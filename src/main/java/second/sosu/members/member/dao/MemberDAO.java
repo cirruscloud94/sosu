@@ -112,6 +112,12 @@ public class MemberDAO extends AbstractDAO{
       return mypageInfo;
    }
    
+   //다른 사람 마이페이지
+   @SuppressWarnings("unchecked")
+   public List<Map<String,Object>> userMypage(Map<String,Object> map) throws Exception{
+	   return  (List<Map<String,Object>>)selectList("members.userMypage",map);
+   }
+   
    //수정하기
    public void mypageModify(Map<String,Object> map) throws Exception{
       update("members.mypageModify",map);
@@ -122,10 +128,15 @@ public class MemberDAO extends AbstractDAO{
       update("members.mypageDelete", map);
    }
    
+   //비공개
    public void mypagePrivate(Map<String,Object> map) throws Exception{
       update("members.mypagePrivate", map);
    }
    
+   //신고하기
+   public void insertReport(Map<String,Object> map) throws Exception{
+	   insert("members.insertReport", map);
+   }
    
    
  

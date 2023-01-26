@@ -31,6 +31,9 @@ public interface MemberService {
 
 	// 마이페이지
 	public List<List<Map<String, Object>>> mypage(Map<String, Object> map) throws Exception;
+	
+	//다른 사람 마이페이지
+	public List<Map<String, Object>> userMypage(Map<String, Object> map) throws Exception;
 
 	void mypageModify(Map<String, Object> map, HttpServletRequest request, HttpSession session) throws Exception;
 
@@ -39,5 +42,8 @@ public interface MemberService {
 
 	// 프로필 비공개
 	public void mypagePrivate(Map<String, Object> map) throws Exception;
+	
+	// 신고하기
+	public void insertReport(Map<String, Object> map) throws Exception;
 
 }

@@ -57,6 +57,12 @@ public class MemberServiceImpl implements MemberService{
       return memberDAO.mypage(map);
    }
    
+ // 다른 사람 마이페이지
+   @Override
+   public List<Map<String,Object>> userMypage(Map<String, Object> map) throws Exception {
+      return memberDAO.userMypage(map);
+   }
+   
    //마이페이지 수정
    @Override
    public void mypageModify(Map<String, Object> map, HttpServletRequest request, HttpSession session) throws Exception {
@@ -111,6 +117,11 @@ public class MemberServiceImpl implements MemberService{
    public void mypagePrivate(Map<String, Object> map) throws Exception {
       memberDAO.mypagePrivate(map);
    }
+
+	@Override
+	public void insertReport(Map<String, Object> map) throws Exception {
+		memberDAO.insertReport(map);
+	}
    
    
    

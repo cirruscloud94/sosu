@@ -9,7 +9,7 @@
 <input type="hidden" name = "MO_IDX" value="${MO_IDX}">
 <main class="layoutCenter">
 <div align="center"><h1>모임 디테일</h1></div>
-<form action="/moim/moimDelete.sosu">
+
 <table>
 	<colgroup>	
 		<col width="15%"/>
@@ -32,7 +32,10 @@
 			</td>
 			<th>회원 닉네임</th>
 			<td>
-				<strong>${Detail.M_NICKNAME}</strong>
+				<form action="/members/usermypage.sosu">
+					input type="hidden" value="${Detail.M_NICKNAME}" name="M_NICKNAME">
+					<button type="submit">${Detail.M_NICKNAME}</button>
+				</form>
 			</td>
 			<th>모임지역</th>
 			<td>${Detail.MO_DETAILREGION}</td>
@@ -47,7 +50,7 @@
 	</tbody>
 </table>
 
-
+<form action="/moim/moimDelete.sosu">
 <div align="center" id="btndiv">	
 <a href="/moim/${MO_CATEGORY}.sosu" class = "btn normal">목록으로</a>
 <input type = "hidden" name = "MO_CATEGORY" value = "${DEATAIL.MO_CATEGORY}"/>

@@ -166,12 +166,12 @@ public class MemberController {
       return mv;
    }
 
-   // 마이페이지 +/members/붙이기
+   // 마이페이지 
    @RequestMapping(value = "/members/mypage.sosu", method = RequestMethod.GET)
    public ModelAndView mypage(CommandMap commandMap, HttpSession session) throws Exception {
 
       ModelAndView mv = new ModelAndView();
-
+      
       commandMap.put("M_IDX", session.getAttribute("M_IDX"));
       commandMap.put("F_ARTICLE", session.getAttribute("M_IDX"));
 
@@ -207,6 +207,66 @@ public class MemberController {
 
       return mv;
    }
+   
+   // 다른 사람 마이페이지 
+	@RequestMapping(value = "/members/usermypage.sosu", method = RequestMethod.GET)
+	public ModelAndView usermypage(CommandMap commandMap, HttpSession session) throws Exception {
+
+		ModelAndView mv = new ModelAndView();
+		
+		String nickname = (String)session.getAttribute("M_NICKNAME");
+		
+		if(commandMap.get("M_NICKNAME").toString().equals(nickname)) {
+			mv.setViewName("redirect:/members/mypage.sosu");
+			return mv;
+		}
+		
+		mv.addObject("M_NICKNAME", commandMap.get("M_NICKNAME"));
+		commandMap.put("M_NICKNAME", commandMap.get("M_NICKNAME"));
+		List<Map<String,Object>> list = memberService.userMypage(commandMap.getMap());
+		System.out.println("리스트"+memberService.userMypage(commandMap.getMap()));
+		
+		System.out.println("겟아이디"+list.get(0).get("M_IDX"));
+		
+		commandMap.put("M_IDX", list.get(0).get("M_IDX"));
+		commandMap.put("F_ARTICLE", list.get(0).get("M_IDX"));
+		
+		
+		mv.addObject("privateCheck", list.get(0).get("M_PRIVATE"));
+		mv.addObject("M_IDX", list.get(0).get("M_IDX"));
+		
+		System.out.println("프라이빗"+list.get(0).get("M_PRIVATE"));
+		mv.addObject("mypageInfo", memberService.mypage(commandMap.getMap()));
+
+		if (commandMap.get("mypageCategory") == null) {
+			mv.addObject("mypageCategory", "1");
+		} else {
+			mv.addObject("mypageCategory", commandMap.get("mypageCategory"));
+			if (commandMap.get("mypageCategory").equals("3")) {
+				mv.addObject("selectReview", "5");
+			} else if (commandMap.get("mypageCategory").equals("4")) {
+				mv.addObject("selectZzim", "7");
+			}
+			if (commandMap.get("selectReview").equals("6")) {
+				mv.addObject("mypageCategory", "3");
+				mv.addObject("selectReview", commandMap.get("selectReview"));
+			} else if (commandMap.get("selectReview").equals("5")) {
+				mv.addObject("mypageCategory", "3");
+				mv.addObject("selectReview", commandMap.get("selectReview"));
+			}
+			if (commandMap.get("selectZzim").equals("8")) {
+				mv.addObject("mypageCategory", "4");
+				mv.addObject("selectZzim", commandMap.get("selectZzim"));
+			} else if (commandMap.get("selectZzim").equals("7")) {
+				mv.addObject("mypageCategory", "4");
+				mv.addObject("selectZzim", commandMap.get("selectZzim"));
+			}
+		}
+
+		mv.setViewName("/members/mypage/userMypage");
+
+		return mv;
+	}
 
    // 수정하기 폼
    @RequestMapping(value = "/members/mypagemodifyform.sosu", method = RequestMethod.GET)
@@ -332,4 +392,31 @@ public class MemberController {
 
       session.setAttribute("M_PRIVATE", memberService.login(map).get("M_PRIVATE"));
    }
+   
+   //신고하기 폼
+   @RequestMapping(value = "/members/insertreport.sosu", method = RequestMethod.GET)
+   public ModelAndView insertReport(CommandMap commandMap, HttpSession session) throws Exception {
+	   ModelAndView mv = new ModelAndView();
+	   mv.setViewName("/members/report/insertReport");
+	   return mv;
+   }   
+   
+   //신고하기 처리
+   @RequestMapping(value = "/members/mypagemodifyform.sosu", method = RequestMethod.POST)
+   public void report(CommandMap commandMap, HttpSession session) throws Exception {
+	   memberService.insertReport(commandMap.getMap());
+   }
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
 }
