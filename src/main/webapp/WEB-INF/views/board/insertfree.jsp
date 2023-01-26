@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -8,7 +7,7 @@
 <title>자유게시판 작성</title>
 </head>
 <body>
-	<form id="frm" enctype="multipart/form-data">
+<form id="frm" enctype="multipart/form-data">
 <table style="border:1px solid #ccc">
 	<colgroup>
 		<col width="10%"/>
@@ -16,41 +15,41 @@
 		<col width="40%"/>
 	</colgroup>
 	<caption>게시글등록</caption>
-	
-	
 	<tbody>
 		<tr>
 			<th>${FR_CATEGORY}</th>
-			
-		</tr>
+		</tr>   
 		<tr>
-			<th scope="col">회원번호</th>
-			<td><input type="text" id="M_IDX" name="M_IDX"style="width: 400px;" maxlength="70"></td> 
+			<th scope="col">글쓴이</th>
+			<td>
+				<input type="text" id="M_IDX" name="M_IDX" value="${M_IDX }"style="width: 400px;"> 
+			</td> 
 		</tr>
 		<tr>
 			<th scope="col">제목</th>
-			<td><input type="text" id="FR_TITLE" name="FR_TITLE"style="width: 400px;" maxlength="70"></td> 
+			<td>
+				<input type="text" id="FR_TITLE" name="FR_TITLE"style="width: 400px;" maxlength="70">
+			</td> 
 		</tr>
 		<tr>
 			<th scope="col">내용</th>
-			<td class="view_text"><textarea rows="5" style="width: 80%; height: auto;" title="내용" id="FR_CONTENT" name="FR_CONTENT"></textarea></td> 
+			<td class="view_text">
+				<textarea rows="5" style="width: 80%; height: auto;" title="내용" id="FR_CONTENT" name="FR_CONTENT"></textarea>
+			</td> 
 		</tr>
-		
-		
 	</tbody>
 </table>
-			<div id="fileDiv">
-				<p>
-					<input type="file" id="file" name="file_0"> <a href="#this" class="btn" id="delete" name="delete">삭제</a>
-				</p>
-			</div>
-			<a href="#this" class="btn" id="addFile">파일 추가</a>
-			<a href="#this" class="btn" id="write">작성하기</a>
-			<input type="hidden" name="FR_CATEGORY" value="${FR_CATEGORY}"><!-- 예약번호 -->
-			<input type="hidden" name="FR_WRITER" value="${M_NICKNAME}"><!-- 예약번호 -->
-			<a href="#this" class="btn" id="list">목록으로</a>
-			
-			</form>
+	<div id="fileDiv">
+		<p>
+			<input type="file" id="file" name="file_0"> <a href="#this" class="btn" id="delete" name="delete">삭제</a>
+		</p>
+	</div>
+	<a href="#this" class="btn" id="addFile">파일 추가</a>
+	<a href="#this" class="btn" id="write">작성하기</a>
+	<input type="hidden" name="FR_CATEGORY" value="${FR_CATEGORY}"><!-- 예약번호 -->
+	<input type="hidden" name="FR_WRITER" value="${M_NICKNAME}"><!-- 예약번호 -->
+	<a href="#this" class="btn" id="list">목록으로</a>			
+</form>
 		
 <script type="text/javascript">
 	
@@ -87,7 +86,7 @@
 
 	function fn_insertfree() {
 		var comSubmit = new ComSubmit("frm");
-		comSubmit.setUrl("<c:url value='/sosuboard/insertfree' />");
+		comSubmit.setUrl("<c:url value='/freeboard/insertfree.sosu' />");
 		comSubmit.submit();
 	}
 

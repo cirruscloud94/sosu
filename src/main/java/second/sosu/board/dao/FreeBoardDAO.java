@@ -46,53 +46,44 @@ public class FreeBoardDAO extends AbstractDAO {
 //		return (Map<String, Object>) selectOne("freeboard.freeMemberList", map);
 //	}
 	
-//	자유게시글
-	 
+	//자유게시글 상세	 
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> freeDetail(Map<String, Object> map) throws Exception {
-		
+	public List<Map<String, Object>> freeDetail(Map<String, Object> map) throws Exception {		
 		return(List<Map<String, Object>>)selectList("freeboard.freeDetail", map); 
 	}
 	
-//	작성
-	public void insertFree(Map<String, Object> map) throws Exception {
-		
+	//자유게시글 작성
+	public void insertFree(Map<String, Object> map) throws Exception {		
 		insert("freeboard.insertFree", map);
 	}
 	
-//	사진 파일 등록
-	public void insertFreeFile(Map<String, Object> map) throws Exception {
-		
+	//자유게시글 사진 파일 등록
+	public void insertFreeFile(Map<String, Object> map) throws Exception {		
 		insert("freeboard.insertFreeFile", map);
 	}
 	
-// 	프로필 리스트
-	public void freeMemberList(Map<String, Object> map) throws Exception {
-		
+	//자유게시글 프로필 리스트
+	public void freeMemberList(Map<String, Object> map) throws Exception {		
 		insert("freeboard.freeMemberList", map);
 	}
 	
-//	수정
-	public void updateFree(Map<String, Object> map) throws Exception {
-		
+	//자유게시글 수정
+	public void updateFree(Map<String, Object> map) throws Exception {		
 		update("freeboard.updateFree", map);
 	}
 	
-//	사진 파일 수정
-	public void updateFreeFile(Map<String, Object> map) throws Exception {
-		
+	//자유게시글 사진 파일 수정
+	public void updateFreeFile(Map<String, Object> map) throws Exception {		
 		update("freeboard.updateFreeFile", map);
 	}
 	
-//	삭제
-	public void deleteFree(Map<String, Object> map) throws Exception {
-		
+	//자유게시글 삭제
+	public void deleteFree(Map<String, Object> map) throws Exception {		
 		update("freeboard.deleteFree", map);
 	}
 	
-//	이미지 파일 삭제
-	public void deleteFreeFile(Map<String, Object> map) throws Exception {
-		
+	//자유게시글 이미지 파일 삭제
+	public void deleteFreeFile(Map<String, Object> map) throws Exception {		
 		update("freeboard.deleteFreeFile", map);
 	}
 }
