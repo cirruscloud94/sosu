@@ -21,32 +21,58 @@ public class MoimServiceImpl implements MoimService {
 	@Resource(name = "moimDao")
 	private MoimDao moimDao;
 
+	// 모임 리스트
 	@Override
-	public List<Map<String, Object>> moimList(Map<String, Object> map, HttpSession session, CommandMap commandMap) throws Exception {
+	public List<Map<String, Object>> moimList(Map<String, Object> map, HttpSession session, CommandMap commandMap)
+			throws Exception {
 		// TODO Auto-generated method stub
 		return moimDao.moimList(map, session, commandMap);
 	}
 
+	// 모임 상세보기
 	@Override
 	public Map<String, Object> moimDetail(Map<String, Object> map) throws Exception {
 		Map<String, Object> resultMap = moimDao.moimDetail(map);
 		return resultMap;
 	}
 
+	// 모임에 참가한 인원 리스트
+	@Override
+	public List<Map<String, Object>> moimMemberList(Map<String, Object> map, CommandMap commandMap) throws Exception {
+		// TODO Auto-generated method stub
+		return moimDao.moimMemberList(map, commandMap);
+	}
+
+	// 모임참여에 대기중인 인원 리스트
+	@Override
+	public List<Map<String, Object>> moimMemberWait(Map<String, Object> map, CommandMap commandMap) throws Exception {
+		// TODO Auto-generated method stub
+		return moimDao.moimMemberWait(map, commandMap);
+	}
+
+	// 모임 작성
 	@Override
 	public void moimRegister(Map<String, Object> map, HttpSession session) throws Exception {
 		// TODO Auto-generated method stub
-		// String m_idx = (String)session.getAttribute("m_idx");
 
-		// map.put("m_idx", m_id);
 		moimDao.moimRegister(map, session);
 	}
 
+	// 모임 참가
 	@Override
-	public void moimJoin(Map<String, Object> map, HttpServletRequest request) throws Exception {
+	public void moimJoin(Map<String, Object> map, HttpSession session, CommandMap commandMap) throws Exception {
 		// TODO Auto-generated method stub
 
-		moimDao.moimJoin(map, request);
+		moimDao.moimJoin(map, session, commandMap);
+
+	}
+
+	// 모임 참가
+	@Override
+	public void moimJoinPermit(Map<String, Object> map, HttpSession session, CommandMap commandMap) throws Exception {
+		// TODO Auto-generated method stub
+
+		moimDao.moimJoinPermit(map, session, commandMap);
 
 	}
 
@@ -56,9 +82,22 @@ public class MoimServiceImpl implements MoimService {
 		moimDao.moimModify(map);
 	}
 
+	// 모임 참여승인
+	@Override
+	public void moimWaitApprove(Map<String, Object> map) throws Exception {
+		moimDao.moimWaitApprove(map);
+	}
+
+	// 모임 맴버 강퇴
+	@Override
+	public void moimMemberBan(Map<String, Object> map) throws Exception {
+		moimDao.moimMemberBan(map);
+	}
+
 	// 모임 삭제
 	@Override
 	public void moimDelete(Map<String, Object> map) throws Exception {
 		moimDao.moimDelete(map);
 	}
+
 }
