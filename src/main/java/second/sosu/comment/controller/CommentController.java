@@ -22,7 +22,7 @@ public class CommentController {
 	public ModelAndView commentInsert(CommandMap commandMap, HttpSession session) throws Exception {
 		ModelAndView mv = new ModelAndView("redirect:/freeboard/Detail");
 		
-		commentService.commentInsert(commandMap.getMap());
+		commentService.commentInsert(commandMap.getMap(), session);
 		mv.addObject("B_IDX", commandMap.get("B_IDX"));
 		
 		return mv;
@@ -32,7 +32,7 @@ public class CommentController {
 	public ModelAndView commentInsert2(CommandMap commandMap, HttpSession session) throws Exception {
 		ModelAndView mv = new ModelAndView("redirect:/freeboard/Detail");
 		
-		commentService.commentInsert2(commandMap.getMap());
+		commentService.commentInsert2(commandMap.getMap(), session);
 		mv.addObject("B_IDX", commandMap.get("B_IDX"));
 		
 		return mv;
@@ -42,7 +42,7 @@ public class CommentController {
 	public ModelAndView commentUpdate(CommandMap commandMap, HttpSession session) throws Exception {
 		ModelAndView mv = new ModelAndView("redirect:/freeboard/Detail");
 		
-		commentService.commentUpdate(commandMap.getMap());
+		commentService.commentUpdate(commandMap.getMap(), session);
 		mv.addObject("B_IDX", commandMap.get("B_IDX"));
 		
 		return mv;
@@ -52,7 +52,7 @@ public class CommentController {
 	public ModelAndView commandDelete(CommandMap commandMap, HttpSession session) throws Exception {
 		ModelAndView mv = new ModelAndView("redirect:/freeboard/Detail");
 		
-		commentService.commentDelete(commandMap.getMap());
+		commentService.commentDelete(commandMap.getMap(), session);
 		mv.addObject("B_IDX", commandMap.get("B_IDX"));
 		
 		return mv;
