@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -42,8 +41,7 @@ public class MainController {
 	@RequestMapping(value = "/main.sosu")
 	public String main() {
 		
-		
-		return "main";
+		return "main_layout";
 	}
 	
 	@RequestMapping( "/{MO_CATEGORY}.sosu")
@@ -52,7 +50,8 @@ public class MainController {
 		commandMap.getMap().put("MO_CATEGORY", MO_CATEGORY);
 		
 		ModelAndView mv = new ModelAndView("/mainlist");
-		System.out.println("+++++++++++++++++"+commandMap.getMap());
+		mv.setViewName("mainlist");
+		
 				
 		List<Map<String, Object>> molist  = mainService.moimList(commandMap.getMap(), session, commandMap);
 		List<Map<String, Object>> frlist  = mainService.freeList(commandMap.getMap(), session);

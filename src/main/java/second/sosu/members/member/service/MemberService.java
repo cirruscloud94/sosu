@@ -31,6 +31,9 @@ public interface MemberService {
 
 	// 마이페이지
 	public List<List<Map<String, Object>>> mypage(Map<String, Object> map) throws Exception;
+	
+	//다른 사람 마이페이지
+	public List<Map<String, Object>> userMypage(Map<String, Object> map) throws Exception;
 
 	void mypageModify(Map<String, Object> map, HttpServletRequest request, HttpSession session) throws Exception;
 
@@ -39,5 +42,30 @@ public interface MemberService {
 
 	// 프로필 비공개
 	public void mypagePrivate(Map<String, Object> map) throws Exception;
+	
+	// 신고하기
+	public void insertReport(Map<String, Object> map) throws Exception;
+	
+	//찜 삭제
+	public void deleteZzim(Map<String,Object> map) throws Exception;
+	
+	
+	
+	
+	//관리자 - 회원 기본 리스트
+	public List<Map<String,Object>> adminMemberList(Map<String,Object> map) throws Exception;
+	
+	//관리자 - 회원 상세보기
+	public List<Map<String,Object>> adminMemberDetail(Map<String,Object> map) throws Exception;
+	
+	//관리자 - 신고내역
+	public List<Map<String, Object>> adminMemberReport(Map<String,Object> map) throws Exception;
+	
+	//관리자 - 신고 내역 삭제
+	public void adminMemberReportDelete(Map<String,Object> map) throws Exception;
+	
+	//관리자 - 회원정지
+	public void adminMemberStop(Map<String, Object> map) throws Exception;
+	   
 
 }

@@ -47,17 +47,7 @@ $(document).ready(function(){
       file.setAttribute("type","hidden");
    });
    
-   //여자남자 버튼 활성화
-   var m_gender = $('#m_gender').val();
-   var b_male = document.getElementById("male");
-   var b_female = document.getElementById("female");
-   if(m_gender == 1 || m_gender==3){
-      b_female.setAttribute("disabled", "disabled");
-      b_male.setAttribute("onClick", "return(false);");
-   }else{
-      b_male.setAttribute("disabled", "disabled");
-      b_female.setAttribute("onClick", "return(false);");
-   }
+   
 });
 
 
