@@ -1,20 +1,3 @@
-<%@ page language="java" contentType="text/html; UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<body>
-	<%
-	//개행을 위한..(구현X)
-	pageContext.setAttribute("crcn", "\r\n");
-	pageContext.setAttribute("br", "<br>");
-	%>
-
-	<input type="hidden" name="MO_IDX" value="${MO_IDX}" id="MO_IDX">
-	<main class="layoutCenter">
-		<div align="center">
-			<h1>모임 디테일</h1>
-		</div>
-=======
 <%@ page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -492,14 +475,11 @@
 			</c:if>
 		</div>
 	</main>
-=======
-
 </div>
 </body>
 
 <!-- 삭제 컨펌 alert 1/20기준 미완 -->
 <script type="text/javascript">
-<<<<<<< HEAD
 	function check() {
 
 		var cate = $("#cate");
@@ -582,41 +562,4 @@
 			return false;
 		}
 	}
-=======
-function check() {
-   
-   var cate = $("#cate").text();
-   var idx = $("#MO_IDX").text();
-   var list = ${list};
-   
-   
-    if (confirm("게시글을 삭제 하시겠습니까?")){ 
-       alert("삭제 되었습니다.");
-       location.href="/moim/moimDelete.sosu";
-       } else {
-       location.href="/moim/" +cate + "/" + idx + ".sosu";
-      return false;
-   }
-    }
-function checkJoin() {
-   
-   var cate = $("#cate").text();
-   var idx = $("#MO_IDX").text();
-   
-   
-   for(int i=0 ; i<list.size() ; i++){
-      if(<%=session.getAttribute("sessionss")%>==${list[i].M_IDX}){
-         alert("이미 참여함ㅋ");
-         return false;
-      }else{
-         if (confirm("모임에 참여하시겠습니까??")){ 
-             alert("참여완료.");
-             location.href="/moim/moimJoin.sosu";
-             } else {
-             location.href="/moim/" +cate + "/" + idx + ".sosu";
-            return false;
-         }
-      }
-   }
-}
 </script>

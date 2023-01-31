@@ -47,7 +47,7 @@
 			<div align="center" id="btndiv">	
 			<a href="/review/${detail.MO_CATEGORY}.sosu" class="btn normal">목록으로</a>
 			
-			<a href="/reviewModify/${detail.MO_CATEGORY}/${detail.MO_IDX}.sosu" class="btn normal">수정하기</a>
+			<a href="/reviewModify/${detail.MO_CATEGORY}/${detail.RV_IDX}.sosu" class="btn normal">수정하기</a>
 			
 			<a href="/review/${detail.MO_CATEGORY}.sosu" onclick="if(check()) move(this, 'in', 'RV_IDX', 'MO_IDX')">
 				삭제하기

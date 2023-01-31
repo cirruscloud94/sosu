@@ -8,7 +8,7 @@
 
 <main class="container">
 <article>
-	<form action="/reviewModify/${RV_IDX}.sosu" method="post" onsubmit="return check()" name="insertReview" id="insertReview">
+	<form action="/review/reviewModify.sosu" method="post" onsubmit="return check()" name="insertReview" id="insertReview">
 		<h1>리뷰 수정하기</h1>
 		
 		<fieldset>
@@ -29,12 +29,14 @@
 		<!-- 회원번호 -->
 		<input type="hidden" name="rv_m_idx" value="${reviewMap.M_IDX}">
 		<!-- 모임번호 --> 
-		<input type="hidden" name="rv_mo_idx" value="${reviewMap.MO_IDX}"> 
+		<input type="hidden" name="rv_mo_idx" value="${reviewMap.MO_IDX}">
+		<!-- 선택한 카테고리 -->
+		<input type="hidden" name="mo_cate" value="${MO_CATEGORY}"> 
 		
 		<input type="file" id="review_file" accept="image/jpeg, image/png, image/jpg"> <!-- accept로 이미지파일 확장자 제한 가능 -->
 		
 		<a href="/review/${MO_CATEGORY}.sosu" class="btn">취소</a><!-- 마이페이지 URL  -->
-		<button class="submit">등록</button>
+		<button class="submit" id="rvModify">등록</button>
 	</form>
 </article>
 </main>

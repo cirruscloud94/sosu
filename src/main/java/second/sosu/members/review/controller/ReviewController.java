@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import second.sosu.common.domain.CommandMap;
@@ -141,12 +142,14 @@ public class ReviewController {
 	 * @throws Exception
 	 */
 	
-	@PostMapping("/reviewModify/{RV_IDX}.sosu")
-	public ModelAndView reviewModify_(@PathVariable int RV_IDX, CommandMap commandMap) throws Exception {
+	@PostMapping("/review/reviewModify.sosu")
+	public ModelAndView reviewModify_(@RequestParam("MO_CATEGORY") String MO_CATEGORY, CommandMap commandMap) throws Exception {
 		
-		commandMap.put("RV_IDX", RV_IDX);
+		Map<String, Object> map = reviewService.reviewDetail(commandMap.getMap());
 		
-		ModelAndView mv = new ModelAndView("redirect:/members/review/reviewList");
+		String idx = map.get("RV_IDX").toString(); 
+		
+		ModelAndView mv = new ModelAndView("redirect:/review/"+ MO_CATEGORY +"/"+ idx +".sosu");
 		
 		reviewService.updateReview(commandMap.getMap());
 		
