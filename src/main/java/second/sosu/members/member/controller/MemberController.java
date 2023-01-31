@@ -14,16 +14,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import second.sosu.common.domain.CommandMap;
-import second.sosu.common.util.FileUtils;
 //import second.sosu.members.member.dao.MypageQuery;
 import second.sosu.members.member.service.MemberService;
 
 @Controller
-//@RequestMapping("/members/")
 public class MemberController {
 
    Logger log = Logger.getLogger(this.getClass());
@@ -95,7 +95,6 @@ public class MemberController {
       // 로그인 성공 시 세션값 저장
       if (memberService.login(commandMap.getMap()) != null) {
          Map<String, Object> map = memberService.login(commandMap.getMap());
-         mv.setViewName("/main");
 
          session.setAttribute("M_IDX", map.get("M_IDX"));
          session.setAttribute("M_NAME", map.get("M_NAME"));
@@ -112,7 +111,9 @@ public class MemberController {
          session.setAttribute("M_ANS", map.get("M_ANS"));
          session.setAttribute("M_PRIVATE", map.get("M_PRIVATE"));
          session.setAttribute("M_BAN_DATE", map.get("M_BAN_DATE"));
-
+         
+         mv.setViewName("redirect:/main.sosu");
+         
          return mv;
       }
       mv.setViewName("redirect:/members/loginform.sosu");
@@ -208,65 +209,67 @@ public class MemberController {
       return mv;
    }
    
-   // 다른 사람 마이페이지 
-	@RequestMapping(value = "/members/usermypage.sosu", method = RequestMethod.GET)
-	public ModelAndView usermypage(CommandMap commandMap, HttpSession session) throws Exception {
+// 다른 사람 마이페이지 
+   @RequestMapping(value = "/members/usermypage.sosu", method = RequestMethod.GET)
+   public ModelAndView usermypage(CommandMap commandMap, HttpSession session) throws Exception {
+      ModelAndView mv = new ModelAndView();
+      
+      if(commandMap.get("M_NICKNAME")!=null) {
+         session.setAttribute("USER_M_NICKNAME", commandMap.get("M_NICKNAME"));
+      }
+      
+      String nickname = (String)session.getAttribute("M_NICKNAME");
+      String mnickname = (String)session.getAttribute("USER_M_NICKNAME");
+      
+      if(mnickname.equals(nickname)) {
+         mv.setViewName("redirect:/members/mypage.sosu");
+         return mv;
+      }
+      
+      mv.addObject("M_NICKNAME", session.getAttribute("USER_M_NICKNAME"));
+      commandMap.put("M_NICKNAME", session.getAttribute("USER_M_NICKNAME"));
+      List<Map<String,Object>> list = memberService.userMypage(commandMap.getMap());
+      System.out.println("리스트"+memberService.userMypage(commandMap.getMap()));
+            
+      commandMap.put("M_IDX", list.get(0).get("M_IDX"));
+      commandMap.put("F_ARTICLE", list.get(0).get("M_IDX"));
+      
+      mv.addObject("privateCheck", list.get(0).get("M_PRIVATE"));
+      mv.addObject("M_IDX", list.get(0).get("M_IDX"));
+      session.setAttribute("USER_M_IDX", list.get(0).get("M_IDX"));
+      
+      
+      mv.addObject("mypageInfo", memberService.mypage(commandMap.getMap()));
 
-		ModelAndView mv = new ModelAndView();
-		
-		String nickname = (String)session.getAttribute("M_NICKNAME");
-		
-		if(commandMap.get("M_NICKNAME").toString().equals(nickname)) {
-			mv.setViewName("redirect:/members/mypage.sosu");
-			return mv;
-		}
-		
-		mv.addObject("M_NICKNAME", commandMap.get("M_NICKNAME"));
-		commandMap.put("M_NICKNAME", commandMap.get("M_NICKNAME"));
-		List<Map<String,Object>> list = memberService.userMypage(commandMap.getMap());
-		System.out.println("리스트"+memberService.userMypage(commandMap.getMap()));
-		
-		System.out.println("겟아이디"+list.get(0).get("M_IDX"));
-		
-		commandMap.put("M_IDX", list.get(0).get("M_IDX"));
-		commandMap.put("F_ARTICLE", list.get(0).get("M_IDX"));
-		
-		
-		mv.addObject("privateCheck", list.get(0).get("M_PRIVATE"));
-		mv.addObject("M_IDX", list.get(0).get("M_IDX"));
-		
-		System.out.println("프라이빗"+list.get(0).get("M_PRIVATE"));
-		mv.addObject("mypageInfo", memberService.mypage(commandMap.getMap()));
+      if (commandMap.get("mypageCategory") == null) {
+         mv.addObject("mypageCategory", "1");
+      } else {
+         mv.addObject("mypageCategory", commandMap.get("mypageCategory"));
+         if (commandMap.get("mypageCategory").equals("3")) {
+            mv.addObject("selectReview", "5");
+         } else if (commandMap.get("mypageCategory").equals("4")) {
+            mv.addObject("selectZzim", "7");
+         }
+         if (commandMap.get("selectReview").equals("6")) {
+            mv.addObject("mypageCategory", "3");
+            mv.addObject("selectReview", commandMap.get("selectReview"));
+         } else if (commandMap.get("selectReview").equals("5")) {
+            mv.addObject("mypageCategory", "3");
+            mv.addObject("selectReview", commandMap.get("selectReview"));
+         }
+         if (commandMap.get("selectZzim").equals("8")) {
+            mv.addObject("mypageCategory", "4");
+            mv.addObject("selectZzim", commandMap.get("selectZzim"));
+         } else if (commandMap.get("selectZzim").equals("7")) {
+            mv.addObject("mypageCategory", "4");
+            mv.addObject("selectZzim", commandMap.get("selectZzim"));
+         }
+      }
 
-		if (commandMap.get("mypageCategory") == null) {
-			mv.addObject("mypageCategory", "1");
-		} else {
-			mv.addObject("mypageCategory", commandMap.get("mypageCategory"));
-			if (commandMap.get("mypageCategory").equals("3")) {
-				mv.addObject("selectReview", "5");
-			} else if (commandMap.get("mypageCategory").equals("4")) {
-				mv.addObject("selectZzim", "7");
-			}
-			if (commandMap.get("selectReview").equals("6")) {
-				mv.addObject("mypageCategory", "3");
-				mv.addObject("selectReview", commandMap.get("selectReview"));
-			} else if (commandMap.get("selectReview").equals("5")) {
-				mv.addObject("mypageCategory", "3");
-				mv.addObject("selectReview", commandMap.get("selectReview"));
-			}
-			if (commandMap.get("selectZzim").equals("8")) {
-				mv.addObject("mypageCategory", "4");
-				mv.addObject("selectZzim", commandMap.get("selectZzim"));
-			} else if (commandMap.get("selectZzim").equals("7")) {
-				mv.addObject("mypageCategory", "4");
-				mv.addObject("selectZzim", commandMap.get("selectZzim"));
-			}
-		}
+      mv.setViewName("/members/mypage/userMypage");
 
-		mv.setViewName("/members/mypage/userMypage");
-
-		return mv;
-	}
+      return mv;
+   }
 
    // 수정하기 폼
    @RequestMapping(value = "/members/mypagemodifyform.sosu", method = RequestMethod.GET)
@@ -347,7 +350,7 @@ public class MemberController {
       map.put("M_IDX", session.getAttribute("M_IDX"));
       map.put("M_PW", session.getAttribute("M_PW"));
       map.put("M_EMAIL", session.getAttribute("M_EMAIL"));
-
+      
       String M_PRIVATE = session.getAttribute("M_PRIVATE").toString();
 
       if (param.get("pri1") != null) {
@@ -396,27 +399,42 @@ public class MemberController {
    //신고하기 폼
    @RequestMapping(value = "/members/insertreport.sosu", method = RequestMethod.GET)
    public ModelAndView insertReport(CommandMap commandMap, HttpSession session) throws Exception {
-	   ModelAndView mv = new ModelAndView();
-	   mv.setViewName("/members/report/insertReport");
-	   return mv;
+      ModelAndView mv = new ModelAndView();
+      mv.addObject("M_IDX", session.getAttribute("USER_M_IDX"));
+      mv.setViewName("/members/report/insertReport");
+      return mv;
    }   
    
    //신고하기 처리
-   @RequestMapping(value = "/members/mypagemodifyform.sosu", method = RequestMethod.POST)
-   public void report(CommandMap commandMap, HttpSession session) throws Exception {
-	   memberService.insertReport(commandMap.getMap());
+   @RequestMapping(value = "/members/report.sosu", method = RequestMethod.POST)
+   @ResponseBody
+   public ModelAndView report(CommandMap commandMap, HttpSession session) throws Exception {
+      System.out.println("파람파람"+commandMap.getMap());
+      
+      commandMap.put("R_MEM", session.getAttribute("M_IDX"));
+      
+      commandMap.put("R_REPORTEDMEM", commandMap.get("M_IDX"));
+
+      memberService.insertReport(commandMap.getMap());
+      ModelAndView mv = new ModelAndView();
+      mv.addObject("close","close");
+      mv.setViewName("/members/report/insertReport");
+      return mv;
    }
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
+   
+   //찜 삭제
+   @RequestMapping(value = "/members/deletezzim.sosu", method = RequestMethod.POST)
+   @ResponseBody
+   public void deleteZzim(@RequestBody HashMap<String, Object> param, HttpSession session) throws Exception {
+      System.out.println("제트"+param.get("Z_IDX"));
+      memberService.deleteZzim(param);
+      
+   }
+      
+            
+  
+      
+      
+      
+      
 }

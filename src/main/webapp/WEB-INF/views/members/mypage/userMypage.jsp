@@ -10,7 +10,15 @@
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script defer type="text/javascript" src="/resources/js/userMypage.js"></script>
+<script>
 
+function reportPopup() {
+    var popUrl = "/members/insertreport.sosu";
+    var blank = "_blank";
+    var popOption ="top=10, left=120, width=400, height=500, status=no, menubar=no, toolbar=no, resizable=no";
+    window.open(popUrl, blank, popOption);
+} 
+</script>
 <title>Insert title here</title>
 <link href="/resources/css/mypage.css" rel="stylesheet">
 </head>
@@ -23,15 +31,23 @@
       <img src="${pageContext.request.contextPath}/resources/img/upload/${mypageInfo[9][0].F_SVNAME}"><br/>
    </form>
    <!-- 공통 정보 -->
-   닉네임 : ${mypageInfo[0][0].M_NICKNAME}<br><a href="/members/mypagemodifyform.sosu">수정하기</a>
+   닉네임 : ${mypageInfo[0][0].M_NICKNAME}<br>
    이메일 : ${mypageInfo[0][0].M_EMAIL}<br>  
    별점(소수) : ${mypageInfo[1][0].STARFLOAT}<br>
    별점(정수) : ${mypageInfo[2][0].STARINT}<br>
    <br><br>
-   <form action="/members/insertreport.sosu">
-   <input type="hidden" name="M_IDX" value="${M_IDX}">
-   	<input type="submit" value="신고하기">
-   </form>
+      
+  
+ <%if(!session.getAttribute("M_TYPE").equals("A")){ %>
+
+
+<a href="javascript:void(0);" onclick="reportPopup();"> <input type='hidden' name="M_IDX" value="${M_IDX}">신고하기</a>
+
+<%} %>
+
+      
+ 
+      
    </div>
    <hr>
    
@@ -68,21 +84,21 @@
    
    <c:if test="${mypageCategory eq '2' }">
    <h3>내가 참여한 모임</h3>
-	   <c:if test="${privateCheck eq '1' || privateCheck eq '2'}">
-	   <h4>비공개입니다.</h4>
-	   </c:if>
-	   <c:if test="${privateCheck eq '0' || privateCheck eq '3'}">
-	   <section id="2"> 내가 참여한 모임 개수 : ${fn:length(mypageInfo[4])}<br>
-	      <c:forEach begin="0" end="${fn:length(mypageInfo[4])}" items="${mypageInfo[4]}" var="mypage">
-	         모임상세지역 : ${mypage.MO_DETAILREGION }<br> 
-	         모임제목 : ${mypage.MO_TITLE}<br>
-	         모임인원 : [${mypage.MOIMMEMBER} / ${mypage.MO_MAXPEOPLE }]<br>
-	         모임상세카테고리 : # ${mypage.MO_DETAILCATEGORY }<br>
-	         모임비용 : ${mypage.MO_COST }<br>
-	         <hr>
-	      </c:forEach>
-	   </section>
-	   </c:if>
+      <c:if test="${privateCheck eq '1' || privateCheck eq '2'}">
+      <h4>비공개입니다.</h4>
+      </c:if>
+      <c:if test="${privateCheck eq '0' || privateCheck eq '3'}">
+      <section id="2"> 내가 참여한 모임 개수 : ${fn:length(mypageInfo[4])}<br>
+         <c:forEach begin="0" end="${fn:length(mypageInfo[4])}" items="${mypageInfo[4]}" var="mypage">
+            모임상세지역 : ${mypage.MO_DETAILREGION }<br> 
+            모임제목 : ${mypage.MO_TITLE}<br>
+            모임인원 : [${mypage.MOIMMEMBER} / ${mypage.MO_MAXPEOPLE }]<br>
+            모임상세카테고리 : # ${mypage.MO_DETAILCATEGORY }<br>
+            모임비용 : ${mypage.MO_COST }<br>
+            <hr>
+         </c:forEach>
+      </section>
+      </c:if>
    <hr>
    </c:if>
    
@@ -115,41 +131,42 @@
    
    
    <c:if test="${mypageCategory eq '4' }">
-	   <c:if test="${privateCheck eq '1' || privateCheck eq '3'}">
-	      <h4>비공개입니다.</h4>
-	      </c:if>
-	   <c:if test="${privateCheck eq '0' || privateCheck eq '2'}">
-		   <section id="4"> <%-- 찜 전체 개수 :  ${{fn:length(mypageInfo[7])} + ${fn:length(mypageInfo[8]) }} --%><br/>
-		   <h3>모임</h3>
-		   <br>
-		   <input type="submit" id="check7" value="내가 찜한 모임">
-		   <input type="submit" id="check8" value="내가 찜한 자유게시판">
-		      
-		      <c:if test="${selectZzim eq '7' }">
-		      <div>내가 찜한 모임 개수 : ${fn:length(mypageInfo[7]) }</div>
-		         <c:forEach begin="0" end="${fn:length(mypageInfo[7])}" items="${mypageInfo[7]}" var="mypage">
-		            모임상세지역 : ${mypage.MO_DETAILREGION }<br> 
-		            모임제목 : ${mypage.MO_TITLE}<br>
-		            모임인원 : [${mypage.MOIMMEMBER} / ${mypage.MO_MAXPEOPLE }]<br>
-		            모임상세카테고리 : # ${mypage.MO_DETAILCATEGORY }<br>
-		            모임비용 : ${mypage.MO_COST }<br>
-		            <hr>
-		         </c:forEach>
-		      </c:if>
-		      
-		      <c:if test="${selectZzim eq '8' }">
-		      <div>내가 찜한 자유게시판 개수 : ${fn:length(mypageInfo[8]) }</div>
-		         <c:forEach begin="0" end="${fn:length(mypageInfo[8])}" items="${mypageInfo[8]}" var="mypage">
-		            작성자 : ${mypage.FR_WRITER}<br>
-		            게시글 제목 : ${mypage.FR_TITLE }<br>
-		            게시판 카테고리:  ${mypage.FR_CATEGORY}<br>
-		            작성일 : ${mypage.FR_REGDATE}<br>
-		            조회수 : ${mypage.FR_COUNT}<br>
-		            <hr>
-		         </c:forEach>
-		      </c:if>
-		   </section>
-	   </c:if>
+      <c:if test="${privateCheck eq '1' || privateCheck eq '3'}">
+         <h4>비공개입니다.</h4>
+         </c:if>
+      <c:if test="${privateCheck eq '0' || privateCheck eq '2'}">
+         <section id="4"> <%-- 찜 전체 개수 :  ${{fn:length(mypageInfo[7])} + ${fn:length(mypageInfo[8]) }} --%><br/>
+         <h3>모임</h3>
+         <br>
+         <input type="submit" id="check7" value="내가 찜한 모임">
+         <input type="submit" id="check8" value="내가 찜한 자유게시판">
+            
+            <c:if test="${selectZzim eq '7' }">
+            <div>내가 찜한 모임 개수 : ${fn:length(mypageInfo[7]) }</div>
+               <c:forEach begin="0" end="${fn:length(mypageInfo[7])}" items="${mypageInfo[7]}" var="mypage">
+                  모임상세지역 : ${mypage.MO_DETAILREGION }<br> 
+                  모임제목 : ${mypage.MO_TITLE}<br>
+                  모임인원 : [${mypage.MOIMMEMBER} / ${mypage.MO_MAXPEOPLE }]<br>
+                  모임상세카테고리 : # ${mypage.MO_DETAILCATEGORY }<br>
+                  모임비용 : ${mypage.MO_COST }<br>
+                  <hr>
+               </c:forEach>
+            </c:if>
+            
+            <c:if test="${selectZzim eq '8' }">
+            <div>내가 찜한 자유게시판 개수 : ${fn:length(mypageInfo[8]) }</div>
+               <c:forEach begin="0" end="${fn:length(mypageInfo[8])}" items="${mypageInfo[8]}" var="mypage">
+                  <img src="${pageContext.request.contextPath}/resources/img/upload/${mypage.PROFILE}">
+                  작성자 : ${mypage.FR_WRITER}<br>
+                  게시글 제목 : ${mypage.FR_TITLE }<br>
+                  게시판 카테고리:  ${mypage.FR_CATEGORY}<br>
+                  작성일 : ${mypage.FR_REGDATE}<br>
+                  조회수 : ${mypage.FR_COUNT}<br>
+                  <hr>
+               </c:forEach>
+            </c:if>
+         </section>
+      </c:if>
    </c:if>
    
    </form>

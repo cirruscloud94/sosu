@@ -102,13 +102,18 @@ public class MemberDAO extends AbstractDAO{
          mypageInfo.get(7).get(i).put("MOIMMEMBER", partyMoimMember.get("MOIMMEMBER"));
       }
       
-      //자유게시판 찜
-      mypageInfo.add(selectList("members.mypageZzimFree", map)); //mypageInfo[8]
-      //비공개 처리 (후)
+//      //자유게시판 찜
+//      mypageInfo.add(selectList("members.mypageZzimFree", map)); //mypageInfo[8]
+//      
+//      for(int i=0 ; i<mypageInfo.get(8).size() ; i++) {
+//    	  List<Map<String,Object>> pro = (List<Map<String,Object>>)selectList("members.profileGet", mypageInfo.get(8).get(i).get("F_ARTICLE"));
+//    	  mypageInfo.get(8).get(i).put("F_SVNAME", pro.get(i).get("F_SVNAME"));
+//      }
+      mypageInfo.add(selectList("members.mypageZzimFree",map));
       
       //프로필 사진 가져오기
       mypageInfo.add(selectList("members.profileGet",map)); //mypageInfo[9]
-
+      
       return mypageInfo;
    }
    
@@ -138,8 +143,67 @@ public class MemberDAO extends AbstractDAO{
 	   insert("members.insertReport", map);
    }
    
+   //찜 삭제 
+   public void deleteZzim(Map<String,Object> map) throws Exception{
+	   
+	   delete("members.deleteZzim",map);
+   }
    
- 
+   
+   
+   
+   
+   
+   
+   // 관리자 - 회원 기본 리스트
+   @SuppressWarnings("unchecked")
+   public List<Map<String,Object>> adminMemberList(Map<String,Object> map) throws Exception{
+	   
+	   if(map.get("listType").equals("adminMemberList")) {
+		   return (List<Map<String,Object>>)selectList("members.adminMemberList");
+	   }else if(map.get("listType").equals("adminReportMemberList")) {
+		   return (List<Map<String,Object>>)selectList("members.adminReportMemberList");
+	   }else {
+		   return (List<Map<String,Object>>)selectList("members.adminStopMemberList");
+	   }
+   }
+   
+   //관리자 - 정지처리
+   public void adminMemberStop(Map<String, Object> map) throws Exception{
+	   if(map.get("STOP_YN").equals("Y")) {
+		   update("members.adminMemberStop", map);
+	   }else {
+		   update("members.adminMemberStopCancle", map);
+	   }	   
+   }
+   
+   // 관리자 - 회원 상세보기
+   @SuppressWarnings("unchecked")
+   public List<Map<String,Object>> adminMemberDetail(Map<String,Object> map) throws Exception{
+	   return (List<Map<String,Object>>)selectList("members.adminMemberDetail", map);
+   }
+   
+   // 관리자 - 회원 신고 내역
+   @SuppressWarnings("unchecked")
+   public List<Map<String,Object>> adminMemberReport(Map<String,Object> map) throws Exception{
+
+	   List<Map<String,Object>> reportMap = (List<Map<String,Object>>)selectList("members.adminMemberReport", map);
+	   
+	   for(int i=0 ; i<reportMap.size() ; i++) {
+		   Map<String,Object> m = new HashMap<>();
+		   m.put("M_IDX", reportMap.get(i).get("R_MEM"));
+		   List<Map<String,Object>> list = (List<Map<String,Object>>)selectList("members.adminMemberDetail", m.get("M_IDX"));
+		   reportMap.get(i).put("M_NICKNAME",list.get(0).get("M_NICKNAME"));
+	   }
+	   return reportMap;
+   }
+   
+   // 관리자 - 신고 내역 삭제
+   public void adminMemberReportDelete(Map<String,Object> map) throws Exception{
+	   update("members.adminMemberReportDelete",map);
+   }
+   
+   
    
    
 }

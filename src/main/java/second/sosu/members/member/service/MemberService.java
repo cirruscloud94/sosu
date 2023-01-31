@@ -45,5 +45,27 @@ public interface MemberService {
 	
 	// 신고하기
 	public void insertReport(Map<String, Object> map) throws Exception;
+	
+	//찜 삭제
+	public void deleteZzim(Map<String,Object> map) throws Exception;
+	
+	
+	
+	
+	//관리자 - 회원 기본 리스트
+	public List<Map<String,Object>> adminMemberList(Map<String,Object> map) throws Exception;
+	
+	//관리자 - 회원 상세보기
+	public List<Map<String,Object>> adminMemberDetail(Map<String,Object> map) throws Exception;
+	
+	//관리자 - 신고내역
+	public List<Map<String, Object>> adminMemberReport(Map<String,Object> map) throws Exception;
+	
+	//관리자 - 신고 내역 삭제
+	public void adminMemberReportDelete(Map<String,Object> map) throws Exception;
+	
+	//관리자 - 회원정지
+	public void adminMemberStop(Map<String, Object> map) throws Exception;
+	   
 
 }
