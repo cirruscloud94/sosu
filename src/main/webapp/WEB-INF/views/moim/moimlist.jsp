@@ -1,11 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<<<<<<< HEAD
-<%@ include file="/WEB-INF/include/admin-header.jspf"%>
-=======
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
->>>>>>> 0a9993360704b3db3adc8e81e249c097f4896b1d
 <!DOCTYPE html>
 <html>
 <head>
@@ -160,6 +156,5 @@
          </c:choose>
    </div>
    </div>
->>>>>>> 0a9993360704b3db3adc8e81e249c097f4896b1d
 </body>
 </html>

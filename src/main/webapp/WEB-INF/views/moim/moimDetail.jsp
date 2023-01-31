@@ -1,7 +1,5 @@
-<<<<<<< HEAD
 <%@ page language="java" contentType="text/html; UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/include/admin-header.jspf"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <body>
@@ -259,12 +257,10 @@
          </c:choose>
       </tbody>
 </table> --%>
->>>>>>> 0a9993360704b3db3adc8e81e249c097f4896b1d
 
 		<div class="detailBody">
 			<div class="imgArea">
 
-<<<<<<< HEAD
 				<c:if test="${Detail.F_SVNAME eq null }">
 					<img src="/resources/img/sample.jpg"
 						style="width: 1000px; height: auto;">
@@ -499,7 +495,6 @@
 =======
 
 </div>
->>>>>>> 0a9993360704b3db3adc8e81e249c097f4896b1d
 </body>
 
 <!-- 삭제 컨펌 alert 1/20기준 미완 -->
@@ -624,5 +619,4 @@ function checkJoin() {
       }
    }
 }
->>>>>>> 0a9993360704b3db3adc8e81e249c097f4896b1d
 </script>
