@@ -8,47 +8,49 @@
 </head>
 <body>
 <form id="frm" enctype="multipart/form-data">
-<table style="border:1px solid #ccc">
-	<colgroup>
-		<col width="10%"/>
-		<col width="*"/>
-		<col width="40%"/>
-	</colgroup>
+<table>
 	<caption>게시글등록</caption>
-	<tbody>
+	<tbody>   
 		<tr>
-			<th>${FR_CATEGORY}</th>
-		</tr>   
-		<tr>
-			<th scope="col">글쓴이</th>
+			<th>제목</th>
 			<td>
-				<input type="text" id="M_IDX" name="M_IDX" value="${M_IDX }"style="width: 400px;"> 
+				<input type="text" id="FR_TITLE" name="FR_TITLE" maxlength="70" placeholder="제목을 입력하세요">
 			</td> 
 		</tr>
 		<tr>
-			<th scope="col">제목</th>
+			<th>카테고리</th>
 			<td>
-				<input type="text" id="FR_TITLE" name="FR_TITLE"style="width: 400px;" maxlength="70">
+				<input type="text" name="FR_CATEGORY" value="${FR_CATEGORY}" readOnly>
+			<td>
+		</tr>
+		<tr>
+			<th>작성자</th>
+			<td>
+				<input type="text" id="M_IDX" name="M_IDX" value="${M_IDX }" readOnly> 
 			</td> 
 		</tr>
 		<tr>
-			<th scope="col">내용</th>
-			<td class="view_text">
-				<textarea rows="5" style="width: 80%; height: auto;" title="내용" id="FR_CONTENT" name="FR_CONTENT"></textarea>
+			<th>내용</th>
+			<td class="view_text" colspan="4"> 
+				<textarea rows="5" id="FR_CONTENT" name="FR_CONTENT" placeholder="내용을 입력하세요" style="width:500px; height:300px"></textarea>
 			</td> 
 		</tr>
 	</tbody>
 </table>
-	<div id="fileDiv">
-		<p>
-			<input type="file" id="file" name="file_0"> <a href="#this" class="btn" id="delete" name="delete">삭제</a>
-		</p>
-	</div>
+<div id="fileDiv" align="center">
+	<p>
+		<input type="file" id="file" name="file_0"> 
+		<a href="#this" class="btn" id="delete" name="delete">삭제</a>
+	</p>
+</div>
+<div align="center">	
 	<a href="#this" class="btn" id="addFile">파일 추가</a>
 	<a href="#this" class="btn" id="write">작성하기</a>
-	<input type="hidden" name="FR_CATEGORY" value="${FR_CATEGORY}"><!-- 예약번호 -->
-	<input type="hidden" name="FR_WRITER" value="${M_NICKNAME}"><!-- 예약번호 -->
-	<a href="#this" class="btn" id="list">목록으로</a>			
+	<input type="hidden" name="FR_CATEGORY" value="${FR_CATEGORY}">
+	<input type="hidden" name="FR_WRITER" value="${M_NICKNAME}">
+	<a href="/freeboard/${FR_CATEGORY}.sosu" class="btn">목록으로</a>
+	<!-- <a href="#this" class="btn" id="list">목록으로</a>-->	
+</div>	
 </form>
 		
 <script type="text/javascript">
@@ -60,7 +62,7 @@
 			e.preventDefault();
 			fn_openfreeboard();
 		});
-
+ 
 		$("#write").on("click", function(e) { //작성하기 버튼
 			e.preventDefault();
 			fn_insertfree();
@@ -78,11 +80,11 @@
 
 	});
 
-	function fn_openfreeboard() {
+	 function fn_openfreeboard() {
 		var comSubmit = new ComSubmit();
 		comSubmit.setUrl("<c:url value='/freeboard/{FR_CATEGORY}.sosu' />");
 		comSubmit.submit();
-	}
+	} 
 
 	function fn_insertfree() {
 		var comSubmit = new ComSubmit("frm");
@@ -93,7 +95,7 @@
 	function fn_addFile() {
 		var str = "<p><input type='file' name='file_" + (gfv_count++)
 				+ "'><a href='#this' class='btn' name='delete'>삭제</a></p>";
-		$("#fileDiv").append(str);  //<<div id="fileDiv">에 변수 str의 값을 추가
+		$("#fileDiv").append(str); //<<div id="fileDiv">에 변수 str의 값을 추가
 		$("a[name='delete']").on("click", function(e) {
 			e.preventDefault();
 			fn_deleteFile($(this));

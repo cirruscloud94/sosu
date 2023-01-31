@@ -48,7 +48,7 @@
             </c:when>
             <c:otherwise>
                <tr>
-                  <td colspan="4">조회된 결과가 없습니다.</td>
+                  <td align="center" colspan="7">조회된 결과가 없습니다.</td>
                </tr>
             </c:otherwise>
          </c:choose>
@@ -94,7 +94,7 @@
             </c:when>
             <c:otherwise>
                <tr>
-                  <td colspan="4">조회된 결과가 없습니다.</td>
+                  <td align="center" colspan="8">조회된 결과가 없습니다.</td>
                </tr>
             </c:otherwise>
          </c:choose>
@@ -120,7 +120,7 @@
          <c:choose>
             <c:when test="${fn:length(frlist) > 0 }">
                <c:forEach items="${frlist}" var = "f" varStatus="status" end = "3">
-                <tr align="center" onclick= "location.href='/freeboard/${f.MO_CATEGORY}/${f.FR_IDX}.sosu'">
+                <tr align="center" onclick= "location.href='/freeboard/${f.FR_CATEGORY}/${f.FR_IDX}.sosu'">
                      <td>${f.FR_IDX}<input type = "hidden" value = "${f.FR_IDX}"></td>  
                      <td>${f.FF_SVNAME}<input type = "hidden" value = "${f.M_IDX}"></td>            
                      <td>${f.FR_TITLE}</td>
@@ -138,7 +138,7 @@
             </c:when>
             <c:otherwise>
                <tr>
-                  <td colspan="4">조회된 결과가 없습니다.</td>
+                  <td align="center" colspan="7">조회된 결과가 없습니다.</td>
                </tr>
             </c:otherwise>
          </c:choose>

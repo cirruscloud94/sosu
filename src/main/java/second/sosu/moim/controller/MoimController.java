@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -33,6 +32,7 @@ public class MoimController {
 		commandMap.getMap().put("MO_CATEGORY", MO_CATEGORY);
 
 		ModelAndView mv = new ModelAndView("/moim/moimlist");
+		mv.setViewName("moim/moimlist");
 		System.out.println("+++++++++++++++++" + commandMap.getMap());
 
 		List<Map<String, Object>> list = moimService.moimList(commandMap.getMap(), session, commandMap);
