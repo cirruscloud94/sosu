@@ -32,6 +32,7 @@
          <c:choose>
             <c:when test="${fn:length(list) > 0 }">
                <c:forEach items="${list}" var = "m" end = "3">
+               
                   <tr align="center" onclick= "location.href='/moim/${m.MO_CATEGORY}/${m.MO_IDX}.sosu'">
                      <td>${m.MO_IDX}<input type="hidden" name="MO_IDX" value="${m.MO_IDX}"></td>
                      <td>${m.MO_TITLE}<input type="hidden" name="M_IDX" value="${m.M_IDX}"></td>
@@ -46,6 +47,7 @@
                      </c:if>
                      <td>${m.MF_SVNAME}</td>
                   </tr>
+                  
                </c:forEach>
             </c:when>
             <c:otherwise>

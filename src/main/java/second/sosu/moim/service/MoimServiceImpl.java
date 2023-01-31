@@ -16,49 +16,60 @@ import second.sosu.moim.dao.MoimDao;
 @Service("moimService")
 public class MoimServiceImpl implements MoimService {
 
-	Logger log = Logger.getLogger(this.getClass());
+   Logger log = Logger.getLogger(this.getClass());
 
-	@Resource(name = "moimDao")
-	private MoimDao moimDao;
+   @Resource(name = "moimDao")
+   private MoimDao moimDao;
 
-	@Override
-	public List<Map<String, Object>> moimList(Map<String, Object> map, HttpSession session, CommandMap commandMap) throws Exception {
-		// TODO Auto-generated method stub
-		return moimDao.moimList(map, session, commandMap);
-	}
+   // 모임 리스트
+   @Override
+   public List<Map<String, Object>> moimList(Map<String, Object> map, HttpSession session, CommandMap commandMap)
+         throws Exception {
+      // TODO Auto-generated method stub
+      return moimDao.moimList(map, session, commandMap);
+   }
 
-	@Override
-	public Map<String, Object> moimDetail(Map<String, Object> map) throws Exception {
-		Map<String, Object> resultMap = moimDao.moimDetail(map);
-		return resultMap;
-	}
+   // 모임 상세보기
+   @Override
+   public Map<String, Object> moimDetail(Map<String, Object> map) throws Exception {
+      Map<String, Object> resultMap = moimDao.moimDetail(map);
+      return resultMap;
+   }
 
-	@Override
-	public void moimRegister(Map<String, Object> map, HttpSession session) throws Exception {
-		// TODO Auto-generated method stub
-		// String m_idx = (String)session.getAttribute("m_idx");
+   // 모임에 참가한 인원 리스트
+   @Override
+   public List<Map<String, Object>> moimMemberList(Map<String, Object> map, CommandMap commandMap) throws Exception {
+      // TODO Auto-generated method stub
+      return moimDao.moimMemberList(map, commandMap);
+   }
 
-		// map.put("m_idx", m_id);
-		moimDao.moimRegister(map, session);
-	}
+   // 모임 작성
+   @Override
+   public void moimRegister(Map<String, Object> map, HttpSession session) throws Exception {
+      // TODO Auto-generated method stub
 
-	@Override
-	public void moimJoin(Map<String, Object> map, HttpServletRequest request) throws Exception {
-		// TODO Auto-generated method stub
+      moimDao.moimRegister(map, session);
+   }
 
-		moimDao.moimJoin(map, request);
+   // 모임 참가
+   @Override
+   public void moimJoin(Map<String, Object> map, HttpSession session, CommandMap commandMap) throws Exception {
+      // TODO Auto-generated method stub
 
-	}
+      moimDao.moimJoin(map, session, commandMap);
 
-	// 모임 수정
-	@Override
-	public void moimModify(Map<String, Object> map) throws Exception {
-		moimDao.moimModify(map);
-	}
+   }
 
-	// 모임 삭제
-	@Override
-	public void moimDelete(Map<String, Object> map) throws Exception {
-		moimDao.moimDelete(map);
-	}
+   // 모임 수정
+   @Override
+   public void moimModify(Map<String, Object> map) throws Exception {
+      moimDao.moimModify(map);
+   }
+
+   // 모임 삭제
+   @Override
+   public void moimDelete(Map<String, Object> map) throws Exception {
+      moimDao.moimDelete(map);
+   }
+
 }

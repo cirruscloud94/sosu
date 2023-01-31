@@ -40,7 +40,7 @@
                      <c:if test ="${sessionss ne null}">
                      <td>${m.MZ_CHECK}</td>
                      </c:if>
-                     <c:if test ="${sessionScope.M_IDX eq null}">
+                     <c:if test ="${sessionss eq null}">
                      </c:if>
                      <td>${m.MF_SVNAME}</td>
                   </tr>

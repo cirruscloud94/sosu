@@ -62,6 +62,7 @@
 <a href="/members/loginform.sosu">로그인</a>
 
 <%}else{ %>
+
 <a href="/members/mypage.sosu">마이페이지</a>
 <a href="/members/logout.sosu">로그아웃</a>
 <%} %>
@@ -99,16 +100,5 @@
          </div>
          </div>
 
-   <!-- <script>
-      /* Main Page Redirect by Readiz */
-      var urlAddr = decodeURIComponent(location.href);
-      urlAddr = urlAddr.replace('http://', '').replace('https://', '');
-      urlAddr = urlAddr.split('#')[0];
-      urlAddr = urlAddr.split('?')[0];
-      var url = urlAddr.split('/');
-      if (url[1] == '') {
-         location.href = '/category'
-      }
-   </script> -->
 </body>
 </html>
