@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -86,17 +87,17 @@ public class AdminMemberController {
       return mv;
    }
    
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
+   /** 공지사항 및 QNA 관리
+    * 
+    * @param commandMap
+    * @return
+    * @throws Exception
+    */
+   @GetMapping("/admin/help.sosu")
+   public ModelAndView adminHelp(CommandMap commandMap) throws Exception {
+	   ModelAndView mv = new ModelAndView("/admin/help/help");
+	   mv.setViewName("/admin/help/help");
+	   
+	   return mv;
+   }
 }

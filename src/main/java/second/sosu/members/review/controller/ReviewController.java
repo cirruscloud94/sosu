@@ -74,7 +74,7 @@ public class ReviewController {
 		return mv;
 	}
 	
-	/** 리뷰 작성폼
+	/** 리뷰 작성 폼
 	 * 
 	 * @category review
 	 * @param commandMap
@@ -103,7 +103,7 @@ public class ReviewController {
 	@PostMapping("/members/reviewForm.sosu")
 	public ModelAndView reviewForm_insert(CommandMap commandMap) throws Exception {
 		
-		ModelAndView mv = new ModelAndView("redirect:/members/review/reviewDetail");
+		ModelAndView mv = new ModelAndView("redirect:/members/mypage.sosu");
 		
 		reviewService.insertReview(commandMap.getMap());
 		
@@ -143,7 +143,7 @@ public class ReviewController {
 	 */
 	
 	@PostMapping("/review/reviewModify.sosu")
-	public ModelAndView reviewModify_(@RequestParam("MO_CATEGORY") String MO_CATEGORY, CommandMap commandMap) throws Exception {
+	public ModelAndView reviewModify_(@RequestParam(value="MO_CATEGORY", required=false) String MO_CATEGORY, CommandMap commandMap) throws Exception {
 		
 		Map<String, Object> map = reviewService.reviewDetail(commandMap.getMap());
 		
@@ -152,10 +152,6 @@ public class ReviewController {
 		ModelAndView mv = new ModelAndView("redirect:/review/"+ MO_CATEGORY +"/"+ idx +".sosu");
 		
 		reviewService.updateReview(commandMap.getMap());
-		
-//		mv.addObject("RV_IDX", commandMap.get("RV_IDX"));
-//		mv.addObject("M_IDX", commandMap.get("M_IDX"));
-//		mv.addObject("MO_IDX", commandMap.get("MO_IDX"));
 		
 		return mv;
 	}
@@ -172,7 +168,7 @@ public class ReviewController {
 		
 		commandMap.put("MO_CATEGORY", MO_CATEGORY); 
 		
-		ModelAndView mv = new ModelAndView("redirect:/members/review/reviewList");
+		ModelAndView mv = new ModelAndView("redirect:/review/{MO_CATEGORY}.sosu");
 		
 		reviewService.deleteReview(commandMap.getMap());
 		

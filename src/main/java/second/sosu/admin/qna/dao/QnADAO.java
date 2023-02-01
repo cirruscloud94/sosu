@@ -14,24 +14,24 @@ public class QnADAO extends AbstractDAO {
 	@SuppressWarnings("unchecked") 
 	public List<Map<String,Object>>qnaList(Map<String, Object> map) throws Exception {
 		
-		return(List<Map<String,Object>>)selectList("qna.qnaList", map); 
+		return(List<Map<String,Object>>)selectList("help.qnaList", map); 
 	}
 	
 //	작성
 	public void qnaWrite(Map<String, Object> map) throws Exception {
 		
-		insert("qna.qnaWrite", map);
+		insert("help.qnaWrite", map);
 	}
 	
 //	수정
 	public void qnaUpdate(Map<String, Object> map) throws Exception {
 		
-		update("qna.qnaUpdate", map);
+		update("help.qnaUpdate", map);
 	}
 	
 //	삭제
 	public void qnaDelete(Map<String, Object> map) throws Exception {
 		
-		update("qna.qnaDelete", map);
+		update("help.qnaDelete", map);
 	}
 }

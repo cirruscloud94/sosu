@@ -26,6 +26,10 @@
 	<input type="hidden" name="listType" value="adminStopMemberList">
 	<input type="submit" value="정지당한 회원 리스트">
 </form>
+<form action="/admin/help.sosu">
+	<input type="hidden" name="listType" value="adminStopMemberList">
+	<input type="submit" value="고객센터 관리">
+</form>
 
 <table>
 	<thead>

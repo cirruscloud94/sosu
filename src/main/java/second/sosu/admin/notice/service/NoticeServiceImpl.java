@@ -19,12 +19,12 @@ public class NoticeServiceImpl implements NoticeService{
 	@Resource(name = "noticeDAO")
 	private NoticeDAO noticeDAO;
 	
-	//리뷰 페이징 리스트
+	
 	@Override 
 	public List<Map<String,Object>>noticeList(Map<String, Object> map) throws Exception {
 		
 		return noticeDAO.noticeList(map);
-	  }
+	}
 
 	@Override
 	public void noticeWrite(Map<String, Object> map, HttpSession session) throws Exception {

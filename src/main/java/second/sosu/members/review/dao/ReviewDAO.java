@@ -9,13 +9,8 @@ import second.sosu.common.dao.AbstractDAO;
 
 @Repository("reviewDAO")
 public class ReviewDAO extends AbstractDAO {
-	
-//	@SuppressWarnings("unchecked") 
-//	public Map<String,Object>selectReview(Map<String, Object> map) throws Exception {
-//		
-//		return(Map<String, Object>)selectPagingList("review.selectMyReview", map); 
-//	}
-//	
+
+//	리뷰 리스트
 	@SuppressWarnings("unchecked") 
 	public List<Map<String, Object>> selectAllReview(Map<String, Object> map) throws Exception {
 		
@@ -35,10 +30,20 @@ public class ReviewDAO extends AbstractDAO {
 		insert("review.insertReview", map);
 	}
 	
+//	리뷰 사진 파일 등록
+	public void insertPhotoReview(Map<String, Object> map) throws Exception {
+		insert("review.insertPhotoReview", map);
+	}
+	
 //	리뷰 수정
 	public void updateReview(Map<String, Object> map) throws Exception {
 		
 		update("review.updateReview", map);
+	}
+	
+//	리뷰 사진 파일 수정
+	public void updatePhotoReview(Map<String, Object> map) throws Exception {
+		update("review.updatePhotoReview", map);
 	}
 	
 //	리뷰 삭제
@@ -46,5 +51,7 @@ public class ReviewDAO extends AbstractDAO {
 		
 		update("review.deleteReview", map);
 	}
+	
+
 
 }

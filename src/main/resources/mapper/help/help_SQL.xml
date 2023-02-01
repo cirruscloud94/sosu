@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="help">
+
+   	<!-- 공지사항 상세보기 -->   
+   	<select id="noticeList" resultType="hashmap" parameterType="hashmap">
+   		SELECT 
+        		*
+		FROM 
+		        NOTICE
+		WHERE 
+		        N_DEL_YN = 'N'
+   	</select>
+   	
+    <!-- 공지사항 작성하기 -->
+    <insert id="noticeWrite" parameterType="hashmap">
+    	
+    	INSERT INTO NOTICE
+        (
+		      	 N_IDX,
+				 N_TITLE,
+				 N_CONTENT,
+				 N_REGDATE,
+				 N_DEL_YN
+        )
+      	VALUES
+      	(
+		         N_IDX.NEXTVAL,
+		         #{N_TITLE}, 
+		         #{N_CONTENT},
+		         sysdate,
+		         'N',
+      	)
+   
+    </insert>
+   
+    <!-- 공지사항 수정하기 -->
+    <update id="noticeUpdate" parameterType="hashmap">
+    	
+    	UPDATE 
+    			NOTICE
+      	SET 
+	            N_TITLE = #{N_TITLE},
+	            N_CONTENT = #{N_CONTENT},
+	            N_REGDATE = sysdate
+     	WHERE 
+            	N_IDX = #{N_IDX}
+      	AND
+      			N_DEL_YN = 'N' 
+   				<!-- 회원번호 받아야함 -->
+    </update>
+    
+    <!-- 공지사항 삭제하기 -->
+    <update id="noticeDelete" parameterType="hashmap">
+    
+    	UPDATE 
+    			NOTICE
+      	SET 
+	            N_DEL_YN = 'Y',
+	            N_REGDATE = sysdate
+      	WHERE 
+            	N_IDX = #{N_IDX}
+      	AND
+      			N_DEL_YN = 'N' 
+      			<!-- 회원번호 받아야함 -->
+    </update>
+    
+    <!-- QnA 상세보기 -->   
+   	<select id="qnaList" resultType="hashmap" parameterType="hashmap">
+   		SELECT 
+		        *
+		FROM 
+		        QNA
+		WHERE 
+		        Q_DEL_YN = 'N'
+   	</select>
+   	
+    <!-- QnA 작성하기 -->
+    <insert id="qnaWrite" parameterType="hashmap">
+    	
+    	INSERT INTO QNA
+        (
+		      	 Q_IDX,
+				 M_IDX,
+				 Q_TITLE,
+				 Q_CONTENT,
+				 Q_REGDATE,
+				 Q_PRIVATE,
+				 Q_DEL_YN
+        )
+      	VALUES
+      	(
+		         Q_IDX.NEXTVAL,
+		         #{M_IDX}, 
+		         #{Q_TITLE},
+		         #{Q_CONTENT},
+		         sysdate,
+		         #{Q_PRIVATE},
+		         'N'
+      	)
+   
+    </insert>
+   
+    <!-- QnA 수정하기 -->
+    <update id="qnaUpdate" parameterType="hashmap">
+    	
+    	UPDATE 
+    			QNA
+      	SET 
+	            Q_TITLE = #{Q_TITLE},
+	            Q_CONTENT = #{Q_CONTENT},
+	            Q_REGDATE = sysdate,
+	            Q_PRIVATE = #{Q_PRIVATE}
+     	WHERE 
+            	Q_IDX = #{Q_IDX}
+      	AND 
+            	M_IDX = #{M_IDX}
+      	AND      
+            	Q_DEL_YN = 'N'
+   
+    </update>
+    
+    <!-- QnA 삭제하기 -->
+    <update id="qnaDelete" parameterType="hashmap">
+    
+    	UPDATE 
+    			QNA
+      	SET 
+	            Q_DEL_YN = 'Y',
+	            Q_REGDATE = sysdate
+      	WHERE 
+            	Q_IDX = #{Q_IDX}
+      	AND 
+            	M_IDX = #{M_IDX}
+        AND
+        		Q_DEL_YN = 'N'
+      
+    </update>
+
+</mapper>
