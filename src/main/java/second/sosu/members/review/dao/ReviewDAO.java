@@ -17,11 +17,18 @@ public class ReviewDAO extends AbstractDAO {
 		return(List<Map<String, Object>>)selectList("review.selectAllReview", map); 
 	}
 	
-//	리뷰 상세보기
+//	리뷰 상세보기 리스트
 	@SuppressWarnings("unchecked") 
 	public Map<String, Object> reviewDetail(Map<String, Object> map) throws Exception {
 		
 		return (Map<String, Object>)selectOne("review.reviewDetail", map);
+	}
+	
+//	리뷰 후기 개수
+	@SuppressWarnings("unchecked") 
+	public Map<String, Object> selectAllReviewCount(Map<String, Object> map) throws Exception {
+		
+		return (Map<String, Object>)selectOne("review.selectAllReviewCount", map);
 	}
 	
 //	리뷰 작성

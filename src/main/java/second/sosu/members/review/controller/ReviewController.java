@@ -24,7 +24,7 @@ public class ReviewController {
 	@Resource(name="reviewService")
 	private ReviewService reviewService;
 	
-	/** 리뷰 상세보기
+	/** 리뷰 상세보기 리스트
 	 * 
 	 * @param commandMap
 	 * @return
@@ -43,9 +43,13 @@ public class ReviewController {
 		
 		mv.setViewName("members/review/reviewDetail");
 		
-		Map<String, Object> map = reviewService.reviewDetail(commandMap.getMap());
+		List<Map<String, Object>> list = reviewService.selectAllReview(commandMap.getMap());
 		
-		mv.addObject("detail", map);
+		Map<String, Object> map = reviewService.selectAllReviewCount(commandMap.getMap());
+		
+		mv.addObject("detailList", list);
+		
+		mv.addObject("review_count", map);
 		
 		return mv;
 	}

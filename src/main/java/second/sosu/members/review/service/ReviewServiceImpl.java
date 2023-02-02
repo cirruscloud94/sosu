@@ -38,6 +38,12 @@ public class ReviewServiceImpl implements ReviewService{
 		
 		return reviewDAO.reviewDetail(map);
 	}
+	
+//	리뷰 상세보기 후기 개수
+public Map<String, Object> selectAllReviewCount(Map<String, Object> map) throws Exception {
+		
+		return reviewDAO.selectAllReviewCount(map);
+	}
 
 //	리뷰 작성
 	@Override

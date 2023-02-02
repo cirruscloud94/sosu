@@ -8,6 +8,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui" %>
 
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+
 <link href="/resources/css/main.css" rel="stylesheet">
 
 <div style="height: 90px;"

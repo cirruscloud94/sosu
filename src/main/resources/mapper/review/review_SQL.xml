@@ -102,7 +102,47 @@
                 F.F_REG_DATE DESC
     ]]>  
     </select>
-   
+    
+    <!-- 후기 전체보기에서 후기 개수와 별점 평균 -->
+    <select id="selectAllReviewCount" parameterType="hashmap" resultType="hashmap">
+   	<![CDATA[
+   		SELECT 
+    			COUNT(*) RVC, ROUND(AVG(RV_STAR), 0) AVGSP
+        FROM 
+        (
+        		SELECT 
+		        		R.*, 
+		        		NVL(F.F_SVNAME, 0) AS RF_SVNAME, 
+		        		MO.MO_TITLE, 
+		        		M.*
+        		FROM 
+		        		REVIEW R, 
+		        		FILE_T F, 
+		        		MOIM MO, 
+		        		MEMBER M
+		        WHERE
+		        		F.F_TABLE(+) = 'R'
+		        AND 
+		        		F.F_MAIN_YN(+) = 'Y'
+		        AND 
+		        		F.F_ARTICLE(+) = R.RV_IDX
+		        AND 
+		        		F.F_DEL_YN(+) = 'N'
+		        AND 
+		        		R.RV_DEL_YN(+) = 'N'
+		        AND 
+		        		R.MO_IDX = MO.MO_IDX 
+		        AND 
+		        		M.M_IDX = R.M_IDX
+		        AND 
+		        		MO.MO_CATEGORY = 'outdoor'
+		        ORDER BY 
+		                F.F_REG_DATE DESC
+        ) 
+        		REVIEW
+   	]]>
+    </select>
+    
     <!-- 좋아요 수 -->
     <select id="reviewZzimCount" parameterType="hashmap" resultType="hashmap">
    

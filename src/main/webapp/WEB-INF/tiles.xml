@@ -14,17 +14,19 @@
 		<put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
 	</definition>
 	
-	
-<!-- 	<definition name="goods/*" extends="main_layout">
-		<put-attribute name="body" value="/WEB-INF/views/goods/{1}.jsp"/>
+	<definition name="mainlist" extends="main_layout">
+		<put-attribute name="body" value="/WEB-INF/views/mainlist.jsp"/>
 	</definition>
 	
+ 	<definition name="members/review/*" extends="main_layout">
+		<put-attribute name="body" value="/WEB-INF/views/members/review/{1}.jsp"/>
+	</definition> 
 	
-	<definition name="member/*" extends="main_layout">
-		<put-attribute name="body" value="/WEB-INF/views/member/{1}.jsp"/>
+	<definition name="members/mypage/*" extends="main_layout">
+		<put-attribute name="body" value="/WEB-INF/views/members/mypage/{1}.jsp"/>
 	</definition>
 	
-	
+<!--	
    <definition name="notice/*" extends="main_layout">
       <put-attribute name="body" value="/WEB-INF/views/notice/{1}.jsp"/>
    </definition>
@@ -45,21 +47,12 @@
 		<put-attribute name="body" value="/WEB-INF/views/popupView/{1}.jsp"/>
 	</definition>
 	
-
-	
-	
-	
-
-
-	
 	  관리자 페이지
    <definition name="admin_layout" template="/WEB-INF/views/layout/layout.jsp">
       <put-attribute name="header" value="/WEB-INF/views/layout/admin_header.jsp" />
       <put-attribute name="body" value="/WEB-INF/views/admin_main.jsp" />
       <put-attribute name="footer" value="/WEB-INF/views/layout/footer.jsp" />
    </definition>
-   
-   
    
  	admin 
    <definition name="admin/*" extends="admin_layout">
@@ -73,7 +66,5 @@
     <!-- <definition name="admin/goods/*" extends="admin_layout">
       <put-attribute name="body" value="/WEB-INF/views/admin/goods/{1}.jsp"/>
    </definition> -->
-  
-
 	
 </tiles-definitions>
