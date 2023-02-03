@@ -5,6 +5,7 @@
 
 <link href="/resources/css/detail.css" rel="stylesheet">
 <script defer type="text/javascript" src="/resources/js/moimDetail.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
 <body>
 <%   //개행을 위한..(구현X)

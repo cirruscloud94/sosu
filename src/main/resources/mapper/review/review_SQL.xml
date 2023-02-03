@@ -107,7 +107,7 @@
     <select id="selectAllReviewCount" parameterType="hashmap" resultType="hashmap">
    	<![CDATA[
    		SELECT 
-    			COUNT(*) RVC, ROUND(AVG(RV_STAR), 0) AVGSP
+    			COUNT(*) RVC, TO_CHAR(AVG(RV_STAR), 'FM9.0') AVGSP
         FROM 
         (
         		SELECT 

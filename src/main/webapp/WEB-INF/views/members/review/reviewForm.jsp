@@ -12,7 +12,6 @@
 			<h1>리뷰 작성하기</h1>
 			
 			<fieldset>
-			    <legend>별점을 선택해주세요</legend>
 			    <input type="radio" name="RV_STAR" value="5" id="rate1"><label for="rate1">⭐</label>
 			    <input type="radio" name="RV_STAR" value="4" id="rate2"><label for="rate2">⭐</label>
 			    <input type="radio" name="RV_STAR" value="3" id="rate3"><label for="rate3">⭐</label>
@@ -30,6 +29,8 @@
 			<input type="hidden" name="M_IDX" value="${M_IDX}">
 			<!-- 모임번호 --> 
 			<input type="hidden" name="MO_IDX" value="${MO_IDX}">
+			<!-- 모임 제목 -->
+			<input type="hidden" name="MO_TITLE" value="${MO_TITLE}">
 			
 			<input type="file" id="review_file" accept="image/jpeg, image/png, image/jpg"> <!-- accept로 이미지파일 확장자 제한 가능 -->
 			

@@ -92,6 +92,12 @@ public class ReviewController {
 		
 		mv.setViewName("members/review/reviewForm");
 		
+		String MO_IDX = (String)commandMap.get("MO_IDX");
+		String MO_TITLE = (String)commandMap.get("MO_TITLE");
+		
+		mv.addObject("MO_IDX", MO_IDX);
+		mv.addObject("MO_TITLE", MO_TITLE);
+		
 		return mv;
 	}
 	

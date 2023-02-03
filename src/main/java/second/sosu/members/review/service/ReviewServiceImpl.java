@@ -24,7 +24,7 @@ public class ReviewServiceImpl implements ReviewService{
 	
 	@Resource(name="fileUtils")
 	private FileUtils fileUtils;
-
+	
 //	리뷰 전체 보기
 	@Override 
 	public List<Map<String, Object>> selectAllReview(Map<String, Object> map) throws Exception {
@@ -40,7 +40,7 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 	
 //	리뷰 상세보기 후기 개수
-public Map<String, Object> selectAllReviewCount(Map<String, Object> map) throws Exception {
+	public Map<String, Object> selectAllReviewCount(Map<String, Object> map) throws Exception {
 		
 		return reviewDAO.selectAllReviewCount(map);
 	}

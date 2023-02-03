@@ -10,66 +10,11 @@
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script defer type="text/javascript" src="/resources/js/mypage.js"></script>
+<script src="/resources/js/common.js"></script>
 <link href="/resources/css/mypage.css" rel="stylesheet">
 <link href="/resources/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="/resources/assets/vendor/aos/aos.css" rel="stylesheet">
 <link href="/resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-<script>
-
-$(document).ready(function(){
-	$("input:checkbox[id='delZzim1']").on('click', function(){
-		var delZzimMoim_parent = $(this).parent("#parent");
-		var delZzimMoim_checkVal = delZzimMoim_parent.find("#delZzim1").val();
-		var delZzimMoim_list = [];
-		var $checked = $("input#delZzim1[type=checkbox]:checked");
-	      $.each($checked, function(k, v){
-	         delZzimMoim_list.push($(this).val());
-	      });
-	      console.log(delZzimMoim_list);
-
-	    /*   $.ajax({
-		         type : "POST",
-		         url : "/members/deletezzim.sosu",
-		         contentType: "application/json",
-		            data : JSON.stringify({
-		               ZzimBox : delZzimMoim_list
-		            }),
-		            dataType:'json'
-			}) */
-		
-	})
-})
-
-//내가 찜한 자유게시판 삭제
-$(document).ready(function(){
-	$("input:checkbox[id='delZzim2']").on('click', function(){
-		var delZzimFree_parent = $(this).parent("#hihi");
-		var delZzimFree_check = delZzimFree_parent.find("#delZzim2").val();
-		if($("input:checkbox[id='delZzim2']").is(":checked")==true){
-		      $.ajax({
-		         type : "POST",
-		         url : "/members/deletezzim.sosu",
-		         contentType: "application/json",
-		            data : JSON.stringify({
-		               Z_IDX : delZzimFree_check
-		            }),
-		            dataType:'json'
-		      })
-		   }else{
-			   return false;
-		   }
-	})
-})
-
-
-   
-		
-   
-
-</script>
-
-
 </head>
 <body>
 
@@ -105,7 +50,6 @@ $(document).ready(function(){
    
    
    <form action="/members/mypage.sosu" method="get">
-      <div class="pro_sec">
       <input type="hidden" id="category" class="mypageCategory" name="mypageCategory" value="">
       <input type="hidden" id="review" name="selectReview" value="">
       <input type="hidden" id="zzim" name="selectZzim" value="">
@@ -130,13 +74,12 @@ $(document).ready(function(){
       <button type="submit" <c:if test="${mypageCategory eq '4'}">class="btn-mypage on"</c:if>
       <c:if test="${mypageCategory ne '4'}">class="btn-mypage"</c:if>
        id="check4">${zzimA + zzimB} <br/> 스크랩</button>
-      </div>
    
    
    <c:if test="${mypageCategory eq '1' }">
-      <section id="1">
-      <div class="container" style="width:900px; margin-top: 5%;">
-      <div class="row gy-5" style="width:900px;">
+      <section id="1" class="pro_sec">
+      <div class="container" >
+      <div class="row gy-5">
          
             <c:forEach begin="0" end="${fn:length(mypageInfo[3])}" items="${mypageInfo[3]}" var="mypage">
             <div class="col-lg-3 menu-item">
@@ -144,82 +87,94 @@ $(document).ready(function(){
             <a onclick= "location.href='/moim/${mypage.MO_CATEGORY}/${mypage.MO_IDX}.sosu'">
                <input type="hidden" name="MO_CATEGORY" value="${mypage.MO_CATEGORY}">
                <input type="hidden" name="MO_IDX" value="${mypage.MO_IDX}">
-               <img src="${pageContext.request.contextPath}/resources/img/icons/list.png" style="width: 200px; height: 200px; display:block">
+               <img src="${pageContext.request.contextPath}/resources/img/icons/list.png"
+				<c:if test="${mypage.MO_CLOSE_YN eq 'N' }"> class="moim-img"</c:if> 
+				<c:if test="${mypage.MO_CLOSE_YN eq 'Y' }"> class="moim-endimg"</c:if>> <!-- 모임 마감시 이미지 어둡게 처리 -->
             </a>
                <p class="detail-region">${mypage.MO_DETAILREGION }</p>
                <p class="moim-title">${mypage.MO_TITLE}
                <span class="moim-people">[${mypage.MOIMMEMBER} / ${mypage.MO_MAXPEOPLE }]
                <span class="detail-cate"> # ${mypage.MO_DETAILCATEGORY }</span></span></p>
                <hr class="hrhr">
-               <p class="mo-cost"> ${mypage.MO_COST }
+               <p class="mo-cost"> <fmt:formatNumber type="number" maxFractionDigits="3" value="${mypage.MO_COST }" />￦
             </div>
             </div>
             </c:forEach>
-         
          </div>
    </div>
    </section>
    </c:if>
    
    
-   
    <c:if test="${mypageCategory eq '2' }">
-   <div class="pro_sec">
-   <p style="font-size: 15px; float: right; margin-top: 30px;">비공개
-      <label class="switch-button" style="position: relative; display: inline-block; width: 54px; height: 30px; left: 2px; bottom: 12px; vertical-align: sub;">
+   <section id="2" class="pro_sec">
+   <div class="container" >
+   <p>비공개 처리
+      <label class="switch-button" >
          <input type="checkbox" onclick="checkReview()" id="private1" value="1" <c:if test="${privateCheck eq '1' || privateCheck eq '2'}">checked</c:if>>
       <span class="onoff-switch"></span>
    </label></p>
-   </div>
-   <section id="2">
-   <div class="container" style="width:900px; margin-top: 5%;">
-   <div class="row gy-5" style="width:900px;">
    
+   
+   <div class="row gy-5">
       <c:forEach begin="0" end="${fn:length(mypageInfo[4])}" items="${mypageInfo[4]}" var="mypage">
       <div class="col-lg-3 menu-item">
       <div class="row gy-5">
       <a onclick= "location.href='/moim/${mypage.MO_CATEGORY}/${mypage.MO_IDX}.sosu'">
-         <input type="hidden" name="MO_CATEGORY" value="${mypage.MO_CATEGORY}">
-            <input type="hidden" name="MO_IDX" value="${mypage.MO_IDX}">
-            <img src="${pageContext.request.contextPath}/resources/img/icons/list.png" style="width: 200px; height: 200px; display:block">
-      </a>
-     
+		<input type="hidden" name="MO_CATEGORY" value="${mypage.MO_CATEGORY}">
+       	<input type="hidden" name="MO_IDX" value="${mypage.MO_IDX}">
+		<img src="${pageContext.request.contextPath}/resources/img/icons/list.png"
+			<c:if test="${mypage.MO_CLOSE_YN eq 'N' }"> class="moim-img"</c:if> 
+			<c:if test="${mypage.MO_CLOSE_YN eq 'Y' }"> class="moim-endimg"</c:if>> <!-- 모임 마감시 이미지 어둡게 처리 -->
+	</a>
          <p class="detail-region">${mypage.MO_DETAILREGION }</p> 
          <p class="moim-title">${mypage.MO_TITLE}
+         <input type="hidden" name="MO_TITLE" value="${mypage.MO_TITLE}">
          <span class="moim-people">[${mypage.MOIMMEMBER} / ${mypage.MO_MAXPEOPLE }]
          <span class="detail-cate"> # ${mypage.MO_DETAILCATEGORY }</span></span></p>
          <hr class="hrhr">
-         <p class="mo-cost"> ${mypage.MO_COST }
+          <p class="mo-cost"> <fmt:formatNumber type="number" maxFractionDigits="3" value="${mypage.MO_COST }" />￦
+          
+          <!-- 리뷰쪽에서 고칠부분들 -->
+		<c:if test="${mypage.MO_CLOSE_YN eq 'Y' }">
+			<a href="/members/reviewForm.sosu" class="use_move" onclick="move(this, 'in', 'MO_IDX', 'MO_TITLE')">
+			🗨리뷰 작성하기
+				<input type="hidden" name="MO_IDX" value="${mypage.MO_IDX}">
+				<input type="hidden" name="MO_TITLE" value="${mypage.MO_TITLE}">
+			</a>
+		</c:if> <!-- 모임 마감시 이미지 어둡게 처리 -->
       </div>
       </div>
       </c:forEach>
-   
    </div>
    </div>
    </section>
    </c:if>
    
+   <!-- 리뷰 카테고리 -->
    <c:if test="${mypageCategory eq '3' }">
-   <section id="3"><br/>
-   
+   <section id="3" class="pro_sec">
       <button type="submit" <c:if test="${selectReview eq '5'}">class="btn-review on"</c:if>
          <c:if test="${selectReview ne '5'}">class="btn-review"</c:if>
       id="check5">내가 남긴 리뷰 (${fn:length(mypageInfo[5])})</button>
    <button type="submit" <c:if test="${selectReview eq '6'}">class="btn-review on"</c:if>
          <c:if test="${selectReview ne '6'}">class="btn-review"</c:if>
-      id="check6">내가 남긴 리뷰 (${fn:length(mypageInfo[6])})</button>      
-   
-      <div class="container" style="width:900px; margin-top: 2%;">
+      id="check6">나에게 남긴 리뷰 (${fn:length(mypageInfo[6])})</button>      
+    </section>
+    
+    <c:if test="${selectReview eq '5' }">
+    <section id="4" class="pro_sec">
+      <div class="container">
          <div class="row gy-5">
-            <c:if test="${selectReview eq '5' }">
                <c:forEach begin="0" end="${fn:length(mypageInfo[5])}" items="${mypageInfo[5]}" var="mypage">
                   <div class="col-lg-3 menu-item">
                   <div class="row gy-5">
-                     <img src="${pageContext.request.contextPath}/resources/img/icons/list.png" style="width: 200px; height: 200px; display:block">
-                     <p class="rezimm-title">${mypage.MO_TITLE}<span class="moim-date">
-                     <fmt:formatDate value="${mypage.MO_REGDATE}" pattern="yyyy-MM-dd"/></span></p>
-                     <hr class="hrhr" style="width:200px;">
-                     <p class="review-star" style="color: #ffc81e;text-align: left;margin-top: -10px;">
+                     <img src="${pageContext.request.contextPath}/resources/img/icons/list.png" class="moim-img">
+                     <p class="rezimm-title">${mypage.MO_TITLE}
+                     <span class="moim-date"><fmt:formatDate value="${mypage.MO_REGDATE}" pattern="yyyy-MM-dd"/>
+                     </span></p>
+                     <hr class="hrhr">
+                     <p class="review-star" >
                         <c:if test="${mypage.RV_STAR eq 1}"><c:out value="★☆☆☆☆"/></c:if> 
                         <c:if test="${mypage.RV_STAR eq 2}"><c:out value="★★☆☆☆" /></c:if> 
                         <c:if test="${mypage.RV_STAR eq 3}"><c:out value="★★★☆☆" /></c:if> 
@@ -229,17 +184,24 @@ $(document).ready(function(){
                   </div>
                   </div>
                </c:forEach>
+               </div>
+               </div>
+            </section>
             </c:if>
-      
-            <c:if test="${selectReview eq '6' }">   
+            
+            <c:if test="${selectReview eq '6' }">  
+            <section id="5" class="pro_sec">
+				<div class="container">
+         			<div class="row gy-5">      
                <c:forEach begin="0" end="${fn:length(mypageInfo[6])}" items="${mypageInfo[6]}" var="mypage">
                   <div class="col-lg-3 menu-item">
                   <div class="row gy-5">
-                     <img src="${pageContext.request.contextPath}/resources/img/icons/list.png" style="width: 200px; height: 200px; display:block">
-                     <p class="rezimm-title">${mypage.MO_TITLE}<span class="moim-date">
-                     <fmt:formatDate value="${mypage.MO_REGDATE}" pattern="yyyy-MM-dd"/></span></p>
-                     <hr class="hrhr" style="width:200px;">
-                     <p class="review-star" style="color: #ffc81e;text-align: left;margin-top: -10px;">
+                     <img src="${pageContext.request.contextPath}/resources/img/icons/list.png" class="moim-img">
+                     <p class="rezimm-title">${mypage.MO_TITLE}
+                     <span class="moim-date"><fmt:formatDate value="${mypage.MO_REGDATE}" pattern="yyyy-MM-dd"/>
+                     </span></p>
+                     <hr class="hrhr">
+                     <p class="review-star">
                         <c:if test="${mypage.RV_STAR eq 1}"><c:out value="★☆☆☆☆"/></c:if> 
                         <c:if test="${mypage.RV_STAR eq 2}"><c:out value="★★☆☆☆" /></c:if> 
                         <c:if test="${mypage.RV_STAR eq 3}"><c:out value="★★★☆☆" /></c:if> 
@@ -249,15 +211,23 @@ $(document).ready(function(){
                   </div>
                   </div>
                </c:forEach>
-            </c:if>
          </div>
       </div>
-   </section>
+      </section>
+      </c:if>
    </c:if>
    
-   
-      <c:if test="${mypageCategory eq '4' }">
-      <section id="4"><br/>
+   <!-- 찜 카테고리 -->
+	<c:if test="${mypageCategory eq '4' }">
+	<section id="6" class="pro_sec">
+         <p >비공개 처리
+         <label class="switch-button">
+           <input type="checkbox" onclick="checkZzim()" id="private2" value="1" <c:if test="${privateCheck eq '1' || privateCheck eq '3'}">checked</c:if>>
+            <span class="onoff-switch"></span>
+         </label></p>
+	</section>
+	
+		<section id="7" class="pro_sec">
    <button type="submit" <c:if test="${selectZzim eq '7'}">class="btn-review on"</c:if>
          <c:if test="${selectZzim ne '7'}">class="btn-review"</c:if>
       id="check7">내가 찜한 모임 (${fn:length(mypageInfo[7]) })</button>      
@@ -265,68 +235,83 @@ $(document).ready(function(){
    <button type="submit" <c:if test="${selectZzim eq '8'}">class="btn-review on"</c:if>
          <c:if test="${selectZzim ne '8'}">class="btn-review"</c:if>
       id="check8">내가 찜한 자유게시판 (${fn:length(mypageInfo[8]) })</button>      
+   	</section>
+
    
-      <div class="pro_sec">
-         <p style="font-size: 15px; float: right; margin-top: 30px;">비공개
-         <label class="switch-button" style="position: relative; display: inline-block; width: 54px; height: 30px; left: 2px; bottom: 12px; vertical-align: sub;">
-           <input type="checkbox" onclick="checkZzim()" id="private2" value="1" <c:if test="${privateCheck eq '1' || privateCheck eq '3'}">checked</c:if>>
-            <span class="onoff-switch"></span>
-         </label></p>
-      </div>
-   
-   <div class="container" style="width:900px; margin-top: 5%;">
-      <div class="row gy-5" style="width:900px;" id="zzimFreeDiv">
-         <c:if test="${selectZzim eq '7' }">
+   <c:if test="${selectZzim eq '7' }">
+   <section id="8" class="pro_sec">
+   <div class="container" >
+      <div class="row gy-5" >
             <c:forEach begin="0" end="${fn:length(mypageInfo[7])}" items="${mypageInfo[7]}" var="mypage">
                <div class="col-lg-3 menu-item">
                <div class="row gy-5" id="zzimMoim">
                <a onclick= "location.href='/moim/${mypage.MO_CATEGORY}/${mypage.MO_IDX}.sosu'">
-                  <input type="hidden" name="MO_CATEGORY" value="${mypage.MO_CATEGORY}">
-                     <input type="hidden" name="MO_IDX" value="${mypage.MO_IDX}">
-                     <img src="${pageContext.request.contextPath}/resources/img/icons/list.png" style="width: 200px; height: 200px; display:block">
+               <input type="hidden" name="MO_CATEGORY" value="${mypage.MO_CATEGORY}">
+				<input type="hidden" name="MO_IDX" value="${mypage.MO_IDX}">
+				<img src="${pageContext.request.contextPath}/resources/img/icons/list.png" class="moim-img">
                </a>
                 
                   <p class="detail-region">${mypage.MO_DETAILREGION }</p>
                   <p class="moim-title">${mypage.MO_TITLE}
                   <span class="moim-people">[${mypage.MOIMMEMBER} / ${mypage.MO_MAXPEOPLE }]
                   <span class="detail-cate" > # ${mypage.MO_DETAILCATEGORY }</span></span></p>
-                  <hr class="hrhr" style="width:200px; margin-top: 0px;">
-                  <p class="mo-cost"> ${mypage.MO_COST }
-                  <div id="parent">
-                  <input type="checkbox" id="delZzim1" value="${mypage.Z_IDX}" >
-                  </div>
+                  <hr class="hrhr">
+                  <p class="mo-cost" style="margin-top:10px"> 
+                  <fmt:formatNumber type="number" maxFractionDigits="3" value="${mypage.MO_COST }" />￦
+                   
+                   <span id="parent" class="parent">
+                   <input type=hidden value="${mypage.Z_IDX}" id="zIDX">
+                   <input type="hidden" value="N" id="zDelYN">
+						<c:if test="${mypage.Z_DEL_YN eq 'N'}"> 
+         				<input type="button" id="delZzim1" name="Z_IDX" value="♥" class="heart"></c:if>
+         				 
+         				<c:if test="${memberDetail[0].Z_DEL_YN eq 'Y'}"> 
+         				<input type="button" id="delZzim1" name="Z_IDX" value="♡" class="heart"></c:if>
+                  	</span>
                </div>
                </div>
             </c:forEach>
-         </c:if>   
+            </div>
+       </div>
+      </section>
+        </c:if>   
       
       
          <c:if test="${selectZzim eq '8' }">
-         
+          <section id="9" class="pro_sec">
+          <div class="container" >
+      <div class="row gy-5" >
             <c:forEach begin="0" end="${fn:length(mypageInfo[8])}" items="${mypageInfo[8]}" var="mypage">
                <div class="col-lg-3 menu-item">
                <div class="row gy-5" >
-                  <img src="${pageContext.request.contextPath}/resources/img/icons/list.png" style="width: 200px; height: 200px; display:block">
+                  <img src="${pageContext.request.contextPath}/resources/img/icons/list.png" class="moim-img">
                   
-                  <p class="moim-title" style="margin-top: 10px;">
+                  <p class="zzimWriter">
                   <span>
-                  <img class="img-pro-free" src="${pageContext.request.contextPath}/resources/img/upload/${mypage.PROFILE}"></span>
+                  <img class="img-pro-free" src="${pageContext.request.contextPath}/resources/img/upload/${mypage.PROFILE}">
+                  </span>
                   &nbsp;${mypage.FR_WRITER}</p>
-                  <p class="moim-title"> ${mypage.FR_TITLE }</p>
-                  <hr class="hrhr" style="width:200px; margin-top: 0px;">
-                  <div id="parent">
-                  <input type="checkbox" id="delZzim2" value="${mypage.Z_IDX}" >
-                  <!-- <span class="hhh" style="text-align:right; width: 200px; margin-top:-19px;" >♥</span> -->
+                  <p class="zzimtitle"> ${mypage.FR_TITLE }</p>
+                  <hr class="hrhr">
+                  
+                  <div id="parent" class="parent">
+                   <input type=hidden value="${mypage.Z_IDX}" id="zIDX">
+                   <input type="hidden" value="N" id="zDelYN">
+                            <c:if test="${mypage.Z_DEL_YN eq 'N'}"> 
+         					<input type="button" id="delZzim2" name="Z_IDX" value="♥" class="heart"></c:if>
+         					<c:if test="${memberDetail[0].Z_DEL_YN eq 'Y'}"> 
+         					<input type="button" id="delZzim2" name="Z_IDX" value="♡" class="heart"></c:if>
                   </div>
                </div>
                </div>
             </c:forEach>
-         </c:if>
-      </div>
-   </div>
-   </section>
+            </div>
+            </div>
+            </section>
+            </c:if>
    </c:if>
-   
    </form>
+   
+</div>
+<a href="/main.sosu">메인으로</a>
 </body>
-</html>
