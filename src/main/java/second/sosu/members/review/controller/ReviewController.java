@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -86,7 +87,7 @@ public class ReviewController {
 	 * @author seungju han
 	 */
 	@GetMapping("/members/reviewForm.sosu")
-	public ModelAndView reviewForm(CommandMap commandMap) throws Exception {
+	public ModelAndView reviewForm(CommandMap commandMap, HttpSession session) throws Exception {
 		
 		ModelAndView mv = new ModelAndView("/members/review/reviewForm");
 		

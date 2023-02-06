@@ -3,12 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script defer type="text/javascript" src="/resources/js/mypage.js"></script>
 <script src="/resources/js/common.js"></script>
 <link href="/resources/css/mypage.css" rel="stylesheet">
@@ -49,7 +48,7 @@
    </div>
    
    
-   <form action="/members/mypage.sosu" method="get">
+   <form action="/members/mypage.sosu" method="get" id="search">
       <input type="hidden" id="category" class="mypageCategory" name="mypageCategory" value="">
       <input type="hidden" id="review" name="selectReview" value="">
       <input type="hidden" id="zzim" name="selectZzim" value="">
@@ -74,7 +73,7 @@
       <button type="submit" <c:if test="${mypageCategory eq '4'}">class="btn-mypage on"</c:if>
       <c:if test="${mypageCategory ne '4'}">class="btn-mypage"</c:if>
        id="check4">${zzimA + zzimB} <br/> 스크랩</button>
-   
+   </form>
    
    <c:if test="${mypageCategory eq '1' }">
       <section id="1" class="pro_sec">
@@ -105,7 +104,6 @@
    </section>
    </c:if>
    
-   
    <c:if test="${mypageCategory eq '2' }">
    <section id="2" class="pro_sec">
    <div class="container" >
@@ -122,14 +120,13 @@
       <div class="row gy-5">
       <a onclick= "location.href='/moim/${mypage.MO_CATEGORY}/${mypage.MO_IDX}.sosu'">
 		<input type="hidden" name="MO_CATEGORY" value="${mypage.MO_CATEGORY}">
-       	<input type="hidden" name="MO_IDX" value="${mypage.MO_IDX}">
+		<input type="hidden" name="MO_IDX" value="${mypage.MO_IDX}">
 		<img src="${pageContext.request.contextPath}/resources/img/icons/list.png"
 			<c:if test="${mypage.MO_CLOSE_YN eq 'N' }"> class="moim-img"</c:if> 
 			<c:if test="${mypage.MO_CLOSE_YN eq 'Y' }"> class="moim-endimg"</c:if>> <!-- 모임 마감시 이미지 어둡게 처리 -->
 	</a>
          <p class="detail-region">${mypage.MO_DETAILREGION }</p> 
          <p class="moim-title">${mypage.MO_TITLE}
-         <input type="hidden" name="MO_TITLE" value="${mypage.MO_TITLE}">
          <span class="moim-people">[${mypage.MOIMMEMBER} / ${mypage.MO_MAXPEOPLE }]
          <span class="detail-cate"> # ${mypage.MO_DETAILCATEGORY }</span></span></p>
          <hr class="hrhr">
@@ -137,10 +134,11 @@
           
           <!-- 리뷰쪽에서 고칠부분들 -->
 		<c:if test="${mypage.MO_CLOSE_YN eq 'Y' }">
-			<a href="/members/reviewForm.sosu" class="use_move" onclick="move(this, 'in', 'MO_IDX', 'MO_TITLE')">
-			🗨리뷰 작성하기
-				<input type="hidden" name="MO_IDX" value="${mypage.MO_IDX}">
-				<input type="hidden" name="MO_TITLE" value="${mypage.MO_TITLE}">
+			<a href="/members/reviewForm.sosu" class="use_move" onclick="move(this, 'in', 'MO_IDX', 'MO_TITLE', 'M_IDX')">
+			리뷰 작성하기
+			<input type="hidden" name="MO_IDX" value="${mypage.MO_IDX}">
+			<input type="hidden" name="MO_TITLE" value="${mypage.MO_TITLE}">
+			<input type="hidden" name="M_IDX" value="${mypage.M_IDX}">
 			</a>
 		</c:if> <!-- 모임 마감시 이미지 어둡게 처리 -->
       </div>
@@ -310,7 +308,7 @@
             </section>
             </c:if>
    </c:if>
-   </form>
+   
    
 </div>
 <a href="/main.sosu">메인으로</a>
