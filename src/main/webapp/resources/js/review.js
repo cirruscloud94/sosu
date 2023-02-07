@@ -4,7 +4,7 @@ function check()
 {
     let title = document.querySelector("#rv_title").value; // 제목
     let contents = document.querySelector("#rv_content").value; //내용
-    let imgFile = document.querySelector("#review_file").value; //이미지 파일
+   // let imgFile = document.querySelector("#review_file").value; //이미지 파일
     let Category = $('#rate1');
 
     if($(':radio[name="RV_STAR"]:checked').length < 1)
@@ -28,11 +28,11 @@ function check()
         return false;
     }
 
-    if(imgFile == "" || imgFile == null)
-    {
-        alert("이미지를 등록해주세요!");
-        return false;
-    }
+    // if(imgFile == "" || imgFile == null)
+    // {
+    //     alert("이미지를 등록해주세요!");
+    //     return false;
+    // }
 }
 //=====================================================================//
 

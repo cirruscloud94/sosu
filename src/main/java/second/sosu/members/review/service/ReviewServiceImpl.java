@@ -27,9 +27,9 @@ public class ReviewServiceImpl implements ReviewService{
 	
 //	리뷰 전체 보기
 	@Override 
-	public List<Map<String, Object>> selectAllReview(Map<String, Object> map) throws Exception {
+	public List<Map<String, Object>> reviewList(Map<String, Object> map) throws Exception {
 		
-		return reviewDAO.selectAllReview(map);
+		return reviewDAO.reviewList(map);
 	}
 	
 //	리뷰 상세보기
@@ -40,9 +40,9 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 	
 //	리뷰 상세보기 후기 개수
-	public Map<String, Object> selectAllReviewCount(Map<String, Object> map) throws Exception {
+	public Map<String, Object> reviewAllListCount(Map<String, Object> map) throws Exception {
 		
-		return reviewDAO.selectAllReviewCount(map);
+		return reviewDAO.reviewAllListCount(map);
 	}
 
 //	리뷰 작성
@@ -51,12 +51,26 @@ public class ReviewServiceImpl implements ReviewService{
 		
 		reviewDAO.insertReview(map);
 	}
+	
+//	리뷰 사진파일 작성
+	@Override
+	public void insertPhotoReview(Map<String, Object> map) throws Exception {
+		
+		reviewDAO.insertPhotoReview(map);
+	}
 
 //	리뷰 수정
 	@Override
 	public void updateReview(Map<String, Object> map) throws Exception {
 		
 		reviewDAO.updateReview(map);
+	}
+	
+//	리뷰 사진파일 수정
+	@Override
+	public void updatePhotoReview(Map<String, Object> map) throws Exception {
+		
+		reviewDAO.updatePhotoReview(map);
 	}
 
 //	리뷰 삭제

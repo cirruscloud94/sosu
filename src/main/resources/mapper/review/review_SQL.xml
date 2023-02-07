@@ -3,7 +3,7 @@
 
 <mapper namespace="review">
 
-   	<!-- 모임리스트에서 리뷰 상세보기 보여주기 -->   
+   	<!-- 리뷰 상세보기 -->   
    	<select id="reviewDetail" resultType="hashmap" parameterType="hashmap">
    	<![CDATA[
    		SELECT 
@@ -36,46 +36,14 @@
     ]]>    
    	</select>
    	
-   	<!-- 모임리스트에서 리뷰 보여주기 -->
+   	<!-- 리뷰 전체 보기 -->
    	<select id="reviewList" resultType="hashmap" parameterType="hashmap">
    	<![CDATA[
    		SELECT 
-   				R.*, 
-   				NVL(F.F_SVNAME, 0) AS RF_SVNAME, 
-   				MO.MO_TITLE, 
-   				MO.MO_CATEGORY, 
-   				M.*
-        FROM 
-        		REVIEW R, 
-        		FILE_T F, 
-        		MOIM MO, 
-        		MEMBER M
-        WHERE
-        		F.F_TABLE(+) = 'R'
-        AND 
-        		F.F_MAIN_YN(+) = 'Y'
-        AND 
-        		F.F_ARTICLE(+) = R.RV_IDX
-        AND 
-        		F.F_DEL_YN(+) = 'N'
-        AND 
-        		R.RV_DEL_YN(+) = 'N'
-        AND 
-        		R.MO_IDX = MO.MO_IDX 
-        AND 
-        		M.M_IDX = R.M_IDX
-        AND 
-        		MO.MO_CATEGORY = #{MO_CATEGORY}
-    ]]>  
-   	</select>
-   
-    <!-- 후기 전체보기에서 리뷰 보여주기 -->
-    <select id="selectAllReview" resultType="hashmap" parameterType="hashmap">
-   	<![CDATA[
-        SELECT 
         		R.*, 
         		NVL(F.F_SVNAME, 0) AS RF_SVNAME, 
-        		MO.MO_TITLE, 
+        		MO.MO_TITLE,
+        		MO.MO_CATEGORY, 
         		M.*
         FROM 
         		REVIEW R, 
@@ -101,10 +69,10 @@
         ORDER BY 
                 F.F_REG_DATE DESC
     ]]>  
-    </select>
+   	</select>
     
-    <!-- 후기 전체보기에서 후기 개수와 별점 평균 -->
-    <select id="selectAllReviewCount" parameterType="hashmap" resultType="hashmap">
+    <!-- 리뷰 전체보기에서 리뷰 개수와 별점 평균 -->
+    <select id="reviewAllListCount" parameterType="hashmap" resultType="hashmap">
    	<![CDATA[
    		SELECT 
     			COUNT(*) RVC, TO_CHAR(AVG(RV_STAR), 'FM9.0') AVGSP
@@ -135,7 +103,7 @@
 		        AND 
 		        		M.M_IDX = R.M_IDX
 		        AND 
-		        		MO.MO_CATEGORY = 'outdoor'
+		        		MO.MO_CATEGORY = #{MO_CATEGORY}
 		        ORDER BY 
 		                F.F_REG_DATE DESC
         ) 

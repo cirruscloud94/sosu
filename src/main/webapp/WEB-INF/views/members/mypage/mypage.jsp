@@ -43,12 +43,12 @@
       <c:if test="${mypageInfo[2][0].STARINT eq 3}"><c:out value="★★★☆☆" /></c:if> 
       <c:if test="${mypageInfo[2][0].STARINT eq 4}"><c:out value="★★★★☆" /></c:if>
       <c:if test="${mypageInfo[2][0].STARINT eq 5}"><c:out value="★★★★★" /></c:if>
-      <span style="color:#212529">(${mypageInfo[1][0].STARFLOAT})</span>
+      <span style="color:#212529">${mypageInfo[1][0].STARFLOAT}</span>
       </p>
    </div>
    
    
-   <form action="/members/mypage.sosu" method="get" id="search">
+   <form action="/members/mypage.sosu" method="get">
       <input type="hidden" id="category" class="mypageCategory" name="mypageCategory" value="">
       <input type="hidden" id="review" name="selectReview" value="">
       <input type="hidden" id="zzim" name="selectZzim" value="">
@@ -124,7 +124,7 @@
 		<img src="${pageContext.request.contextPath}/resources/img/icons/list.png"
 			<c:if test="${mypage.MO_CLOSE_YN eq 'N' }"> class="moim-img"</c:if> 
 			<c:if test="${mypage.MO_CLOSE_YN eq 'Y' }"> class="moim-endimg"</c:if>> <!-- 모임 마감시 이미지 어둡게 처리 -->
-	</a>
+	  </a>
          <p class="detail-region">${mypage.MO_DETAILREGION }</p> 
          <p class="moim-title">${mypage.MO_TITLE}
          <span class="moim-people">[${mypage.MOIMMEMBER} / ${mypage.MO_MAXPEOPLE }]
@@ -132,15 +132,19 @@
          <hr class="hrhr">
           <p class="mo-cost"> <fmt:formatNumber type="number" maxFractionDigits="3" value="${mypage.MO_COST }" />￦
           
-          <!-- 리뷰쪽에서 고칠부분들 -->
-		<c:if test="${mypage.MO_CLOSE_YN eq 'Y' }">
-			<a href="/members/reviewForm.sosu" class="use_move" onclick="move(this, 'in', 'MO_IDX', 'MO_TITLE', 'M_IDX')">
-			리뷰 작성하기
+          <!-- 리뷰 작성하기 -->
+		<c:if test="${mypage.MO_CLOSE_YN eq 'Y' and mypage.RVCOUNT == 0}">
+		<form action="/members/reviewForm.sosu">
 			<input type="hidden" name="MO_IDX" value="${mypage.MO_IDX}">
 			<input type="hidden" name="MO_TITLE" value="${mypage.MO_TITLE}">
-			<input type="hidden" name="M_IDX" value="${mypage.M_IDX}">
-			</a>
+			<input type="hidden" name="M_IDX" value="${mypage.MEMIDX}">
+			<button type="submit">리뷰 작성하기</button>
+		</form>
 		</c:if> <!-- 모임 마감시 이미지 어둡게 처리 -->
+		<c:if test="${mypage.MO_CLOSE_YN eq 'Y' and mypage.RVCOUNT != 0}">
+		<input type="hidden" name="RVCOUNT" value="${mypage.RVCOUNT}">	
+		</c:if>
+		
       </div>
       </div>
       </c:forEach>
@@ -166,8 +170,13 @@
          <div class="row gy-5">
                <c:forEach begin="0" end="${fn:length(mypageInfo[5])}" items="${mypageInfo[5]}" var="mypage">
                   <div class="col-lg-3 menu-item">
+                  
                   <div class="row gy-5">
+                  <a onclick="location.href='/review/${mypage.MO_CATEGORY}/${mypage.RV_IDX}.sosu'">
                      <img src="${pageContext.request.contextPath}/resources/img/icons/list.png" class="moim-img">
+                     <input type="hidden" name="RV_IDX" value="${mypage.RV_IDX}">
+                     <input type="hidden" name="MO_CATEGORY" value="${mypage.MO_CATEGORY}">
+                  </a>
                      <p class="rezimm-title">${mypage.MO_TITLE}
                      <span class="moim-date"><fmt:formatDate value="${mypage.MO_REGDATE}" pattern="yyyy-MM-dd"/>
                      </span></p>
@@ -194,9 +203,21 @@
                <c:forEach begin="0" end="${fn:length(mypageInfo[6])}" items="${mypageInfo[6]}" var="mypage">
                   <div class="col-lg-3 menu-item">
                   <div class="row gy-5">
-                     <img src="${pageContext.request.contextPath}/resources/img/icons/list.png" class="moim-img">
-                     <p class="rezimm-title">${mypage.MO_TITLE}
-                     <span class="moim-date"><fmt:formatDate value="${mypage.MO_REGDATE}" pattern="yyyy-MM-dd"/>
+	                  <a onclick="location.href='/review/${mypage.MO_CATEGORY}/${mypage.RV_IDX}.sosu'">
+	                     <img src="${pageContext.request.contextPath}/resources/img/icons/list.png" class="moim-img">
+	                     <input type="hidden" name="RV_IDX" value="${mypage.RV_IDX}">
+	                     <input type="hidden" name="MO_CATEGORY" value="${mypage.MO_CATEGORY}">
+	                  </a>
+                     <c:if test="${fn:length(mypage.MO_TITLE) >= 5}">
+                      <p class="rezimm-title">${mypage.MO_TITLE}...
+                     </c:if>
+                     
+                     <c:if test="${fn:length(mypage.MO_TITLE) < 11}">
+                      <p class="rezimm-title">${mypage.MO_TITLE}
+                     </c:if>
+                     
+                     <span class="moim-date">
+                     <fmt:formatDate value="${mypage.MO_REGDATE}" pattern="yyyy-MM-dd"/>
                      </span></p>
                      <hr class="hrhr">
                      <p class="review-star">

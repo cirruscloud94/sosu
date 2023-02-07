@@ -9,7 +9,6 @@
 <script type="text/javascript">
 history.replaceState({}, null, location.pathname);
 </script>
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 
 </head>
 <body>
@@ -172,22 +171,25 @@ history.replaceState({}, null, location.pathname);
    </tbody>
    </table>
    
-         <button class="btn" type="submit" id="regB" >등록</button>
+         <button class="btn" type="submit" id="regB">등록</button>
          </form>
       </div>
 </body>
  
 <script type="text/javascript">
+//카테고리 값 넘기기
 $("#regB").on("click", function(e){
-	var mo_cate = $(".mo_cate option:selected").val();
-	$.ajax({
-		url : "moim/moimRegister.pro",
-		type : "post",
-		data : { MO_CATEGORY : mo_cate },
-		success : function(data){
-			}
-		});
-	});
+   var mo_cate = $(".mo_cate option:selected").val();
+
+   $.ajax({
+      url : "moim/moimRegister.pro",
+      type : "post",
+      data : { MO_CATEGORY : mo_cate },
+      success : function(data){
+         }
+      }); 
+   });
+
 /* 파일 추가 버튼 + 제한 없음 버튼 구동 */
 var gfv_count = 1;
 

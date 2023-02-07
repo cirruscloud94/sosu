@@ -14,24 +14,24 @@ public class NoticeDAO extends AbstractDAO {
 	@SuppressWarnings("unchecked") 
 	public List<Map<String,Object>>noticeList(Map<String, Object> map) throws Exception {
 		
-		return (List<Map<String,Object>>)selectList("help.noticeList", map); 
+		return (List<Map<String,Object>>)selectList("notice.noticeList", map); 
 	}
 	
 //	작성
 	public void noticeWrite(Map<String, Object> map) throws Exception {
 		
-		insert("help.noticeWrite", map);
+		insert("notice.noticeWrite", map);
 	}
 	
 //	수정
 	public void noticeUpdate(Map<String, Object> map) throws Exception {
 		
-		update("help.noticeUpdate", map);
+		update("notice.noticeUpdate", map);
 	}
 	
 //	삭제
 	public void noticeDelete(Map<String, Object> map) throws Exception {
 		
-		update("help.noticeDelete", map);
+		update("notice.noticeDelete", map);
 	}
 }
