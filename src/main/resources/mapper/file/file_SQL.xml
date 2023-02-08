@@ -5,7 +5,6 @@
 
 
 	<!-- 회원 프로필사진 띄우기 -->
-
 	<select id="memberProfile" parameterType="hashmap"
 		resultType="hashmap">
 			<![CDATA[
@@ -16,8 +15,8 @@
         AND M.M_IDX = #{M_IDX}
 			]]>
 	</select>
-
-	<!-- 이미지 등록하기 -->
+	
+   <!-- 이미지 등록하기 -->
    <insert id="imgInsert" parameterType="hashmap">
        <![CDATA[
       INSERT INTO FILE_T(F_IDX, F_TABLE, F_ARTICLE, F_OGNAME, F_SVNAME, F_SIZE,
@@ -27,5 +26,14 @@
        ]]>
    </insert>
 
+    <!-- 이미지 삭제하기 -->
+   <update id="FileDelete" parameterType="hashmap">
+     UPDATE FILE_T
+     SET F_DEL_YN = 'Y'
+     WHERE F_SVNAME IN
+     <foreach collection="chArr" item="F_SVNAME" open="('" close="')" separator="','"> 
+     #{F_SVNAME} 
+     </foreach>
+   </update>
 </mapper>
 	

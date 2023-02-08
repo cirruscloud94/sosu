@@ -102,4 +102,11 @@ main article section {
 	margin-left: 6px;
 }
 
-
+/* 리뷰 작성자 프사 */
+.review_profile {
+   border-radius: 100%;
+   object-fit: cover;
+   object-position: top;
+   width: 46px;
+   height: 46px;
+}

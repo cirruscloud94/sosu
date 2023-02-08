@@ -10,66 +10,6 @@
 <link href="/resources/assets/vendor/aos/aos.css" rel="stylesheet">
 <link href="/resources/css/list.css" rel="stylesheet">
 <script src="/resources/js/review.js"></script>
-<!-- <link href="/resources/css/review.css" rel="stylesheet"> --> 
-<%-- 
-<main>
-	<article class="container">
-		<div>
-			<h1 class="h1_review">후기 ${review_count.RVC}개 있어요!</h1>
-			<div class="AVGstarpoint">
-				<c:forEach begin="1" end="${((review_count.AVGSP*10)-(review_count.AVGSP*10%10))/10}">⭐</c:forEach>
-				<span>&nbsp;${review_count.AVGSP}</span>
-			</div>
-		</div>
-		<br>
-		<hr>
-		<br>
-		<section>
-			<c:choose>
-				<c:when test="${detailList[0].TOTAL_COUNT != 0}">
-					<c:forEach items="${detailList}" var="r">
-						<div class="reviewHeader">
-							<!-- input hidden 값 -->
-							<input type="hidden" name="MO_CATEGORY" id="mo_category" value="${r.MO_CATEGORY}">
-							<input type="hidden" name="RV_IDX" id="rv_idx" value="${r.RV_IDX}">
-							<input type="hidden" name="M_IDX" id="rv_idx" value="${r.M_IDX}">
-							<input type="hidden" name="MO_IDX" id="MO_IDX" value="${r.MO_IDX}">
-							<input type="hidden" class="review_regdate name" name="RV_REGDATE" id="RV_REGDATE" value="${r.RV_REGDATE}">
-							<div class="info">
-								<div class="profile">
-									<img src="/resources/upload/chunsic.png">
-								</div>
-								<div class="info_notPhoto">
-									<div class="name">${r.M_NICKNAME}</div>
-									<div class="info_SD">
-										<div class="starpoint">
-											<c:forEach begin="1" end="${r.RV_STAR}">⭐</c:forEach>
-										</div>
-										<div class="review_date"></div>
-									</div>
-								</div>
-							</div>
-							<div class="title">${r.RV_TITLE}</div>
-							<div class="contents">${r.RV_CONTENT}</div>
-						</div>
-						<div class="join_moim">
-							<div class="title_moim">${r.MO_TITLE}</div>
-						</div>
-						<br>
-						<hr>
-						<br>
-					</c:forEach>
-				</c:when>
-				<c:otherwise>
-				<tr>
-					<td>조회된 결과가 없습니다.</td>
-				</tr>
-				</c:otherwise>
-			</c:choose>
-		</section>
-	</article>
-</main>
- --%>
 <main class="container" style="margin-top: 75px;">
 	<article>
 		<section class="row gy-5" style="margin-bottom: 90px;">
@@ -122,15 +62,35 @@
 								<input type="hidden" name="M_IDX" id="rv_idx" value="${r.M_IDX}">
 								<input type="hidden" name="MO_IDX" id="MO_IDX" value="${r.MO_IDX}">
 								<input type="hidden" class="review_regdate" name="RV_REGDATE" id="RV_REGDATE" value="${r.RV_REGDATE}">
-								 
-								<img src="${pageContext.request.contextPath}/resources/assets/img/image/${r.F_SVNAME}" alt="" style='width: 300px; height: 300px'> 
+								<c:if test="${not empty r.F_IDX}"> 
+								<img src="/resources/img/upload/${r.F_SVNAME}" alt="" style='width: 300px; height: 300px'>
+								</c:if>
+								<c:if test="${empty r.F_IDX}"> 
+								</c:if>
 								<br/>
-								<p class="detail-region">${r.M_NICKNAME}</p>
-								<p class="moim-title">${r.RV_TITLE}
-								</p>
-								<span class="moim-people">${r.RV_CONTENT}</span>
-								<div class="starpoint">
-									<c:forEach begin="1" end="${r.RV_STAR}">⭐</c:forEach>
+								<div class="info">
+									<c:if test="${r.F_TABLE != 'P'}"><!-- 프로필 사진이 없을 때 -->
+									<div class="kingimg">
+										<img class="review_profile" src="/resources/img/category/${MO_CATEGORY}.jpg">
+									</div>
+									</c:if>
+									
+									<c:if test="${r.F_TABLE == 'P'}"><!-- 프로필 사진이 있을 때 -->
+									<div class="kingimg">
+										<img class="review_profile" src="/resources/img/upload/">
+									</div>
+									</c:if>
+									
+									<div class="info_notPhoto">
+										<div class="detail-region">${r.M_NICKNAME}</div>
+										<div class="info_SD">
+											<div class="starpoint">
+												<c:forEach begin="1" end="${r.RV_STAR}">⭐</c:forEach>
+											</div>
+											<div class="review_date"></div>
+											<span class="moim-people">${r.RV_CONTENT}</span>
+										</div>
+									</div>
 								</div>
 								<div class="review_date"></div>
 								${r.MO_TITLE}
@@ -145,47 +105,6 @@
 					</div>
 				</c:otherwise>
 			</c:choose>
-			<%-- <c:choose>
-				<c:when test="${detailList[0].TOTAL_COUNT != 0}">
-					<c:forEach items="${detailList}" var="r">
-						<div class="reviewHeader">
-							<!-- input hidden 값 -->
-							<input type="hidden" name="MO_CATEGORY" id="mo_category" value="${r.MO_CATEGORY}">
-							<input type="hidden" name="RV_IDX" id="rv_idx" value="${r.RV_IDX}">
-							<input type="hidden" name="M_IDX" id="rv_idx" value="${r.M_IDX}">
-							<input type="hidden" name="MO_IDX" id="MO_IDX" value="${r.MO_IDX}">
-							<input type="hidden" class="review_regdate name" name="RV_REGDATE" id="RV_REGDATE" value="${r.RV_REGDATE}">
-							<div class="info">
-								<div class="profile">
-									<img src="/resources/upload/chunsic.png">
-								</div>
-								<div class="info_notPhoto">
-									<div class="name">${r.M_NICKNAME}</div>
-									<div class="info_SD">
-										<div class="starpoint">
-											<c:forEach begin="1" end="${r.RV_STAR}">⭐</c:forEach>
-										</div>
-										<div class="review_date"></div>
-									</div>
-								</div>
-							</div>
-							<div class="title">${r.RV_TITLE}</div>
-							<div class="contents">${r.RV_CONTENT}</div>
-						</div>
-						<div class="join_moim">
-							<div class="title_moim">${r.MO_TITLE}</div>
-						</div>
-						<br>
-						<hr>
-						<br>
-					</c:forEach>
-				</c:when>
-				<c:otherwise>
-				<tr>
-					<td>조회된 결과가 없습니다.</td>
-				</tr>
-				</c:otherwise>
-			</c:choose> --%>
 		</section>
 	</article>
 </main>

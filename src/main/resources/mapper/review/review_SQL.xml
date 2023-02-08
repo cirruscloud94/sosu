@@ -9,18 +9,18 @@
    		SELECT 
    				R.*, 
    				NVL(F.F_SVNAME, 0) AS RF_SVNAME,
-   				MO.MO_TITLE, 
-   				MO.MO_CATEGORY, 
-   				M.*
+   				MO.*, 
+   				M.*,
+                F.*            
         FROM 
         		REVIEW R,
-        		FILE_T F, 
-        		MOIM MO, 
+        		FILE_T F,
+        		MOIM MO,
         		MEMBER M
         WHERE
         		F.F_TABLE(+) = 'R'
         AND 
-        		F.F_MAIN_YN(+) = 'Y'
+        		F.F_MAIN_YN(+) = 'N'
         AND 
         		F.F_ARTICLE(+) = R.RV_IDX
         AND 
@@ -44,7 +44,8 @@
         		NVL(F.F_SVNAME, 0) AS RF_SVNAME, 
         		MO.MO_TITLE,
         		MO.MO_CATEGORY, 
-        		M.*
+        		M.*,
+        		F.*
         FROM 
         		REVIEW R, 
         		FILE_T F, 
@@ -53,7 +54,7 @@
         WHERE
         		F.F_TABLE(+) = 'R'
         AND 
-        		F.F_MAIN_YN(+) = 'Y'
+        		F.F_MAIN_YN(+) = 'N'
         AND 
         		F.F_ARTICLE(+) = R.RV_IDX
         AND 
@@ -153,7 +154,10 @@
     </select>
    
     <!-- 리뷰작성하기 -->
-    <insert id="insertReview" parameterType="hashmap">
+    <insert id="insertReview" parameterType="hashmap" useGeneratedKeys="true" keyProperty="RV_IDX">
+    	<selectKey keyProperty="RV_IDX" resultType="string" order="BEFORE">
+			SELECT RV_IDX.NEXTVAL FROM DUAL
+		</selectKey>
     	
     	INSERT INTO REVIEW
         (
@@ -168,7 +172,7 @@
         )
       	VALUES
       	(
-		         RV_IDX.NEXTVAL,
+		         #{RV_IDX},
 		         #{M_IDX}, 
 		         #{MO_IDX},
 		         #{RV_CONTENT},
@@ -182,7 +186,6 @@
    
     <!-- 리뷰 사진 파일 등록 -->
     <insert id="insertPhotoReview" parameterType="hashmap">
-    	
     	INSERT INTO FILE_T
       	(
 	      		 F_IDX,

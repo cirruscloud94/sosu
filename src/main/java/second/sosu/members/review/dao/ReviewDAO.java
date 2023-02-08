@@ -39,7 +39,7 @@ public class ReviewDAO extends AbstractDAO {
 	
 //	리뷰 사진 파일 등록
 	public void insertPhotoReview(Map<String, Object> map) throws Exception {
-		insert("review.insertPhotoReview", map);
+		insert("file.imgInsert", map);
 	}
 	
 //	리뷰 수정

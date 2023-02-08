@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -44,20 +45,21 @@ public class ReviewServiceImpl implements ReviewService{
 		
 		return reviewDAO.reviewAllListCount(map);
 	}
-
-//	리뷰 작성
+	
+//	리뷰 작성(이미지)
 	@Override
-	public void insertReview(Map<String, Object> map) throws Exception {
+	public void insertReview(Map<String, Object> map, HttpServletRequest request) throws Exception {
 		
 		reviewDAO.insertReview(map);
-	}
-	
-//	리뷰 사진파일 작성
-	@Override
-	public void insertPhotoReview(Map<String, Object> map) throws Exception {
 		
-		reviewDAO.insertPhotoReview(map);
+		List<Map<String, Object>> list = fileUtils.fileInsert(map, request);
+		
+		for(int i=0, size=list.size(); i<size; i++) {
+			
+			reviewDAO.insertPhotoReview(list.get(i));
+		}
 	}
+
 
 //	리뷰 수정
 	@Override

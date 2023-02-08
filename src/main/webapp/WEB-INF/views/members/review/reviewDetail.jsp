@@ -22,9 +22,16 @@
 				<input type="hidden" class="review_regdate name" name="RV_REGDATE" id="RV_REGDATE" value="${map.RV_REGDATE}">
 				<input type="hidden" name="RV_M_IDX" id="RV_M_IDX" value="${map.M_IDX}">
 				<div class="info">
+					<c:if test="${map.F_TABLE != 'P'}"><!-- 프로필 사진이 없을 때 -->
 					<div class="profile">
-						<img src="/resources/upload/chunsic.png">
+						<img class="review_profile" src="/resources/img/category/${MO_CATEGORY}.jpg">
 					</div>
+					</c:if>
+					<c:if test="${map.F_TABLE == 'P'}"><!-- 프로필 사진이 있을 때 -->
+					<div class="profile">
+						<img class="review_profile" src="/resources/img/upload/">
+					</div>
+					</c:if>
 					<div class="info_notPhoto">
 						<div class="name">${map.M_NICKNAME}</div>
 						<div class="info_SD">
@@ -35,7 +42,7 @@
 						</div>
 					</div>
 				</div>
-				<%-- <div class="title">${map.RV_TITLE}</div> --%>
+				<div class="rv_img"><img src="/resources/img/upload/${map.F_SVNAME}"></div>
 				<div class="contents">${map.RV_CONTENT}</div>
 			</div>
 			<div class="join_moim">

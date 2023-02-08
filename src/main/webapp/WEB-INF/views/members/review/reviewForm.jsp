@@ -8,7 +8,7 @@
 
 <main class="container">
 	<article>
-		<form action="/members/reviewForm.sosu" method="post" onsubmit="return check()" name="insertReview" id="insertReview">
+		<form action="/members/reviewForm.sosu" method="post" name="frm" id="frm" enctype="multipart/form-data" onsubmit="return check()" >
 			<h1>리뷰 작성하기</h1>
 			
 			<fieldset>
@@ -31,12 +31,52 @@
 			<input type="hidden" name="MO_IDX" value="${MO_IDX}">
 			<!-- 모임 제목 -->
 			<input type="hidden" name="MO_TITLE" value="${MO_TITLE}">
+			<!-- 게시글 테이블 타입 -->
+			<input type="hidden" name="F_TABLE" value="${F_TABLE}">
 			
-			<input type="file" id="review_file" accept="image/jpeg, image/png, image/jpg"> <!-- accept로 이미지파일 확장자 제한 가능 -->
-			
+			<div id="fileDiv">
+				<p>	<!-- accept로 이미지파일 확장자 제한 가능 -->
+					<input type="file" id="file" name="file" accept="image/jpeg, image/png, image/jpg"> 
+					<a href="#this" class="btn" id="delete" name="delete">삭제</a>
+				</p>
+			</div>
+
+			<br/>
+			<br/>
+			<a href="#this" class="btn" id="addFile">파일 추가</a>
 			<a href="/members/mypage.sosu" class="btn">취소</a><!-- 마이페이지 URL  -->
 			<button class="submit">등록</button>
 		</form>
 	</article>
 </main>
+<script type="text/javascript">
+	var gfv_count = 1;
 
+	$(document).ready(function() {
+
+		$("#addFile").on("click", function(e) { //파일추가 버튼
+			e.preventDefault();
+			fn_addFile();
+		});
+
+		$("a[name='delete']").on("click", function(e) { //삭제 버튼
+			e.preventDefault();
+			fn_deleteFile($(this));
+		});
+
+	});
+
+	function fn_addFile() {
+		var str = "<p><input type='file' name='file_" + (gfv_count++)
+				+ "'><a href='#this' class='btn' name='delete'>삭제</a></p>";
+		$("#fileDiv").append(str);  //<<div id="fileDiv">에 변수 str의 값을 추가
+		$("a[name='delete']").on("click", function(e) {
+			e.preventDefault();
+			fn_deleteFile($(this));
+		});
+	}
+
+	function fn_deleteFile(obj) {
+		obj.parent().remove(); //this의 바로 위의 요소(<p>태그)를 삭제
+	}
+</script>

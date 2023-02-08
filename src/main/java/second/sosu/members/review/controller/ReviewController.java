@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -111,13 +112,11 @@ public class ReviewController {
 	 * @author seungju han
 	 */
 	@PostMapping("/members/reviewForm.sosu")
-	public ModelAndView reviewForm_insert(CommandMap commandMap) throws Exception {
+	public ModelAndView reviewForm_insert(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		
 		ModelAndView mv = new ModelAndView("redirect:/members/mypage.sosu");
 		
-		reviewService.insertReview(commandMap.getMap());
-		
-		reviewService.insertPhotoReview(commandMap.getMap());
+		reviewService.insertReview(commandMap.getMap(), request);
 		
 		return mv;
 	}
