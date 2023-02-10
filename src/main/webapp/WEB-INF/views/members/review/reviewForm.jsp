@@ -8,7 +8,7 @@
 
 <main class="container">
 	<article>
-		<form action="/members/reviewForm.sosu" method="post" name="frm" id="frm" enctype="multipart/form-data" onsubmit="return check()" >
+		<form action="/members/reviewForm.sosu" method="post" name="insertReview" id="insertReview" enctype="multipart/form-data" onsubmit="return check()" >
 			<h1>리뷰 작성하기</h1>
 			
 			<fieldset>
@@ -36,7 +36,7 @@
 			
 			<div id="fileDiv">
 				<p>	<!-- accept로 이미지파일 확장자 제한 가능 -->
-					<input type="file" id="file" name="file" accept="image/jpeg, image/png, image/jpg"> 
+					<input type="file" id="file" name="file_0" accept="image/jpeg, image/png, image/jpg"> 
 					<a href="#this" class="btn" id="delete" name="delete">삭제</a>
 				</p>
 			</div>

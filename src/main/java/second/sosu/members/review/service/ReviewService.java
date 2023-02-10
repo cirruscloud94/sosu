@@ -11,15 +11,14 @@ public interface ReviewService {
 	List<Map<String, Object>> reviewList(Map<String, Object> map) throws Exception;
 //	리뷰 상세보기
 	Map<String, Object> reviewDetail(Map<String, Object> map) throws Exception;
+//	리뷰 상세보기(사진)
+	List<Map<String, Object>> reviewPhotoList(Map<String, Object> map) throws Exception;
 //	리뷰 후기 개수
 	Map<String, Object> reviewAllListCount(Map<String, Object> map) throws Exception;
-//	리뷰 작성(이미지)
+//	리뷰 작성(+이미지)
 	void insertReview(Map<String, Object> map, HttpServletRequest request) throws Exception;
-//	리뷰 수정
-	void updateReview(Map<String, Object> map) throws Exception;
-//	리뷰 사진파일 수정
-	void updatePhotoReview(Map<String, Object> map) throws Exception;
+//	리뷰 수정(+이미지)
+	void updateReview(Map<String, Object> map, HttpServletRequest request) throws Exception;
 //	리뷰 삭제	
 	void deleteReview(Map<String, Object> map) throws Exception;
-	
 }

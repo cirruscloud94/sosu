@@ -24,6 +24,13 @@ public class ReviewDAO extends AbstractDAO {
 		return (Map<String, Object>)selectOne("review.reviewDetail", map);
 	}
 	
+//	리뷰 상세보기(사진)
+	@SuppressWarnings("unchecked") 
+	public List<Map<String, Object>> reviewPhotoList(Map<String, Object> map) throws Exception {
+		
+		return(List<Map<String, Object>>)selectList("review.reviewPhotoList", map); 
+	}
+	
 //	리뷰 후기 개수
 	@SuppressWarnings("unchecked") 
 	public Map<String, Object> reviewAllListCount(Map<String, Object> map) throws Exception {
@@ -39,7 +46,7 @@ public class ReviewDAO extends AbstractDAO {
 	
 //	리뷰 사진 파일 등록
 	public void insertPhotoReview(Map<String, Object> map) throws Exception {
-		insert("file.imgInsert", map);
+		insert("review.insertPhotoReview", map);
 	}
 	
 //	리뷰 수정
@@ -51,6 +58,10 @@ public class ReviewDAO extends AbstractDAO {
 //	리뷰 사진 파일 수정
 	public void updatePhotoReview(Map<String, Object> map) throws Exception {
 		update("review.updatePhotoReview", map);
+	}
+//	리뷰 사진 파일 수정
+	public void deletePhotoReview(Map<String, Object> map) throws Exception {
+		update("review.deletePhotoReview", map);
 	}
 	
 //	리뷰 삭제

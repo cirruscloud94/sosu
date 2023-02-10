@@ -47,7 +47,11 @@ public class ReviewController {
 		
 		Map<String, Object> map = reviewService.reviewDetail(commandMap.getMap());
 		
+		List<Map<String, Object>> list = reviewService.reviewPhotoList(commandMap.getMap());
+		
 		mv.addObject("map", map);
+		
+		mv.addObject("list", list);
 		
 		return mv;
 	}
@@ -141,7 +145,7 @@ public class ReviewController {
 		
 		Map<String, Object> map = reviewService.reviewDetail(commandMap.getMap());
 		
-		mv.addObject("reviewMap", map);
+		mv.addObject("map", map);
 		
 		return mv;
 	}
@@ -154,7 +158,8 @@ public class ReviewController {
 	 */
 	
 	@PostMapping("/review/reviewModify.sosu")
-	public ModelAndView reviewModify_(@RequestParam(value="MO_CATEGORY", required=false) String MO_CATEGORY, CommandMap commandMap) throws Exception {
+	public ModelAndView reviewModify_(@RequestParam(value="MO_CATEGORY", required=false) String MO_CATEGORY, 
+			CommandMap commandMap, HttpServletRequest request) throws Exception {
 		
 		Map<String, Object> map = reviewService.reviewDetail(commandMap.getMap());
 		
@@ -162,7 +167,9 @@ public class ReviewController {
 		
 		ModelAndView mv = new ModelAndView("redirect:/review/"+ MO_CATEGORY +"/"+ idx +".sosu");
 		
-		reviewService.updateReview(commandMap.getMap());
+		reviewService.updateReview(commandMap.getMap(), request);
+		
+		mv.addObject("RV_IDX", commandMap.get("RV_IDX"));
 		
 		return mv;
 	}
