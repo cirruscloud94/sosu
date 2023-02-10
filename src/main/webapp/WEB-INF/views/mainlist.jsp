@@ -103,15 +103,16 @@
          <div class="row gy-5"  onclick="location.href='/review/${r.MO_CATEGORY}/${r.RV_IDX}.sosu'" style="cursor: pointer;">
          <input type="hidden" name="M_IDX" value="${r.RV_IDX}">
             <input type="hidden" name="MO_IDX" value="${r.M_IDX}">
-            
-             <c:if test="${r.f_svname != null }">
+            	<c:choose>
+             	<c:when test="${not empty r.F_SVNAME}">
                  <img
-                     src="${pageContext.request.contextPath}/resources/assets/img/image/${r.F_SVNAME }"
+                     src="${pageContext.request.contextPath}/resources/img/upload/${r.F_SVNAME}"
                      alt="" style='width: 300px; height: 300px'>
-                 </c:if>
-                 <c:if test="${r.f_svname == null }">
+                 </c:when>
+                 <c:otherwise>
                     <img src="/resources/img/icons/list.png"  style='width: 300px; height: 300px'>
-                 </c:if> 
+                 </c:otherwise>
+                 </c:choose> 
                      <br />
                <p class="rmoim-title">${r.RV_TITLE}
                <span class="rdetail-cate">

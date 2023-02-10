@@ -8,24 +8,16 @@
    	<![CDATA[
    		SELECT 
    				R.*, 
-   				NVL(F.F_SVNAME, 0) AS RF_SVNAME,
-   				MO.*, 
-   				M.*,
-                F.*            
+   				MO.MO_TITLE,
+                MO.MO_CATEGORY,
+                MO.MO_IDX,
+                M.M_GENDER,
+                M.M_NICKNAME
         FROM 
         		REVIEW R,
-        		FILE_T F,
         		MOIM MO,
         		MEMBER M
         WHERE
-        		F.F_TABLE(+) = 'R'
-        AND 
-        		F.F_MAIN_YN(+) = 'N'
-        AND 
-        		F.F_ARTICLE(+) = R.RV_IDX
-        AND 
-        		F.F_DEL_YN(+) = 'N'
-        AND 
         		R.RV_DEL_YN(+) = 'N'
         AND 
         		R.MO_IDX = MO.MO_IDX 
@@ -41,10 +33,10 @@
    	<![CDATA[
    		SELECT 
         		R.*, 
-        		NVL(F.F_SVNAME, 0) AS RF_SVNAME, 
         		MO.MO_TITLE,
         		MO.MO_CATEGORY, 
-        		M.*,
+        		M.M_GENDER,
+                M.M_NICKNAME,
         		F.*
         FROM 
         		REVIEW R, 
@@ -75,26 +67,19 @@
    	<!-- 리뷰 사진 파일 리스트 -->
    	<select id="reviewPhotoList" resultType="hashmap" parameterType="hashmap">
    	<![CDATA[
-   		SELECT 
-                F_IDX,
-                F_TABLE,
-                F_ARTICLE,
-                F_OGNAME,
+   		SELECT 	
+   				F_MAIN_YN,
                 F_SVNAME,
-                F_MAIN_YN,
-                F_DEL_YN,
-                F_REG_DATE,
-                ROUND(F_SIZE/1024,1) AS FILE_SIZE            
+                F_IDX,
+                F_OGNAME,
+                F_SIZE,
+				F_TABLE
         FROM 
         		FILE_T
         WHERE
-        		F_MAIN_YN = 'N'
-        AND
         		F_DEL_YN = 'N'
         AND
-                F_TABLE = 'R'
-        AND
-                F_ARTICLE = #{F_ARTICLE}
+                F_ARTICLE = #{RV_IDX}
     ]]>    
    	</select>
     
@@ -137,6 +122,20 @@
         		REVIEW
    	]]>
     </select>
+    
+    <!-- 모임 리뷰 개수 -->
+    <!-- <select id="reviewMoimCount" parameterType="hashmap" resultType="hashmap">
+   		SELECT
+                COUNT(*) AS MOIMRVCOUNT
+        FROM 
+                MOIM M, REVIEW R
+        WHERE 
+                M.MO_IDX = R.MO_IDX 
+		AND 
+				M.MO_IDX = #{MO_IDX}                 
+        AND  
+        		R.RV_DEL_YN = 'N';
+    </select> -->
     
     <!-- 좋아요 수 -->
     <select id="reviewZzimCount" parameterType="hashmap" resultType="hashmap">

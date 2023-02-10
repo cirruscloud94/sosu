@@ -40,17 +40,24 @@ public class ReviewServiceImpl implements ReviewService{
 		return reviewDAO.reviewDetail(map);
 	}
 	
-//	리뷰 상세보기 후기 개수
-	public Map<String, Object> reviewAllListCount(Map<String, Object> map) throws Exception {
-		
-		return reviewDAO.reviewAllListCount(map);
-	}
-	
-//	리뷰 전체 보기
+//	리뷰 상세보기(사진)
 	@Override 
 	public List<Map<String, Object>> reviewPhotoList(Map<String, Object> map) throws Exception {
 		
 		return reviewDAO.reviewPhotoList(map);
+	}
+	
+//	리뷰 상세보기(프로필사진)
+	@Override
+	public Map<String, Object> memberProfile(Map<String, Object> map) throws Exception {
+		
+		return reviewDAO.memberProfile(map);
+	}
+	
+//	리뷰 상세보기 후기 개수
+	public Map<String, Object> reviewAllListCount(Map<String, Object> map) throws Exception {
+		
+		return reviewDAO.reviewAllListCount(map);
 	}
 	
 //	리뷰 작성(이미지)
@@ -63,7 +70,7 @@ public class ReviewServiceImpl implements ReviewService{
 		
 		for(int i=0, size=list.size(); i<size; i++) {
 			
-			reviewDAO.insertPhotoReview(list.get(i));
+			reviewDAO.imgInsert(list.get(i));
 		}
 	}
 
@@ -84,7 +91,7 @@ public class ReviewServiceImpl implements ReviewService{
 			tempMap = list.get(i);
 			
 			if(tempMap.get("IS_NEW").equals("Y")){
-				reviewDAO.insertPhotoReview(tempMap);
+				reviewDAO.imgInsert(tempMap);
 			}
 			else{
 				reviewDAO.updatePhotoReview(tempMap);

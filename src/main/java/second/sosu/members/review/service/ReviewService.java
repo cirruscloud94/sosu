@@ -13,6 +13,8 @@ public interface ReviewService {
 	Map<String, Object> reviewDetail(Map<String, Object> map) throws Exception;
 //	리뷰 상세보기(사진)
 	List<Map<String, Object>> reviewPhotoList(Map<String, Object> map) throws Exception;
+//	리뷰 상세보기(프로필사진)
+	Map<String, Object> memberProfile(Map<String, Object> map) throws Exception;
 //	리뷰 후기 개수
 	Map<String, Object> reviewAllListCount(Map<String, Object> map) throws Exception;
 //	리뷰 작성(+이미지)

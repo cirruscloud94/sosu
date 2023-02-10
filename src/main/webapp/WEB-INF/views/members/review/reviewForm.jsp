@@ -36,7 +36,8 @@
 			
 			<div id="fileDiv">
 				<p>	<!-- accept로 이미지파일 확장자 제한 가능 -->
-					<input type="file" id="file" name="file_0" accept="image/jpeg, image/png, image/jpg"> 
+					<input type="file" id="file" name="file_0" accept="image/jpeg, image/png, image/jpg">
+					<input type="file" id="file" name="mainIamge" accept="image/jpeg, image/png, image/jpg"> 
 					<a href="#this" class="btn" id="delete" name="delete">삭제</a>
 				</p>
 			</div>

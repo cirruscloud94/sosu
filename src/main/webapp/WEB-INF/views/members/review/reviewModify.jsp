@@ -13,7 +13,7 @@
 <main class="container">
 <article>
 	<form action="/review/reviewModify.sosu" method="post" onsubmit="return check()" name="insertReview" id="insertReview" enctype="multipart/form-data">
-		<h1>리뷰 수정하기</h1>
+		<h1>${map.MO_TITLE}</h1>
 		
 		<fieldset>
 		    <legend>별점을 선택해주세요</legend>
@@ -38,27 +38,27 @@
 		<input type="hidden" name="RV_IDX" value="${RV_IDX}"> 
 		<!-- 선택한 카테고리 -->
 		<input type="hidden" name="mo_cate" value="${MO_CATEGORY}">
-		<!-- 파일번호 -->
-		<input type="hidden" name="F_IDX" value="${map.F_IDX}">
-		<!-- 파일 태그 --> 
-		<input type="hidden" name="F_TABLE" value="${map.F_TABLE}">
+		 
 		
 		<div id="fileDiv">
-		<c:forEach items="${map}" end="${fn:length(F_IDX)}" varStatus="m">
+		<c:forEach items="${list}" varStatus="m" var="r">
 			<p> <!-- accept로 이미지파일 확장자 제한 가능 -->
-				<input type="hidden" id="F_IDX" name="F_IDX_${m.index}" value="${map.F_IDX}"> 
-				<a href="#this" id="name_${m.index}" name="name_${m.index}">${map.F_OGNAME}</a>
+				<a href="#this" id="name_${m.index}" name="name_${m.index}">${r.F_OGNAME}</a>
 				<input type="file" id="file_${m.index}" name="file_${m.index}" accept="image/jpeg, image/png, image/jpg"> 
-				(${map.F_SIZE}kb) 
+				(${r.F_SIZE}kb) 
 				<a href="#this" class="btn" id="delete_${m.index}" name="delete_${m.index}">삭제</a>
+				<!-- 파일번호 -->
+				<input type="hidden" id="F_IDX" name="F_IDX_${m.index}" value="${r.F_IDX}"> 
+				<!-- 파일 태그 --> 
+				<input type="hidden" name="F_TABLE" value="${r.F_TABLE}">
 			</p>
 		</c:forEach>
 		</div>
 		<br/>
 		<br/>
-		<a href="#this" class="btn" id="addFile">파일 추가</a>
-		<a href="/members/mypage.sosu" class="btn">취소</a><!-- 마이페이지 URL  -->
-		<button class="submit">등록</button>
+		<a href="#this" class="btn_a" id="addFile">파일 추가</a>
+		<a href="/members/mypage.sosu" class="btn_a">취소</a><!-- 마이페이지 URL  -->
+		<button class="submit success">수정하기</button>
 	</form>
 </article>
 </main>
@@ -87,7 +87,7 @@
 	function fn_addFile(){
 		var str = "<p>" +
 				"<input type='file' id='file_"+(gfv_count)+"' name='file_"+(gfv_count)+"'>"+
-				"<a href='#this' class='btn' id='delete_"+(gfv_count)+"' name='delete_"+(gfv_count)+"'>삭제</a>" +
+				"<a href='#this' class='btn_a' id='delete_"+(gfv_count)+"' name='delete_"+(gfv_count)+"'>삭제</a>" +
 			"</p>";
 		$("#fileDiv").append(str);
 		$("#delete_"+(gfv_count++)).on("click", function(e){ 

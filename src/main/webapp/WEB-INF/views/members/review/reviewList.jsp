@@ -62,46 +62,35 @@
 								<input type="hidden" name="M_IDX" id="rv_idx" value="${r.M_IDX}">
 								<input type="hidden" name="MO_IDX" id="MO_IDX" value="${r.MO_IDX}">
 								<input type="hidden" class="review_regdate" name="RV_REGDATE" id="RV_REGDATE" value="${r.RV_REGDATE}">
-								<c:if test="${not empty r.F_IDX}"> 
-								<img src="/resources/img/upload/${r.F_SVNAME}" alt="" style='width: 300px; height: 300px'>
-								</c:if>
-								<c:if test="${empty r.F_IDX}"> 
-								</c:if>
 								<br/>
 								<div class="info">
-									<c:if test="${r.F_TABLE != 'P'}"><!-- 프로필 사진이 없을 때 -->
-									<div class="kingimg">
-										<img class="review_profile" src="/resources/img/category/${MO_CATEGORY}.jpg">
-									</div>
-									</c:if>
+									<%-- <div class="profile">
+										<img class="review_profile" src="/resources/img/profile/${m_map.PROFILE}">
+									</div> --%>
 									
-									<c:if test="${r.F_TABLE == 'P'}"><!-- 프로필 사진이 있을 때 -->
-									<div class="kingimg">
-										<img class="review_profile" src="/resources/img/upload/">
-									</div>
-									</c:if>
-									
-									<div class="info_notPhoto">
-										<div class="detail-region">${r.M_NICKNAME}</div>
+									<div>
+										<div>${r.M_NICKNAME}</div>
 										<div class="info_SD">
 											<div class="starpoint">
 												<c:forEach begin="1" end="${r.RV_STAR}">⭐</c:forEach>
 											</div>
 											<div class="review_date"></div>
-											<span class="moim-people">${r.RV_CONTENT}</span>
+											<span>${r.RV_CONTENT}</span>
 										</div>
 									</div>
 								</div>
-								<div class="review_date"></div>
 								${r.MO_TITLE}
-								<hr style="width: 300px;">
+								<c:if test="${not empty r.F_SVNAME}">
+									<div class="rv_img"><img src="/resources/img/upload/${r.F_SVNAME}"></div>
+								</c:if>
+								<hr>
 							</div>
 						</div>
 					</c:forEach>
 				</c:when>
 				<c:otherwise>
-					<div class="row gy-5" style="height: 165px; margin-bottom: 12px;">
-						<div class="none">조회된 결과가 없습니다.</div>
+					<div>
+						<div>조회된 결과가 없습니다.</div>
 					</div>
 				</c:otherwise>
 			</c:choose>

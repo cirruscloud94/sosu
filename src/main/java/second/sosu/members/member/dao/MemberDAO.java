@@ -118,6 +118,11 @@ public class MemberDAO extends AbstractDAO{
       //프로필 사진 가져오기
       mypageInfo.add(selectList("members.profileGet",map)); //mypageInfo[9]
       
+//      for(int i=0 ; i<mypageInfo.get(10).size() ; i++) {   
+//          Map<String,Object> partyMoimMember = (Map<String,Object>)selectOne("review.reviewMoimCount",mypageInfo.get(10).get(i).get("MO_IDX"));
+//          mypageInfo.get(10).get(i).put("MOIMRVCOUNT", partyMoimMember.get("MOIMRVCOUNT"));
+//       }
+      
       return mypageInfo;
    }
    
