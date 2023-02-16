@@ -37,16 +37,29 @@
 		<!-- 리뷰번호 -->
 		<input type="hidden" name="RV_IDX" value="${RV_IDX}"> 
 		<!-- 선택한 카테고리 -->
-		<input type="hidden" name="mo_cate" value="${MO_CATEGORY}">
+		<input type="hidden" id="mo_cate" name="MO_CATEGORY" value="${MO_CATEGORY}">
 		 
 		
 		<div id="fileDiv">
 		<c:forEach items="${list}" varStatus="m" var="r">
 			<p> <!-- accept로 이미지파일 확장자 제한 가능 -->
+			
+				<!-- 메인사진  -->
+				<c:if test="${r.F_MAIN_YN == 'Y'}">
 				<a href="#this" id="name_${m.index}" name="name_${m.index}">${r.F_OGNAME}</a>
-				<input type="file" id="file_${m.index}" name="file_${m.index}" accept="image/jpeg, image/png, image/jpg"> 
+				<input type="file" id="file" name="mainIamge" accept="image/jpeg, image/png, image/jpg">
+				(${r.F_SIZE}kb)
+				<a href="#this" class="btn" id="delete_${m.index}" name="delete_${m.index}">삭제</a>
+				</c:if>
+				
+				<!-- 사진  -->
+				<c:if test="${r.F_MAIN_YN == 'N'}">
+				<a href="#this" id="name_${m.index}" name="name_${m.index}">${r.F_OGNAME}</a>
+				<input type="file" id="file_0" name="file_0" accept="image/jpeg, image/png, image/jpg"> 
 				(${r.F_SIZE}kb) 
 				<a href="#this" class="btn" id="delete_${m.index}" name="delete_${m.index}">삭제</a>
+				</c:if>
+				
 				<!-- 파일번호 -->
 				<input type="hidden" id="F_IDX" name="F_IDX_${m.index}" value="${r.F_IDX}"> 
 				<!-- 파일 태그 --> 

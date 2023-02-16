@@ -168,7 +168,7 @@
 
 					<div class="row gy-5">
 						<c:forEach begin="0" end="${fn:length(mypageInfo[4])}"
-							items="${mypageInfo[4]}" var="mypage">
+							items="${mypageInfo[4]}" var="mypage" varStatus="status">
 							<div class="col-lg-3 menu-item">
 								<div class="row gy-5">
 									<a
@@ -207,30 +207,22 @@
 									<hr class="hrhr">
 									<p class="mo-cost">
 										<fmt:formatNumber type="number" maxFractionDigits="3"
-											value="${mypage.MO_COST2 }" />
+											value="${mypage.MO_COST2}" />
 										￦
 
 										<!-- 리뷰 작성하기 -->
-										<c:if
-											test="${mypage.MO_CLOSE_YN eq 'Y' and mypage.RVCOUNT == 0}">
-											<form action="/members/reviewForm.sosu">
-												<input type="hidden" name="MO_IDX" value="${mypage.MO_IDX}">
-												<input type="hidden" name="MO_TITLE"
-													value="${mypage.MO_TITLE}"> <input type="hidden"
-													name="M_IDX" value="${mypage.MEMIDX}">
-												<button type="submit">리뷰 작성하기</button>
-											</form>
-										</c:if>
-										<%-- <c:if test="${mypageCategory eq '10'}">
-										<c:forEach begin="0" end="${fn:length(mypageInfo[10])}">
-										${mypage.MOIMRVCOUNT}
-										</c:forEach>
-										</c:if> --%>
-										<!-- 모임 마감시 이미지 어둡게 처리 -->
-										<c:if
-											test="${mypage.MO_CLOSE_YN eq 'Y' and mypage.RVCOUNT != 0}">
-											<input type="hidden" name="RVCOUNT" value="${mypage.RVCOUNT}">
-										</c:if>
+										<form action="/members/reviewForm.sosu">
+											<input type="hidden" name="MO_IDX" value="${mypage.MO_IDX}">
+											<input type="hidden" name="MO_TITLE" value="${mypage.MOTT}"> 
+											<input type="hidden" name="M_IDX" value="${mypage.MEMIDX}">
+												
+											<c:if test="${reCount[status.index].RVCOUNT eq '0'}">	
+											<button type="submit">리뷰 작성하기</button>
+											</c:if>
+											
+											<c:if test="${reCount[status.index].RVCOUNT ne '0'}">
+											</c:if>
+										</form>
 								</div>
 							</div>
 						</c:forEach>

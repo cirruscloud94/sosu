@@ -38,8 +38,8 @@ function check()
 
 //== 리뷰 수정 ==//
 $("#rvModify").on("click", function(e){
-    let mo_cate = $("input[name='mo_cate']").val();
-    
+    let mo_cate = $("#mo_cate").val();
+        
     $.ajax({
         url : "/review/reviewModify.sosu",
         type : "post",

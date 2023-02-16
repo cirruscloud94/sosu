@@ -123,20 +123,6 @@
    	]]>
     </select>
     
-    <!-- 모임 리뷰 개수 -->
-    <!-- <select id="reviewMoimCount" parameterType="hashmap" resultType="hashmap">
-   		SELECT
-                COUNT(*) AS MOIMRVCOUNT
-        FROM 
-                MOIM M, REVIEW R
-        WHERE 
-                M.MO_IDX = R.MO_IDX 
-		AND 
-				M.MO_IDX = #{MO_IDX}                 
-        AND  
-        		R.RV_DEL_YN = 'N';
-    </select> -->
-    
     <!-- 좋아요 수 -->
     <select id="reviewZzimCount" parameterType="hashmap" resultType="hashmap">
    

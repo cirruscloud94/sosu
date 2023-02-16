@@ -4,8 +4,9 @@ main {
     flex-flow: column nowrap;
     margin: 0px auto;
     width: 100%;
-    max-width: 808px;
+    max-width: 750px;
     min-height: 1px;
+    margin-top: 150px;
 }
 
 main article {
@@ -20,7 +21,7 @@ hr {
 main article section {
 	margin-bottom: 20px;
     white-space: inherit;
-    font-size: 15px;
+    font-size: 20px;
     line-height: 22px;
 }
 
@@ -52,7 +53,7 @@ main article section {
 
 .name {
 	font-weight: bold;
-    font-size: 12px;
+    font-size: 20px;
     line-height: 12px;
     margin-bottom: 10px;
 }
@@ -78,12 +79,13 @@ main article section {
 .join_moim {
 	color: rgb(155, 155, 155);
     display: inline-block;
+    margin-top: 15pt;
 }
 
 .join_moim > div {
     margin-bottom: 10px;
     line-height: 10px;
-    font-size: 10px;
+    font-size: 15px;
 }
 
 .title_moim {
@@ -112,11 +114,28 @@ main article section {
 }
 
 .rv_img {
-	text-align: center;
+	width:400pt;
+	height:250pt;
+	position: relative;
+	margin-bottom: 15pt;
+}
+
+.rv_img > img{
+	position: absolute;
+	width: 100%;
+  	height: 100%; 
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 
 .rv_btn{
 	text-align: end;
+}
+
+.contents {
+	margin-top: 30px;
+	white-space: pre-line;
 }
 
 /* 링크 밑줄 제거 */
@@ -135,6 +154,10 @@ main article section {
 
 .btn_a:hover, .btn_a:active {
      background-color: #fff;
+}
+
+.reviewHeader {
+	
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');

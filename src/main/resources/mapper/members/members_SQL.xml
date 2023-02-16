@@ -195,27 +195,7 @@
 	              M.MO_CLOSE_YN,
 	              F.F_SVNAME,
 	              M.M_IDX AS MOIDX,
-	              MEM.M_IDX AS MEMIDX,
-                  (
-                  SELECT 
-                        COUNT(*)
-                  FROM 
-                        PARTYMEM P, MOIM M, REVIEW R
-                  WHERE 
-                        R.M_IDX = #{M_IDX}
-                  AND 
-                        P.P_BAN_YN='N'
-                  AND 
-                        P.P_FINAL_YN = 'Y' 
-                  AND 
-                        M.MO_IDX = R.MO_IDX 
-                  AND 
-                        P.M_IDX = R.M_IDX 
-                  AND 
-                        M.MO_IDX = P.MO_IDX
-                  AND 
-                        R.RV_DEL_YN = 'N'
-                  ) AS RVCOUNT
+	              MEM.M_IDX AS MEMIDX
       FROM 
               	PARTYMEM P, 
               	MOIM M, 
@@ -223,28 +203,43 @@
                 FILE_T F
                 
       WHERE 
-              	P.M_IDX = #{M_IDX}
-      AND 
-              	P.P_BAN_YN = 'N' 
+              	P.M_IDX = MEM.M_IDX  
       AND 
               	P.P_FINAL_YN = 'Y' 
       AND 
-              	P.MO_IDX = M.MO_IDX 
+              	P.P_BAN_YN = 'N' 
       AND 
-              	P.M_IDX = MEM.M_IDX
+              	P.M_IDX = #{M_IDX} 
       AND
-                F.F_TABLE(+) = 'M'
+                P.MO_IDX = M.MO_IDX 
+      AND
+                F.F_TABLE(+) = 'M' 
       AND     
-                F.F_ARTICLE(+) = M.MO_IDX
+                F.F_ARTICLE(+) = M.MO_IDX 
       AND
-                F.F_DEL_YN(+) = 'N'
+                F.F_DEL_YN(+) = 'N' 
       AND        
-                F.F_MAIN_YN(+) = 'Y'
+                F.F_MAIN_YN(+) = 'Y' 
       AND
-              	NOT M.M_IDX = MEM.M_IDX
+              	NOT M.M_IDX = MEM.M_IDX 
                 
       ORDER BY 
               	M.MO_REGDATE DESC
+   </select>
+   
+   <!-- 마이페이지 : 참여한 모임별 리뷰개수 -->
+   <select id="mypageMoimReviewCount" resultType="hashmap"
+      parameterType="hashmap">
+        SELECT
+              	COUNT(*) AS RVCOUNT 
+        FROM
+              	REVIEW R, MOIM M
+        WHERE 
+               	R.M_IDX = #{M_IDX}
+        AND
+        		R.MO_IDX = #{MO_IDX}
+        AND 
+               	R.RV_DEL_YN = 'N' 
    </select>
 
    <!-- 마이페이지 : 내가 남긴 리뷰 개수 -->

@@ -78,7 +78,7 @@ public class ReviewController {
 		
 		List<Map<String, Object>> list = reviewService.reviewList(commandMap.getMap());
 		
-//		Map<String, Object> map = reviewService.reviewAllListCount(commandMap.getMap());
+		Map<String, Object> map = reviewService.reviewAllListCount(commandMap.getMap());
 		
 //		List<Map<String, Object>> p_list = reviewService.reviewPhotoList(commandMap.getMap());
 		
@@ -86,7 +86,7 @@ public class ReviewController {
 		
 		mv.addObject("detailList", list);
 		
-//		mv.addObject("review_count", map);
+		mv.addObject("review_count", map);
 		
 //		mv.addObject("list", p_list);
 		
@@ -179,7 +179,9 @@ public class ReviewController {
 		
 		Map<String, Object> map = reviewService.reviewDetail(commandMap.getMap());
 		
-		String idx = map.get("RV_IDX").toString(); 
+		String idx = map.get("RV_IDX").toString();
+		
+		commandMap.put("MO_CATEGORY", MO_CATEGORY);
 		
 		ModelAndView mv = new ModelAndView("redirect:/review/"+ MO_CATEGORY +"/"+ idx +".sosu");
 		

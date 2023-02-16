@@ -75,6 +75,12 @@ public class MemberServiceImpl implements MemberService{
       return memberDAO.userMypage(map);
    }
    
+// 마이페이지 내가 참여한 모임 리뷰 유무
+   @Override
+   public List<Map<String,Object>> mypageMoimReviewCount(Map<String, Object> map, HttpSession session) throws Exception {
+      return memberDAO.mypageMoimReviewCount(map, session);
+   }
+   
    //마이페이지 수정
    @Override
    public void mypageModify(Map<String, Object> map, HttpServletRequest request, HttpSession session) throws Exception {

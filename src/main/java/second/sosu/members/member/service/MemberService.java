@@ -40,6 +40,9 @@ public interface MemberService {
    //다른 사람 마이페이지
    public List<Map<String, Object>> userMypage(Map<String, Object> map) throws Exception;
    
+   //마이페이지 내가 참여한 모임 리뷰 유무
+   public List<Map<String, Object>> mypageMoimReviewCount(Map<String, Object> map, HttpSession session) throws Exception;
+   
    //마이페이지 수정
    void mypageModify(Map<String, Object> map, HttpServletRequest request, HttpSession session) throws Exception;
 

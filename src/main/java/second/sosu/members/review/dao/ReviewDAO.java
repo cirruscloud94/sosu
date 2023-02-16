@@ -11,71 +11,71 @@ import second.sosu.common.dao.AbstractDAO;
 public class ReviewDAO extends AbstractDAO {
 
 //	리뷰 리스트
-	@SuppressWarnings("unchecked") 
+	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> reviewList(Map<String, Object> map) throws Exception {
-		
-		return(List<Map<String, Object>>)selectList("review.reviewList", map); 
+
+		return (List<Map<String, Object>>) selectList("review.reviewList", map);
 	}
-	
+
 //	리뷰 상세보기
-	@SuppressWarnings("unchecked") 
+	@SuppressWarnings("unchecked")
 	public Map<String, Object> reviewDetail(Map<String, Object> map) throws Exception {
-		
-		return (Map<String, Object>)selectOne("review.reviewDetail", map);
+
+		return (Map<String, Object>) selectOne("review.reviewDetail", map);
 	}
-	
+
 //	리뷰 상세보기(사진)
-	@SuppressWarnings("unchecked") 
+	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> reviewPhotoList(Map<String, Object> map) throws Exception {
-		
-		return(List<Map<String, Object>>)selectList("review.reviewPhotoList", map); 
+
+		return (List<Map<String, Object>>) selectList("review.reviewPhotoList", map);
 	}
+
 //	리뷰 상세보기(프로필 사진)	
-	@SuppressWarnings("unchecked") 
+	@SuppressWarnings("unchecked")
 	public Map<String, Object> memberProfile(Map<String, Object> map) throws Exception {
-		
-		return (Map<String, Object>)selectOne("file.memberProfile", map);
+
+		return (Map<String, Object>) selectOne("file.memberProfile", map);
 	}
-	
+
 //	리뷰 후기 개수
-	@SuppressWarnings("unchecked") 
+	@SuppressWarnings("unchecked")
 	public Map<String, Object> reviewAllListCount(Map<String, Object> map) throws Exception {
-		
-		return (Map<String, Object>)selectOne("review.reviewAllListCount", map);
+
+		return (Map<String, Object>) selectOne("review.reviewAllListCount", map);
 	}
-	
+
 //	리뷰 작성
 	public void insertReview(Map<String, Object> map) throws Exception {
-		
+
 		insert("review.insertReview", map);
 	}
-	
+
 //	리뷰 사진 파일 등록
 	public void imgInsert(Map<String, Object> map) throws Exception {
 		insert("file.imgInsert", map);
 	}
-	
+
 //	리뷰 수정
 	public void updateReview(Map<String, Object> map) throws Exception {
-		
+
 		update("review.updateReview", map);
 	}
-	
+
 //	리뷰 사진 파일 수정
 	public void updatePhotoReview(Map<String, Object> map) throws Exception {
 		update("review.updatePhotoReview", map);
 	}
+
 //	리뷰 사진 파일 수정
 	public void deletePhotoReview(Map<String, Object> map) throws Exception {
 		update("review.deletePhotoReview", map);
 	}
-	
+
 //	리뷰 삭제
 	public void deleteReview(Map<String, Object> map) throws Exception {
-		
+
 		update("review.deleteReview", map);
 	}
-	
-
 
 }

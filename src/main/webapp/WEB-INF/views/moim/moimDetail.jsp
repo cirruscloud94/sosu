@@ -110,10 +110,18 @@
       <!-- 0127기준 미완 방장 프로필 -->
       <%-- ${Detail.KPROFILE} --%>
       <img src="${pageContext.request.contextPath}/resources/assets/img/image/${f.F_SVNAME}" class="kingimg">
-      <form action="/members/usermypage.sosu" style="height: 35px;">
-              <input type="hidden" value="${Detail.M_NICKNAME}" name="M_NICKNAME">
-              <button type="submit" class="king">${Detail.M_NICKNAME}</button>
-        </form>
+      					<!-- 2/14 비회원시 로그인창으로 이동하는 기능 추가 -->
+      					<c:if test="${sessionss ne null}">
+                           <form action="/members/usermypage.sosu">
+                              <input type="hidden" value="${Detail.M_NICKNAME}" name="M_NICKNAME">
+                              <button type="submit" class="king">${Detail.M_NICKNAME}</button>
+                           </form>
+                        </c:if>   
+                        <c:if test="${sessionss eq null}">
+                           <form action="/members/loginform.sosu">
+                              <button type="submit" onclick="alert('로그인 창으로 이동합니다')">${Detail.M_NICKNAME}</button>
+                           </form>
+                        </c:if>
         <span class="ks"><fmt:formatDate value="${Detail.MO_REGDATE}" pattern="yyyy/MM/dd" /> 개설</span>
    </div>
          <hr>
@@ -145,10 +153,20 @@
                   <input type="hidden" value="${m.M_IDX}" name="M_IDX" id = "pmidx${status.index}">
                      <tr align="center">
                         <td>${m.PROFILE}</td>
-                        <td><form action="/members/usermypage.sosu">
+                        <td>
+                        <!-- 2/14 비회원시 로그인창으로 이동하는 기능 추가 -->
+                        <c:if test="${sessionss ne null}">
+                           <form action="/members/usermypage.sosu">
                               <input type="hidden" value="${m.M_NICKNAME}" name="M_NICKNAME">
                               <button type="submit">${m.M_NICKNAME}</button>
-                           </form></td>
+                           </form>
+                        </c:if>   
+                        <c:if test="${sessionss eq null}">
+                           <form action="/members/loginform.sosu">
+                              <button type="submit" onclick="alert('로그인 창으로 이동합니다')">${m.M_NICKNAME}</button>
+                           </form>
+                        </c:if>
+                           </td>
                         <c:if test="${sessionss eq Detail.M_IDX}">
                            <td>
                               <form action=/moim/moimMemberBan.sosu>

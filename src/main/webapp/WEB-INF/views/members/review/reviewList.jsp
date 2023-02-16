@@ -10,9 +10,123 @@
 <link href="/resources/assets/vendor/aos/aos.css" rel="stylesheet">
 <link href="/resources/css/list.css" rel="stylesheet">
 <script src="/resources/js/review.js"></script>
+<style>
+.info {
+	display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile {
+	flex: 0 0 auto;
+    margin-right: 14px;
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
+    overflow: hidden;
+}
+
+.info_notPhoto > div:last-child {
+    -webkit-box-flex: 1;
+    flex: 1 1 auto;
+}
+
+.info_notPhoto {
+	margin-right: auto;
+}
+
+.name {
+	font-weight: bold;
+    font-size: 20px;
+    line-height: 12px;
+    margin-bottom: 10px;
+}
+
+.info_SD {
+	display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.starpoint {
+	display: flex;
+    flex-flow: row nowrap;
+}
+
+.review_date {
+	margin-left: 6px;
+    line-height: 10px;
+    color: rgb(155, 155, 155);
+    font-size: 10px;
+}
+
+.rv_img {
+	width: 285px;
+	height: 285px;
+	margin-bottom: 15pt;
+}
+
+.rv_img img {
+	width: 100%;
+	height: 100%;
+}
+
+.review_profile {
+   border-radius: 100%;
+   object-fit: cover;
+   object-position: top;
+   width: 46px;
+   height: 46px;
+}
+
+.join_moim {
+	color: rgb(155, 155, 155);
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.join_moim > div {
+    margin-bottom: 10px;
+    line-height: 10px;
+    font-size: 15px;
+}
+
+.title_moim {
+	cursor: pointer;
+    color: inherit;
+}
+
+.AVGstarpoint {
+	margin-left: 6px;
+	margin-bottom: 30px;
+    line-height: 10px;
+    color: rgb(155, 155, 155);
+    font-size: 30px;
+    text-align: center;
+}
+
+.h1_review {
+	margin-left: 6px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.contents {
+	font-size: 17px;
+	white-space: pre-line;
+}
+
+.reviewHeader {
+	
+}
+</style>
 <main class="container" style="margin-top: 75px;">
 	<article>
-		<section class="row gy-5" style="margin-bottom: 90px;">
+		<section>
 			<div class="container">
 				<div class="row gy-5">
 					<div class="col">
@@ -45,12 +159,16 @@
 				<div>
 					<h1 class="h1_review">후기 ${review_count.RVC}개 있어요!</h1>
 					<div class="AVGstarpoint">
+						평균&nbsp; 
 						<c:forEach begin="1" end="${((review_count.AVGSP*10)-(review_count.AVGSP*10%10))/10}">⭐</c:forEach>
 						<span>&nbsp;${review_count.AVGSP}</span>
 					</div>
 				</div>
 				<hr>
 			</div>
+		</section>
+		
+		<section class="row gy-5" style="margin-bottom: 90px;">
 			<c:choose>
 				<c:when test="${detailList[0].TOTAL_COUNT != 0}">
 					<c:forEach items="${detailList}" var="r">
@@ -63,27 +181,30 @@
 								<input type="hidden" name="MO_IDX" id="MO_IDX" value="${r.MO_IDX}">
 								<input type="hidden" class="review_regdate" name="RV_REGDATE" id="RV_REGDATE" value="${r.RV_REGDATE}">
 								<br/>
+								<c:if test="${not empty r.F_SVNAME}">
+									<div class="rv_img"><img src="/resources/img/upload/${r.F_SVNAME}"></div>
+								</c:if>
 								<div class="info">
-									<%-- <div class="profile">
-										<img class="review_profile" src="/resources/img/profile/${m_map.PROFILE}">
-									</div> --%>
+									<div class="profile">
+										<%-- <c:forEach items="" var=""> --%>
+											<img class="review_profile" src="/resources/img/profile/base_m.png">
+										<%-- </c:forEach> --%>
+									</div>
 									
-									<div>
-										<div>${r.M_NICKNAME}</div>
+									<div class="info_notPhoto">
+										<div class="name">${r.M_NICKNAME}</div>
 										<div class="info_SD">
 											<div class="starpoint">
 												<c:forEach begin="1" end="${r.RV_STAR}">⭐</c:forEach>
 											</div>
 											<div class="review_date"></div>
-											<span>${r.RV_CONTENT}</span>
 										</div>
 									</div>
 								</div>
-								${r.MO_TITLE}
-								<c:if test="${not empty r.F_SVNAME}">
-									<div class="rv_img"><img src="/resources/img/upload/${r.F_SVNAME}"></div>
-								</c:if>
-								<hr>
+								<div class="contents">${r.RV_CONTENT}</div>
+								<div class="join_moim">
+									<div class="title_moim">${r.MO_TITLE}</div>
+								</div>
 							</div>
 						</div>
 					</c:forEach>
