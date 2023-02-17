@@ -49,13 +49,9 @@ public class ReviewController {
 		
 		List<Map<String, Object>> list = reviewService.reviewPhotoList(commandMap.getMap());
 		
-//		Map<String, Object> m_map = reviewService.memberProfile(commandMap.getMap());
-		
 		mv.addObject("map", map);
 		
 		mv.addObject("list", list);
-		
-//		mv.addObject("m_map", m_map);
 		
 		return mv;
 	}
@@ -80,17 +76,9 @@ public class ReviewController {
 		
 		Map<String, Object> map = reviewService.reviewAllListCount(commandMap.getMap());
 		
-//		List<Map<String, Object>> p_list = reviewService.reviewPhotoList(commandMap.getMap());
-		
-//		Map<String, Object> m_map = reviewService.memberProfile(commandMap.getMap());
-		
 		mv.addObject("detailList", list);
 		
 		mv.addObject("review_count", map);
-		
-//		mv.addObject("list", p_list);
-		
-//		mv.addObject("m_map", m_map);
 		
 		return mv;
 	}

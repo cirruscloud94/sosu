@@ -310,6 +310,8 @@
       AND
               R.RV_DEL_YN = 'N'
       AND
+      		  F_DEL_YN = 'N'	
+      AND
               F.F_ARTICLE(+) = R.RV_IDX
       AND   
               F.F_MAIN_YN(+) = 'Y'

@@ -9,14 +9,14 @@
 <main class="container">
 	<article>
 		<form action="/members/reviewForm.sosu" method="post" name="insertReview" id="insertReview" enctype="multipart/form-data" onsubmit="return check()" >
-			<h1>리뷰 작성하기</h1>
+			<h1>${MO_TITLE}</h1>
 			
 			<fieldset>
-			    <input type="radio" name="RV_STAR" value="5" id="rate1"><label for="rate1">⭐</label>
-			    <input type="radio" name="RV_STAR" value="4" id="rate2"><label for="rate2">⭐</label>
-			    <input type="radio" name="RV_STAR" value="3" id="rate3"><label for="rate3">⭐</label>
-			    <input type="radio" name="RV_STAR" value="2" id="rate4"><label for="rate4">⭐</label>
-			    <input type="radio" name="RV_STAR" value="1" id="rate5"><label for="rate5">⭐</label>
+			    <input type="radio" name="RV_STAR" value="5" id="rate1"><label class="starp" for="rate1">⭐</label>
+			    <input type="radio" name="RV_STAR" value="4" id="rate2"><label class="starp" for="rate2">⭐</label>
+			    <input type="radio" name="RV_STAR" value="3" id="rate3"><label class="starp" for="rate3">⭐</label>
+			    <input type="radio" name="RV_STAR" value="2" id="rate4"><label class="starp" for="rate4">⭐</label>
+			    <input type="radio" name="RV_STAR" value="1" id="rate5"><label class="starp" for="rate5">⭐</label>
 			</fieldset>
 			
 			<h3>제목</h3>
@@ -35,17 +35,21 @@
 			<input type="hidden" name="F_TABLE" value="${F_TABLE}">
 			
 			<div id="fileDiv">
-				<p>	<!-- accept로 이미지파일 확장자 제한 가능 -->
+				<div class="filebox">	<!-- accept로 이미지파일 확장자 제한 가능 -->
+					<input class="upload-name-main" value="썸네일첨부" placeholder="썸네일첨부">
+					<label for="file" class="filesearch">파일찾기</label>
 					<input type="file" id="file" name="mainIamge" accept="image/jpeg, image/png, image/jpg">
-					<input type="file" id="file" name="file_0" accept="image/jpeg, image/png, image/jpg">
-					<a href="#this" class="btn" id="delete" name="delete">삭제</a>
-				</p>
+					
+					<input class="upload-name" value="파일첨부" placeholder="파일첨부">
+					<label for="file_0" class="filesearch">파일찾기</label>
+					<input type="file" id="file_0" name="file_0" accept="image/jpeg, image/png, image/jpg">
+				</div>
 			</div>
 
 			<br/>
 			<br/>
-			<a href="#this" class="btn" id="addFile">파일 추가</a>
-			<a href="/members/mypage.sosu" class="btn">취소</a><!-- 마이페이지 URL  -->
+			<a href="#this" class="btn_a" id="addFile">파일 추가</a>
+			<a href="/members/mypage.sosu" class="btn_a">취소</a><!-- 마이페이지 URL  -->
 			<button class="submit">등록</button>
 		</form>
 	</article>
@@ -68,8 +72,11 @@
 	});
 
 	function fn_addFile() {
-		var str = "<p><input type='file' name='file_" + (gfv_count++)
-				+ "'><a href='#this' class='btn' name='delete'>삭제</a></p>";
+		var str = "<div class='filebox'>" + 
+				"<input class='upload-name' value='파일첨부' placeholder='파일첨부'>" +
+				"<label for='file_0' class='filesearch'>파일찾기</label>" +
+				"<input type='file' name='file_" + (gfv_count++) + "' accept='image/jpeg, image/png, image/jpg'>" +
+				"<a href='#this' class='btn_a' name='delete'>삭제</a></div>";
 		$("#fileDiv").append(str);  //<<div id="fileDiv">에 변수 str의 값을 추가
 		$("a[name='delete']").on("click", function(e) {
 			e.preventDefault();
@@ -80,4 +87,14 @@
 	function fn_deleteFile(obj) {
 		obj.parent().remove(); //this의 바로 위의 요소(<p>태그)를 삭제
 	}
+	
+	$("#file").on('change',function(){
+		  var fileName = $("#file").val();
+		  $(".upload-name-main").val(fileName);
+	});
+	
+	$("#file_0").on('change',function(){
+		  var fileNames = $("#file_0").val();
+		  $(".upload-name").val(fileNames);
+	});
 </script>

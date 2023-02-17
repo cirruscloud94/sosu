@@ -17,11 +17,11 @@
 		
 		<fieldset>
 		    <legend>별점을 선택해주세요</legend>
-		    <input type="radio" name="RV_STAR" value="5" id="rate1"><label for="rate1">⭐</label>
-		    <input type="radio" name="RV_STAR" value="4" id="rate2"><label for="rate2">⭐</label>
-		    <input type="radio" name="RV_STAR" value="3" id="rate3"><label for="rate3">⭐</label>
-		    <input type="radio" name="RV_STAR" value="2" id="rate4"><label for="rate4">⭐</label>
-		    <input type="radio" name="RV_STAR" value="1" id="rate5"><label for="rate5">⭐</label>
+		    <input type="radio" name="RV_STAR" value="5" id="rate1"><label class="starp" for="rate1">⭐</label>
+		    <input type="radio" name="RV_STAR" value="4" id="rate2"><label class="starp" for="rate2">⭐</label>
+		    <input type="radio" name="RV_STAR" value="3" id="rate3"><label class="starp" for="rate3">⭐</label>
+		    <input type="radio" name="RV_STAR" value="2" id="rate4"><label class="starp" for="rate4">⭐</label>
+		    <input type="radio" name="RV_STAR" value="1" id="rate5"><label class="starp" for="rate5">⭐</label>
 		</fieldset>
 		
 		<h3>제목</h3>
@@ -42,29 +42,36 @@
 		
 		<div id="fileDiv">
 		<c:forEach items="${list}" varStatus="m" var="r">
-			<p> <!-- accept로 이미지파일 확장자 제한 가능 -->
+			<div class="filebox"> <!-- accept로 이미지파일 확장자 제한 가능 -->
 			
-				<!-- 메인사진  -->
-				<c:if test="${r.F_MAIN_YN == 'Y'}">
-				<a href="#this" id="name_${m.index}" name="name_${m.index}">${r.F_OGNAME}</a>
-				<input type="file" id="file" name="mainIamge" accept="image/jpeg, image/png, image/jpg">
-				(${r.F_SIZE}kb)
-				<a href="#this" class="btn" id="delete_${m.index}" name="delete_${m.index}">삭제</a>
+				<c:if test="${r.F_MAIN_YN eq 'Y'}">
+					<!-- 메인사진  -->
+					<input class="upload-name-main" id="name_${m.index}" name="name_${m.index}" value="${r.F_OGNAME}" placeholder="${r.F_OGNAME}">
+					<label class="filesearch" for="file">썸네일수정</label> 
+					<input type="file" id="file" name="mainIamge" accept="image/jpeg, image/png, image/jpg">
+					(${r.F_SIZE}kb)
+					<a href="#this" class="btn_a" id="delete_${m.index}" name="delete_${m.index}">삭제</a>
+					
+					<!-- 파일번호 -->
+					<input type="hidden" id="F_IDX" name="F_IDX_${m.index}" value="${r.F_IDX}"> 
+					<!-- 파일 태그 --> 
+					<input type="hidden" id="F_TABLE" name="F_TABLE_${m.index}" value="${r.F_TABLE}">
 				</c:if>
-				
-				<!-- 사진  -->
-				<c:if test="${r.F_MAIN_YN == 'N'}">
-				<a href="#this" id="name_${m.index}" name="name_${m.index}">${r.F_OGNAME}</a>
-				<input type="file" id="file_0" name="file_0" accept="image/jpeg, image/png, image/jpg"> 
-				(${r.F_SIZE}kb) 
-				<a href="#this" class="btn" id="delete_${m.index}" name="delete_${m.index}">삭제</a>
+				 
+				<c:if test="${r.F_MAIN_YN ne 'Y'}">
+					<!-- 사진  -->
+					<input class="upload-name" id="name_${m.index}" name="name_${m.index}" value="${r.F_OGNAME}" placeholder="${r.F_OGNAME}">
+					<label for="file_0" class="filesearch">파일찾기</label>
+					<input type="file" id="file_0" name="file_0" accept="image/jpeg, image/png, image/jpg"> 
+					(${r.F_SIZE}kb) 
+					<a href="#this" class="btn_a" id="delete_${m.index}" name="delete_${m.index}">삭제</a>
+					
+					<!-- 파일번호 -->
+					<input type="hidden" id="F_IDX" name="F_IDX_${m.index}" value="${r.F_IDX}"> 
+					<!-- 파일 태그 --> 
+					<input type="hidden" id="F_TABLE" name="F_TABLE_${m.index}" value="${r.F_TABLE}">
 				</c:if>
-				
-				<!-- 파일번호 -->
-				<input type="hidden" id="F_IDX" name="F_IDX_${m.index}" value="${r.F_IDX}"> 
-				<!-- 파일 태그 --> 
-				<input type="hidden" name="F_TABLE" value="${r.F_TABLE}">
-			</p>
+			</div>
 		</c:forEach>
 		</div>
 		<br/>
@@ -98,10 +105,12 @@
 	});
 
 	function fn_addFile(){
-		var str = "<p>" +
+		var str = "<div class='filebox'>" +
+				"<input class='upload-name' id='name_${m.index}' name='name_${m.index}' value='첨부파일' placeholder='첨부파일'>"+
+				"<label for='file' class='filesearch'>파일찾기</label>" +
 				"<input type='file' id='file_"+(gfv_count)+"' name='file_"+(gfv_count)+"'>"+
 				"<a href='#this' class='btn_a' id='delete_"+(gfv_count)+"' name='delete_"+(gfv_count)+"'>삭제</a>" +
-			"</p>";
+			"</div>";
 		$("#fileDiv").append(str);
 		$("#delete_"+(gfv_count++)).on("click", function(e){ 
 			e.preventDefault();
@@ -112,4 +121,14 @@
 	function fn_deleteFile(obj) {
 		obj.parent().remove();
 	}
+	
+	$("#file").on('change',function(){
+		  var fileName = $("#file").val();
+		  $(".upload-name-main").val(fileName);
+	});
+	
+	$("#file_0").on('change',function(){
+		  var fileNames = $("#file_0").val();
+		  $(".upload-name").val(fileNames);
+	});
 </script>

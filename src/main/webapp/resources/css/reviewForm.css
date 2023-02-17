@@ -12,7 +12,7 @@ input #star { width:100%; }
 #insertReview input[type=radio]{
     display: none; /* 라디오박스 감춤 */
 }
-#insertReview label{
+#insertReview .starp{
     font-size: 3em; /* 이모지 크기 */
     color: transparent; /* 기존 이모지 컬러 제거 */
     text-shadow: 0 0 0 #f0f0f0; /* 새 이모지 색상 부여 */
@@ -78,7 +78,7 @@ button {
   padding: 0.5rem 1rem;
   
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: 1rem;
+  font-size: 23px;
   font-weight: 400;
   text-align: center;
   text-decoration: none;
@@ -118,6 +118,50 @@ button:focus {
   background: var(--button-hover-bg-color);
   outline: 0;
 }
+
 button:disabled {
   opacity: 0.5;
+}
+
+.filebox .upload-name {
+    display: inline-block;
+    height: 40px;
+    padding: 0 10px;
+    vertical-align: middle;
+    border: 1px solid #dddddd;
+    width: 50%;
+    color: #999999;
+    margin-bottom: 10px;
+}
+
+.filebox .upload-name-main {
+    display: inline-block;
+    height: 40px;
+    padding: 0 10px;
+    vertical-align: middle;
+    border: 1px solid #dddddd;
+    width: 50%;
+    color: #999999;
+    margin-bottom: 10px;
+}
+
+.filebox .filesearch {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #fff;
+    vertical-align: middle;
+    background-color: #999999;
+    cursor: pointer;
+    height: 20px;
+    margin-left: 10px;
+    font-size: 15px;
+}
+
+.filebox input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
 }

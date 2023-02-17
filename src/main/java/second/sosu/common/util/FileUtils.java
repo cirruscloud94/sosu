@@ -221,6 +221,12 @@ public class FileUtils {
 				listMap.put("F_OGNAME", originalFileName);
 				listMap.put("F_SVNAME", storedFileName);
 				listMap.put("F_SIZE", multipartFile.getSize());
+				listMap.put("F_TABLE", "R");
+				if(map.get("F_MAIN_YN") != "N") {
+					listMap.put("F_MAIN_YN", "Y");
+				} else {
+					listMap.put("F_MAIN_YN", "N");
+				}
 				list.add(listMap);
 			}
 			else{ // 기존에 첨부파일이 없는 경우

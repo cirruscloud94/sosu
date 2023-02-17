@@ -103,16 +103,17 @@
          <div class="row gy-5"  onclick="location.href='/review/${r.MO_CATEGORY}/${r.RV_IDX}.sosu'" style="cursor: pointer;">
          <input type="hidden" name="M_IDX" value="${r.RV_IDX}">
             <input type="hidden" name="MO_IDX" value="${r.M_IDX}">
-            	<c:choose>
-             	<c:when test="${not empty r.F_SVNAME}">
-                 <img
-                     src="${pageContext.request.contextPath}/resources/img/upload/${r.F_SVNAME}"
-                     alt="" style='width: 300px; height: 300px'>
-                 </c:when>
-                 <c:otherwise>
-                    <img src="/resources/img/icons/list.png"  style='width: 300px; height: 300px'>
-                 </c:otherwise>
-                 </c:choose> 
+            
+             <c:choose>	
+             	<c:when test="${not empty r.F_SVNAME}">	
+                 <img	
+                     src="${pageContext.request.contextPath}/resources/img/upload/${r.F_SVNAME}"	
+                     alt="" style='width: 300px; height: 300px'>	
+                 </c:when>	
+                 <c:otherwise>	
+                    <img src="/resources/img/icons/list.png"  style='width: 300px; height: 300px'>	
+                 </c:otherwise>	
+               </c:choose> 
                      <br />
                <p class="rmoim-title">${r.RV_TITLE}
                <span class="rdetail-cate">
@@ -155,6 +156,16 @@
      </div> 
       
      <div class="row gy-5"> 
+     	<div class="col" style="margin-top: 10px; margin-bottom: 20px;">
+      
+      <!-- 작성(개설) 버튼 -->
+      <%if(session.getAttribute("M_IDX")!=null){ %>
+      <div style="text-align: right;">
+         <button type="button" onclick="location.href='/freeboard/insertForm/{FR_CATEGORY}.sosu'" class="mrgbtn">글쓰기</button>
+      </div>
+      <% } %>
+            <hr>
+         </div>
       <!--============== 자유게시판 4개 ==============-->
       <c:choose>
       <c:when test="${fn:length(frlist) > 0 }">
@@ -163,13 +174,13 @@
          <span><a href="/freeboard/${MO_CATEGORY}.sosu" class="allb">전체보기</a></span>
       </p>
          <c:forEach items="${frlist}" var="f" end="3">
-            <div class="col-lg-3 menu-item" onclick="location.href='/freeboard/${f.FR_CATEGORY}/${f.FR_IDX}.sosu'">
-                <c:if test="${f.f_svname != null }">
+            <div class="col-lg-3 menu-item" onclick="location.href='/freeboard/${f.FR_CATEGORY}/${f.FR_IDX}.sosu'" style="cursor: pointer;">
+                <c:if test="${f.FF_SVNAME != '0' }">
                 <img
-                     src="${pageContext.request.contextPath}/resources/assets/img/image/${f.F_SVNAME }"
+                     src="${pageContext.request.contextPath}/resources/img/upload/${f.FF_SVNAME }"
                      alt="" style='width: 300px; height: 300px'>
                  </c:if>
-                 <c:if test="${f.f_svname == null }">
+                 <c:if test="${f.FF_SVNAME == '0' }">
                     <img src="/resources/img/icons/list.png"  style='width: 300px; height: 300px'>
                  </c:if> 
                      <br />

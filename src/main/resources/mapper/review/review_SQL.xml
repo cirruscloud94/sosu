@@ -46,7 +46,7 @@
         WHERE
         		F.F_TABLE(+) = 'R'
         AND 
-        		F.F_MAIN_YN(+) = 'N'
+        		F.F_MAIN_YN(+) = 'Y'
         AND 
         		F.F_ARTICLE(+) = R.RV_IDX
         AND 
@@ -72,7 +72,7 @@
                 F_SVNAME,
                 F_IDX,
                 F_OGNAME,
-                F_SIZE,
+                ROUND(F_SIZE/1024,1) AS F_SIZE,
 				F_TABLE
         FROM 
         		FILE_T
@@ -191,35 +191,6 @@
 		         #{RV_TITLE},
 		         'N',
 		         #{RV_STAR}
-      	)
-   
-    </insert>
-   
-    <!-- 리뷰 사진 파일 등록 -->
-    <insert id="insertPhotoReview" parameterType="hashmap">
-    	INSERT INTO FILE_T
-      	(
-	      		 F_IDX,
-				 F_TABLE,
-				 F_ARTICLE,
-				 F_OGNAME,
-				 F_SVNAME,
-				 F_SIZE,
-				 F_MAIN_YN,
-				 F_DEL_YN,
-				 F_REG_DATE
-      	)
-      	VALUES
-      	(
-		         F_IDX.NEXTVAL, 
-		         'R', 
-		         #{F_ARTICLE}, 
-		         #{F_OGNAME}, 
-		         #{F_SVNAME}, 
-		         #{F_SIZE}, 
-		         'N', 
-		         'N', 
-		         sysdate
       	)
    
     </insert>
