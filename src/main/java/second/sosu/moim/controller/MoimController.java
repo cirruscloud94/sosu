@@ -31,26 +31,32 @@ public class MoimController {
    @RequestMapping(value = "/moim/{MO_CATEGORY}.sosu")
    @ResponseBody
    public ModelAndView moimList(@PathVariable String MO_CATEGORY,
-	   @RequestParam( value = "MO_REGION[]", required = false) List<String> MO_REGION,
-    CommandMap commandMap,
+         @RequestParam(value = "MO_REGION[]", required = false) List<String> MO_REGIONS, CommandMap commandMap,
          HttpSession session) throws Exception {
-	     
-	      commandMap.getMap().put("MO_CATEGORY", MO_CATEGORY);
-	      
-	      if(MO_REGION != null) {
-	      System.out.println("aaaaaaaaaaaaaaaa"+MO_REGION);
-	      commandMap.getMap().put("MO_REGION", MO_REGION);	  
-	      }
 
-	      ModelAndView mv = new ModelAndView("/moim/moimlist");
-	      mv.setViewName("moim/moimlist");
+      commandMap.getMap().put("MO_CATEGORY", MO_CATEGORY);
 
-	      List<Map<String, Object>> list = moimService.moimList(commandMap.getMap(), session, commandMap);
-	      
-	      mv.addObject("list", list);
-	      mv.addObject("sessionss", session.getAttribute("M_IDX"));
+      ModelAndView mv = new ModelAndView("/moim/moimlist");
+      mv.setViewName("moim/moimlist");
 
-	      return mv;
+      List<Map<String, Object>> list = new ArrayList<>();
+
+      if (MO_REGIONS != null) {
+         System.out.println("바보" + MO_REGIONS);
+         System.out.println("바보22" + MO_REGIONS.get(0));
+         for (int i = 0; i < MO_REGIONS.size(); i++) {
+
+            commandMap.put("MO_REGION", MO_REGIONS.get(i));
+            list.add(moimService.moimList(commandMap.getMap(), session, commandMap).get(0));
+         }
+         mv.addObject("list", list);
+      } else {
+         mv.addObject("list", moimService.moimList(commandMap.getMap(), session, commandMap));
+      }
+
+      mv.addObject("sessionss", session.getAttribute("M_IDX"));
+
+      return mv;
    }
 
    // 모임 상세보기
@@ -153,17 +159,20 @@ public class MoimController {
       return mv;
    }
 
-// 모임작성 구동
+   // 모임작성 구동
    @RequestMapping("/moim/moimRegister.pro")
    public ModelAndView moimRegister(@RequestParam("MO_CATEGORY") String MO_CATEGORY, CommandMap commandMap, HttpSession session, MultipartHttpServletRequest multiRequest) throws Exception {
-	   // ajax로 받아오기 위해 @RequestParam 사용
-	  
+      // ajax로 받아오기 위해 @RequestParam 사용
+      
       commandMap.put("M_IDX", Integer.parseInt(String.valueOf(session.getAttribute("M_IDX"))));
       // 개행을 위한...(구현 안됨)
       String MO_DETAIL = (String) (commandMap.getMap().replace("\r\n", "<br>"));
       commandMap.setMap(MO_DETAIL);
+
       ModelAndView mv = new ModelAndView("redirect:/moim/" + MO_CATEGORY + ".sosu");
+
       moimService.moimRegister(commandMap.getMap(), session, multiRequest);
+
       return mv;
    }
 
@@ -200,7 +209,6 @@ public class MoimController {
       return mv;
    }
    
-
    // 모임 삭제
    @RequestMapping("/moim/moimDelete.sosu")
    public ModelAndView moimDelete(CommandMap commandMap) throws Exception {

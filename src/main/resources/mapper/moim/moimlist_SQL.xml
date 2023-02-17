@@ -15,10 +15,10 @@
 		AND F.F_TABLE(+) = 'M'
 		AND M.MO_CATEGORY = #{MO_CATEGORY}
 		AND F.F_ARTICLE(+) = M.MO_IDX
-		<if test="MO_REGION != null">
+		<if test="MO_REGIONS != null">
 			AND M.MO_REGION IN
-			<foreach collection="MO_REGION" item = "item" open="(" close=")" separator=",">
-				#{item}
+			<foreach collection="MO_REGIONS" item = "MO_REGIONS" open="(" close=")" separator=",">
+				#{MO_REGIONS}
 			</foreach>
 		</if>
 		ORDER BY M.MO_CLOSE_YN, M.MO_REGDATE DESC
@@ -230,17 +230,6 @@
         ]]>
 	</update>
 
-	<!-- 참여한 모임 탈퇴하기 -->
-	<update id="moimExit" parameterType="hashmap">
-       <![CDATA[
-      UPDATE PARTYMEM
-      SET 
-      P_BAN_YN = 'N',
-      P_FINAL_YN = 'N'
-      WHERE M_IDX = #{M_IDX}
-        ]]>
-	</update>
-
 
 	<!-- 모임 스크랩 수 -->
 	<select id="moimZzimCount" parameterType="hashmap"
@@ -338,6 +327,17 @@
       WHERE MO_IDX = #{MO_IDX}
        ]]>
 	</update>
+	
+	<!-- 참여한 모임 탈퇴하기  -->
+   <update id="moimExit" parameterType="hashmap">
+       <![CDATA[
+      UPDATE PARTYMEM
+      SET 
+      P_BAN_YN = 'N',
+      P_FINAL_YN = 'N'
+      WHERE M_IDX = #{M_IDX}
+        ]]>
+   </update>
 
 	<!-- 모임 삭제 -->
 	<update id="moimDelete" parameterType="hashmap">
@@ -347,6 +347,26 @@
       WHERE MO_IDX = #{MO_IDX}
       ]]>
 	</update>
+	
+	<!-- 모임 메인 이미지 등록하기 -->
+   <insert id="MoimMainImg" parameterType="hashmap">
+       <![CDATA[
+      INSERT INTO FILE_T(F_IDX, F_TABLE, F_ARTICLE, F_OGNAME, F_SVNAME, F_SIZE,
+      F_MAIN_YN, F_DEL_YN, F_REG_DATE)
+      VALUES (F_IDX.NEXTVAL, 'M', #{F_ARTICLE}, #{F_OGNAME}, #{F_SVNAME},
+      #{F_SIZE}, 'Y', 'N', SYSDATE)
+       ]]>
+   </insert>
+   
+   <!-- 모임 하단 이미지 등록하기 -->
+   <insert id="MoimMainImg2" parameterType="hashmap">
+       <![CDATA[
+      INSERT INTO FILE_T(F_IDX, F_TABLE, F_ARTICLE, F_OGNAME, F_SVNAME, F_SIZE,
+      F_MAIN_YN, F_DEL_YN, F_REG_DATE)
+      VALUES (F_IDX.NEXTVAL, 'M', #{F_ARTICLE}, #{F_OGNAME}, #{F_SVNAME},
+      #{F_SIZE}, 'N', 'N', SYSDATE)
+       ]]>
+   </insert>
 
 </mapper>
       

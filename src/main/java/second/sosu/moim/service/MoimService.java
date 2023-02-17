@@ -3,7 +3,6 @@ package second.sosu.moim.service;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -24,10 +23,6 @@ public interface MoimService {
 
    // 모임참여에 대기중인 인원 리스트
    List<Map<String, Object>> moimMemberBanList(Map<String, Object> map, CommandMap commandMap) throws Exception;
-   
-// 모임참여에 대기중인 인원 리스트
-   List<Map<String, Object>> moimMemberDropList(Map<String, Object> map, CommandMap commandMap) throws Exception;
-
 
    // 모임 참여승인
    void moimWaitApprove(Map<String, Object> map) throws Exception;

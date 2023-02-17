@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import second.sosu.common.util.FileUtils;
 import second.sosu.members.review.dao.ReviewDAO;
 
 
@@ -20,18 +22,15 @@ public class ReviewServiceImpl implements ReviewService{
 	
 	@Resource(name = "reviewDAO")
 	private ReviewDAO reviewDAO;
-
-	//리뷰 페이징 리스트
-//	@Override 
-//	public Map<String, Object> selectReview(Map<String, Object> map, HttpSession session) throws Exception {
-//		
-//		return reviewDAO.selectReview(map);
-//	}
 	
+	@Resource(name="fileUtils")
+	private FileUtils fileUtils;
+	
+//	리뷰 전체 보기
 	@Override 
-	public List<Map<String, Object>> selectAllReview(Map<String, Object> map) throws Exception {
+	public List<Map<String, Object>> reviewList(Map<String, Object> map) throws Exception {
 		
-		return reviewDAO.selectAllReview(map);
+		return reviewDAO.reviewList(map);
 	}
 	
 //	리뷰 상세보기
@@ -40,19 +39,67 @@ public class ReviewServiceImpl implements ReviewService{
 		
 		return reviewDAO.reviewDetail(map);
 	}
-
+	
+//	리뷰 상세보기(사진)
+	@Override 
+	public List<Map<String, Object>> reviewPhotoList(Map<String, Object> map) throws Exception {
+		
+		return reviewDAO.reviewPhotoList(map);
+	}
+	
+//	리뷰 상세보기(프로필사진)
 	@Override
-	public void insertReview(Map<String, Object> map) throws Exception {
+	public Map<String, Object> memberProfile(Map<String, Object> map) throws Exception {
+		
+		return reviewDAO.memberProfile(map);
+	}
+	
+//	리뷰 상세보기 후기 개수
+	public Map<String, Object> reviewAllListCount(Map<String, Object> map) throws Exception {
+		
+		return reviewDAO.reviewAllListCount(map);
+	}
+	
+//	리뷰 작성(이미지)
+	@Override
+	public void insertReview(Map<String, Object> map, HttpServletRequest request) throws Exception {
 		
 		reviewDAO.insertReview(map);
+		
+		List<Map<String, Object>> list = fileUtils.fileInsert(map, request);
+		
+		for(int i=0, size=list.size(); i<size; i++) {
+			
+			reviewDAO.imgInsert(list.get(i));
+		}
 	}
 
+
+//	리뷰 수정
 	@Override
-	public void updateReview(Map<String, Object> map) throws Exception {
+	public void updateReview(Map<String, Object> map, HttpServletRequest request) throws Exception {
 		
 		reviewDAO.updateReview(map);
+		
+		reviewDAO.deletePhotoReview(map);
+		
+		List<Map<String,Object>> list = fileUtils.fileUpdate(map, request);
+		
+		Map<String,Object> tempMap = null;
+		
+		for(int i=0, size=list.size(); i<size; i++){
+			tempMap = list.get(i);
+			
+			if(tempMap.get("IS_NEW").equals("Y")){
+				reviewDAO.imgInsert(tempMap);
+			}
+			else{
+				reviewDAO.updatePhotoReview(tempMap);
+			}
+		}
 	}
-
+	
+//	리뷰 삭제
 	@Override
 	public void deleteReview(Map<String, Object> map) throws Exception {
 		
