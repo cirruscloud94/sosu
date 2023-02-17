@@ -9,8 +9,6 @@
 <link href="/resources/css/list.css" rel="stylesheet">
 <link href="/resources/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="/resources/assets/vendor/aos/aos.css" rel="stylesheet">
-<link href="/resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
 <meta charset="UTF-8">
 </head>
 <body>
@@ -29,21 +27,18 @@
                <option value="/etc.sosu" <c:if test="${MO_CATEGORY == 'etc'}">selected="selected"</c:if>>기타</option>
             
             </select>
-         
-               <div class="reg">
-                  <span>전체</span> <span>중부</span> <span>동부</span> <span>서부</span> <span>남부</span>
-                  <span>북부</span>
-               </div>
-      
-               <div class="filter">
-                  <input type="datetime-local">
-               </div>
-            
             </div>
          </div>
       </div>
       <div class="row gy-5">
-         <div class="col" style="margin-top: 20px; margin-bottom: 20px;">
+         <div class="col" style="margin-top: 10px; margin-bottom: 20px;">
+      
+      <!-- 작성(개설) 버튼 -->
+      <%if(session.getAttribute("M_IDX")!=null){ %>
+      <div style="text-align: right;">
+         <button type="button" onclick="location.href='/moim/moimRegister.sosu'" class="mrgbtn">모임 개설하기</button>
+      </div>
+      <% } %>
             <hr>
          </div>
       </div>
@@ -109,14 +104,16 @@
          <input type="hidden" name="M_IDX" value="${r.RV_IDX}">
             <input type="hidden" name="MO_IDX" value="${r.M_IDX}">
             
-             <c:if test="${r.f_svname != null }">
-                 <img
-                     src="${pageContext.request.contextPath}/resources/assets/img/image/${r.F_SVNAME }"
-                     alt="" style='width: 300px; height: 300px'>
-                 </c:if>
-                 <c:if test="${r.f_svname == null }">
-                    <img src="/resources/img/icons/list.png"  style='width: 300px; height: 300px'>
-                 </c:if> 
+             <c:choose>	
+             	<c:when test="${not empty r.F_SVNAME}">	
+                 <img	
+                     src="${pageContext.request.contextPath}/resources/img/upload/${r.F_SVNAME}"	
+                     alt="" style='width: 300px; height: 300px'>	
+                 </c:when>	
+                 <c:otherwise>	
+                    <img src="/resources/img/icons/list.png"  style='width: 300px; height: 300px'>	
+                 </c:otherwise>	
+               </c:choose> 
                      <br />
                <p class="rmoim-title">${r.RV_TITLE}
                <span class="rdetail-cate">
@@ -139,6 +136,8 @@
                   ${r.M_NICKNAME}
                   </span>
                   <span class="hhh" style="margin-top: -7px;">♡</span>
+                  <!-- 찜 수 -->
+                  <%-- <span class="hhh" style="margin-top: -7px;">${r.RZ_COUNT}</span> --%>
                </p>   
             </div>
          </div>
@@ -157,20 +156,31 @@
      </div> 
       
      <div class="row gy-5"> 
+     	<div class="col" style="margin-top: 10px; margin-bottom: 20px;">
+      
+      <!-- 작성(개설) 버튼 -->
+      <%if(session.getAttribute("M_IDX")!=null){ %>
+      <div style="text-align: right;">
+         <button type="button" onclick="location.href='/freeboard/insertForm/{FR_CATEGORY}.sosu'" class="mrgbtn">글쓰기</button>
+      </div>
+      <% } %>
+            <hr>
+         </div>
       <!--============== 자유게시판 4개 ==============-->
       <c:choose>
       <c:when test="${fn:length(frlist) > 0 }">
       <p class="ct">자유게시판
+      <!-- 작성(개설) 버튼 -->
          <span><a href="/freeboard/${MO_CATEGORY}.sosu" class="allb">전체보기</a></span>
       </p>
          <c:forEach items="${frlist}" var="f" end="3">
-            <div class="col-lg-3 menu-item" onclick="location.href='/freeboard/${f.MO_CATEGORY}/${f.FR_IDX}.sosu'">
-                <c:if test="${f.f_svname != null }">
+            <div class="col-lg-3 menu-item" onclick="location.href='/freeboard/${f.FR_CATEGORY}/${f.FR_IDX}.sosu'" style="cursor: pointer;">
+                <c:if test="${f.FF_SVNAME != '0' }">
                 <img
-                     src="${pageContext.request.contextPath}/resources/assets/img/image/${f.F_SVNAME }"
+                     src="${pageContext.request.contextPath}/resources/img/upload/${f.FF_SVNAME }"
                      alt="" style='width: 300px; height: 300px'>
                  </c:if>
-                 <c:if test="${f.f_svname == null }">
+                 <c:if test="${f.FF_SVNAME == '0' }">
                     <img src="/resources/img/icons/list.png"  style='width: 300px; height: 300px'>
                  </c:if> 
                      <br />
@@ -205,166 +215,7 @@
       </div>
        </c:otherwise>
       </c:choose>
-      
-      
       </div>
    </div>
-
-               
-               
-                  <%-- <tr align="center"
-                     onclick="location.href='/moim/${m.MO_CATEGORY}/${m.MO_IDX}.sosu'">
-                     <td>${m.MO_IDX}<input type="hidden" name="MO_IDX"
-                        value="${m.MO_IDX}"></td>
-                     <td>${m.MO_TITLE}<input type="hidden" name="M_IDX"
-                        value="${m.M_IDX}"></td>
-                     <td>${m.MO_REGION}</td>
-                     <td>${m.MO_DETAILREGION}</td>
-                     <td>${m.MOMEM_COUNT}</td>
-                     <td>${m.MZ_COUNT}</td>
-                     <c:if test="${sessionss ne null}">
-                        <td>${m.MZ_CHECK}</td>
-                     </c:if>
-                     <c:if test="${sessionScope.M_IDX eq null}">
-                     </c:if>
-                     <td>${m.MF_SVNAME}</td>
-                  </tr> --%>
-            
-
-         <%-- <div>
-            <table class="table">
-               <thead>
-                  <tr align="center">
-                     <th>모임번호</th>
-                     <th>모임제목</th>
-                     <th>모임지역</th>
-                     <th>모임상세지역</th>
-                     <th>현재참여인원</th>
-                     <th>스크랩수</th>
-                     <%
-                     if (session.getAttribute("M_IDX") != null) {
-                     %>
-                     <th>스크랩유무</th>
-                     <%
-                     } else {
-                     %>
-                     <%
-                     }
-                     %>
-                     <th>파일</th>
-                  </tr>
-               </thead>
-               <tbody>
-
-               </tbody>
-            </table>
-         </div> --%>
-
-
-         <!-- 리뷰 리스트 4개 -->
-         <%-- <table>
-            <thead>
-               <tr align="center">
-                  <th>리뷰번호</th>
-                  <th>리뷰사진</th>
-                  <th>모임이름</th>
-                  <th>별점</th>
-                  <th>작성자프사</th>
-                  <th>작성자</th>
-                  <th>좋아요 수</th>
-                  <%
-                  if (session.getAttribute("M_IDX") != null) {
-                  %>
-                  <th>좋아요 유무</th>
-                  <%
-                  } else {
-                  %>
-                  <%
-                  }
-                  %>
-                  <th>작성날짜</th>
-               </tr>
-            </thead>
-            <tbody>
-               <c:choose>
-                  <c:when test="${fn:length(relist) > 0 }">
-                     <c:forEach items="${relist}" var="r" end="4" varStatus="status">
-                        <tr align="center"
-                           onclick="location.href='/review/${r.MO_CATEGORY}/${r.RV_IDX}.sosu'">
-                           <td>${r.RV_IDX}<input type="hidden" value="${r.RV_IDX}"></td>
-                           <td>${r.RF_SVNAME}<input type="hidden" value="${r.M_IDX}"></td>
-                           <td>${r.MO_TITLE}</td>
-                           <td>${r.RV_STAR}</td>
-                           <td>${r.PROFILE}</td>
-                           <td>${r.M_NICKNAME}</td>
-                           <td>${r.RZ_COUNT}</td>
-                           <c:if test="${sessionss ne null}">
-                              <td>${r.RZ_CHECK}</td>
-                           </c:if>
-                           <c:if test="${sessionScope.M_IDX eq null}">
-                           </c:if>
-                           <td>${r.RV_REGDATE}</td>
-                        </tr>
-                     </c:forEach>
-                  </c:when>
-                  <c:otherwise>
-                     <tr>
-                        <td colspan="4">조회된 결과가 없습니다.</td>
-                     </tr>
-                  </c:otherwise>
-               </c:choose>
-            </tbody>
-         </table> --%>
-         <%-- <table>
-            <thead>
-               <tr align="center">
-                  <th>게시판번호</th>
-                  <th>게시판사진</th>
-                  <th>게시판제목</th>
-                  <th>작성자이름</th>
-                  <th>작성자프사</th>
-                  <th>좋아요 수</th>
-                  <%
-                  if (session.getAttribute("M_IDX") != null) {
-                  %>
-                  <th>스크랩유무</th>
-                  <%
-                  } else {
-                  %>
-                  <%
-                  }
-                  %>
-                  <th>작성날짜</th>
-               </tr>
-            </thead>
-            <tbody>
-               <c:choose>
-                  <c:when test="${fn:length(frlist) > 0 }">
-                     <c:forEach items="${frlist}" var="f" varStatus="status" end="3">
-                        <tr align="center"
-                           onclick="location.href='/freeboard/${f.MO_CATEGORY}/${f.FR_IDX}.sosu'">
-                           <td>${f.FR_IDX}<input type="hidden" value="${f.FR_IDX}"></td>
-                           <td>${f.FF_SVNAME}<input type="hidden" value="${f.M_IDX}"></td>
-                           <td>${f.FR_TITLE}</td>
-                           <td>${f.M_NICKNAME}</td>
-                           <td>${f.PROFILE}</td>
-                           <td>${f.FRZ_COUNT}</td>
-                           <c:if test="${sessionss ne null}">
-                              <td>${f.FZ_CHECK}</td>
-                           </c:if>
-                           <c:if test="${sessionScope.M_IDX eq null}">
-                           </c:if>
-                           <td>${f.FR_REGDATE}</td>
-                        </tr>
-                     </c:forEach>
-                  </c:when>
-                  <c:otherwise>
-                     <tr>
-                        <td colspan="4">조회된 결과가 없습니다.</td>
-                     </tr>
-                  </c:otherwise>
-               </c:choose>
-            </tbody>
-         </table> --%>
 </body>
 </html>

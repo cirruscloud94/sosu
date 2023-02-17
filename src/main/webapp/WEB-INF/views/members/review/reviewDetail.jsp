@@ -1,60 +1,63 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<script src="/resources/js/reviewDetail.js"></script>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui" %>
+    
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script src="/resources/js/review.js"></script>
+<link href="/resources/css/review.css" rel="stylesheet">
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
-<main>
-<input type="hidden" name = "MO_IDX" value="${detail.MO_IDX}">
-	<article class="container">
-	<h1>리뷰</h1>
-			<table>
-				<tbody>
-					<tr>
-						<th>카테고리</th>
-						<td>
-							<strong>${detail.MO_CATEGORY}</strong>
-							<input type="hidden" id="category" value="${detail.MO_CATEGORY}">	
-						</td>
-						<th>리뷰번호</th>
-						<td>
-							<strong>${detail.RV_IDX}</strong>
-							<input type="hidden" id="RV_IDX" value="${detail.RV_IDX}">	
-						</td>
-						<th>회원번호</th>
-						<td>
-							<strong>${detail.M_IDX}</strong>
-						</td>
-						<th>모임번호</th>
-						<td>
-							<strong>${detail.MO_IDX}</strong>
-						</td>
-						<th>제목</th>
-						<td>${detail.RV_TITLE}</td>
-					</tr>
-					<tr>
-						<th>등록날짜</th>
-						<td>${detail.RV_REGDATE}</td>
-					</tr>
-					<tr>
-						<th>별점</th>
-						<td>${detail.RV_STAR}</td>
-					</tr>
-					<tr>
-						<td>${detail.RV_CONTENT}</td>
-					</tr>
-				</tbody>
-			</table>
-			
-			<div align="center" id="btndiv">	
-			<a href="/review/${detail.MO_CATEGORY}.sosu" class="btn normal">목록으로</a>
-			
-			<a href="/reviewModify/${detail.MO_CATEGORY}/${detail.RV_IDX}.sosu" class="btn normal">수정하기</a>
-			
-			<a href="/review/${detail.MO_CATEGORY}.sosu" onclick="if(check()) move(this, 'in', 'RV_IDX', 'MO_IDX')">
-				삭제하기
-				<input type="hidden" name="MO_IDX" value="${detail.MO_IDX}">
-				<input type="hidden" name="RV_IDX" value="${detail.RV_IDX}">			
-			</a>
-			
-			</div>
+<main class="container">
+	<article>
+		<section>
+			<form action="/review/{MO_CATEGORY}.sosu" method="post" onsubmit="return confirm('삭제하시겠습니까?');">
+				<div class="reviewHeader">
+					<!-- input hidden 값 -->
+					<input type="hidden" name="MO_CATEGORY" id="mo_category" value="${MO_CATEGORY}">
+					<input type="hidden" name="RV_IDX" id="RV_IDX" value="${RV_IDX}">
+					<input type="hidden" name="M_IDX" id="M_IDX" value="${M_IDX}">
+					<input type="hidden" name="MO_IDX" id="MO_IDX" value="${map.MO_IDX}">
+					<input type="hidden" class="review_regdate" name="RV_REGDATE" id="RV_REGDATE" value="${map.RV_REGDATE}">
+					<input type="hidden" name="RV_M_IDX" id="RV_M_IDX" value="${map.M_IDX}">
+					<div class="info">
+						<div class="profile">
+							<div class="profile">
+								<img class="review_profile" src="/resources/img/profile/base_m.png">
+							</div>
+						</div>
+						<div class="info_notPhoto">
+							<div class="name">${map.M_NICKNAME}</div>
+							<div class="info_SD">
+								<div class="starpoint">
+									<c:forEach begin="1" end="${map.RV_STAR}">⭐</c:forEach>
+								</div>
+								<div class="review_date"></div>
+							</div>
+						</div>
+					</div>
+					<c:forEach items="${list}" var="f">
+						<c:if test="${f.F_TABLE eq 'R'}">
+							<div class="rv_img"><img class="rv" src="/resources/img/upload/${f.F_SVNAME}"></div>
+						</c:if>
+					</c:forEach>
+					<div class="contents">${map.RV_CONTENT}</div>
+				</div>
+				<div class="join_moim">
+					<div class="title_moim">${map.MO_TITLE}</div>
+				</div>
+				<div class="rv_btn">	
+					<a href="/review/${MO_CATEGORY}.sosu" class="btn_a">목록으로</a>
+					
+					<!-- 리뷰 작성자와 회원번호 값이 다를 경우(작성자 본인이 아닐경우 삭제, 수정버튼 사라짐) -->
+					<c:if test="${M_IDX == map.M_IDX}">
+					<a href="/reviewModify/${MO_CATEGORY}/${RV_IDX}.sosu" class="btn_a">수정하기</a>
+					<button class="submit warning">삭제</button>
+					</c:if>
+				</div>
+			</form>
+		</section>
 	</article>
 </main>

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -45,14 +47,17 @@ public class ReviewController {
 		
 		Map<String, Object> map = reviewService.reviewDetail(commandMap.getMap());
 		
-		mv.addObject("detail", map);
+		List<Map<String, Object>> list = reviewService.reviewPhotoList(commandMap.getMap());
+		
+		mv.addObject("map", map);
+		
+		mv.addObject("list", list);
 		
 		return mv;
 	}
 	
-	/** 리뷰 목록
+	/** 리뷰 전체보기 리스트
 	 * 
-	 * @param RV_IDX
 	 * @param MO_CATEGORY
 	 * @param commandMap
 	 * @return reviewList.jsp 경로 반환
@@ -67,14 +72,18 @@ public class ReviewController {
 		
 		mv.setViewName("members/review/reviewList");
 		
-		List<Map<String, Object>> list = reviewService.selectAllReview(commandMap.getMap());
+		List<Map<String, Object>> list = reviewService.reviewList(commandMap.getMap());
 		
-		mv.addObject("reviewList", list);
+		Map<String, Object> map = reviewService.reviewAllListCount(commandMap.getMap());
+		
+		mv.addObject("detailList", list);
+		
+		mv.addObject("review_count", map);
 		
 		return mv;
 	}
 	
-	/** 리뷰 작성폼
+	/** 리뷰 작성 폼
 	 * 
 	 * @category review
 	 * @param commandMap
@@ -82,11 +91,17 @@ public class ReviewController {
 	 * @author seungju han
 	 */
 	@GetMapping("/members/reviewForm.sosu")
-	public ModelAndView reviewForm(CommandMap commandMap) throws Exception {
+	public ModelAndView reviewForm(CommandMap commandMap, HttpSession session) throws Exception {
 		
 		ModelAndView mv = new ModelAndView("/members/review/reviewForm");
 		
 		mv.setViewName("members/review/reviewForm");
+		
+		String MO_IDX = (String)commandMap.get("MO_IDX");
+		String MO_TITLE = (String)commandMap.get("MO_TITLE");
+		
+		mv.addObject("MO_IDX", MO_IDX);
+		mv.addObject("MO_TITLE", MO_TITLE);
 		
 		return mv;
 	}
@@ -101,11 +116,11 @@ public class ReviewController {
 	 * @author seungju han
 	 */
 	@PostMapping("/members/reviewForm.sosu")
-	public ModelAndView reviewForm_insert(CommandMap commandMap) throws Exception {
+	public ModelAndView reviewForm_insert(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		
-		ModelAndView mv = new ModelAndView("redirect:/members/review/reviewDetail");
+		ModelAndView mv = new ModelAndView("redirect:/members/mypage.sosu");
 		
-		reviewService.insertReview(commandMap.getMap());
+		reviewService.insertReview(commandMap.getMap(), request);
 		
 		return mv;
 	}
@@ -130,7 +145,11 @@ public class ReviewController {
 		
 		Map<String, Object> map = reviewService.reviewDetail(commandMap.getMap());
 		
-		mv.addObject("reviewMap", map);
+		List<Map<String, Object>> list = reviewService.reviewPhotoList(commandMap.getMap());
+		
+		mv.addObject("map", map);
+		
+		mv.addObject("list", list);
 		
 		return mv;
 	}
@@ -143,19 +162,20 @@ public class ReviewController {
 	 */
 	
 	@PostMapping("/review/reviewModify.sosu")
-	public ModelAndView reviewModify_(@RequestParam("MO_CATEGORY") String MO_CATEGORY, CommandMap commandMap) throws Exception {
+	public ModelAndView reviewModify_(@RequestParam(value="MO_CATEGORY", required=false) String MO_CATEGORY, 
+			CommandMap commandMap, HttpServletRequest request) throws Exception {
 		
 		Map<String, Object> map = reviewService.reviewDetail(commandMap.getMap());
 		
-		String idx = map.get("RV_IDX").toString(); 
+		String idx = map.get("RV_IDX").toString();
+		
+		commandMap.put("MO_CATEGORY", MO_CATEGORY);
 		
 		ModelAndView mv = new ModelAndView("redirect:/review/"+ MO_CATEGORY +"/"+ idx +".sosu");
 		
-		reviewService.updateReview(commandMap.getMap());
+		reviewService.updateReview(commandMap.getMap(), request);
 		
-//		mv.addObject("RV_IDX", commandMap.get("RV_IDX"));
-//		mv.addObject("M_IDX", commandMap.get("M_IDX"));
-//		mv.addObject("MO_IDX", commandMap.get("MO_IDX"));
+		mv.addObject("RV_IDX", commandMap.get("RV_IDX"));
 		
 		return mv;
 	}
@@ -172,7 +192,7 @@ public class ReviewController {
 		
 		commandMap.put("MO_CATEGORY", MO_CATEGORY); 
 		
-		ModelAndView mv = new ModelAndView("redirect:/members/review/reviewList");
+		ModelAndView mv = new ModelAndView("redirect:/members/mypage.sosu");
 		
 		reviewService.deleteReview(commandMap.getMap());
 		
